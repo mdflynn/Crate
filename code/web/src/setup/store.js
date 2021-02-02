@@ -1,7 +1,9 @@
 // Imports
-import { compose, combineReducers } from 'redux'
+import { combineReducers } from 'redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
 
 // App Imports
 import common from '../modules/common/api/state'
@@ -40,7 +42,7 @@ export const store = createStore(
   rootReducer,
   initialState,
 
-  compose(
+  composeWithDevTools(
     applyMiddleware(thunk),
   )
 )
