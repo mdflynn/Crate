@@ -97,7 +97,7 @@ class Detail extends PureComponent {
                     </Grid>
 
                     {/* Related products list */}
-                    <Related productId={item.id}/>
+                    {/* <Related productId={item.id}/> */}
                   </div>
                 ))
             : <Redirect to={routes.home.path}/>
