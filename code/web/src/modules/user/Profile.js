@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
+import File from '../../ui/input/File'
 
 // UI Imports
 import { Grid, GridCell } from '../../ui/grid'
@@ -23,12 +24,20 @@ const Profile = (props) => (
       <title>My Profile - Crate</title>
     </Helmet>
 
+
     {/* Top title bar */}
     <Grid style={{ backgroundColor: grey }}>
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>
         <H3 font="secondary">My profile</H3>
       </GridCell>
     </Grid>
+    
+    {/* this could be its own image upload component */}
+    {/*💻  onChange will be key in collecting the uploaded file info, not an onClick  💻 */}
+    {/*💻  onClick of the submit will need to call ACTION to vet file then upload if OK  💻 */}
+
+    <File onChange={(e) => console.log(e.target.files)}/>
+    <Button theme="secondary" onClick={(e) => console.log(e.target.files)}>test upload</Button>
 
     <Grid>
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>

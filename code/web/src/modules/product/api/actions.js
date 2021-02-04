@@ -134,7 +134,7 @@ export function getRelatedList(productId, isLoading = true) {
         fields: ['id', 'name', 'slug', 'description', 'image']
       }))
         .then(response => {
-          if (response.status === 200) {
+          if (response.status > 199 && response.status < 300) {
             dispatch({
               type: PRODUCTS_GET_RELATED_LIST_RESPONSE,
               error: null,
