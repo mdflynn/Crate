@@ -38,16 +38,18 @@ const Profile = (props) => (
     {/*💻  onClick of the submit will need to call ACTION to vet file then upload if OK  💻 */}
     {/*💻  image upload could be its own component 💻 */}
 
-    {/*💻  need user description field, may be a part of 1st UX 💻 */}
-    
-    {/*💻  need user address, may be a part of 1st UX 💻 */}
+    {/*💻  <input> need user description field, may be a part of 1st UX 💻 */}
+    {/*💻  <input> need user address, may be a part of 1st UX 💻 */}
+    {/*💻  <input> need user availability (i.e. deliver on second monday of each month - canned choices), may be a part of 1st UX 💻 */}
 
-    {/*💻  need user availability (i.e. deliver on second monday of each month - canned choices), may be a part of 1st UX 💻 */}
-
+    {/* 💻 just seeing how this file uploading works 💻 */}
     <File onChange={(e) => console.log(e.target.files)}/>
     <Button theme="secondary" onClick={(e) => console.log(e.target.files)}>test upload</Button>
 
+    {/* 💻 Seems to work like a styled component - pass in style props 💻 */}
     <Grid>
+
+    {/* 💻 Will need to render new components inside of a GridCell component💻 */}
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>
         <H4 style={{ marginBottom: '0.5em' }}>{props.user.details.name}</H4>
 
@@ -63,17 +65,25 @@ const Profile = (props) => (
   </div>
 )
 
+    {/* 💻 declaring proptypes 💻 */}
+
 // Component Properties
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired
 }
 
+  {/* 💻 create wrapper - equivalent to mapStateToProps 💻 */}
+  {/* 💻 DOCS: If your mapStateToProps function is declared as taking one parameter, it will be called whenever the store state changes, and given the store state as the only parameter. 💻 */}
+  {/* 💻 DOCS: If your mapStateToProps function is declared as taking two parameters, it will be called whenever the store state changes or when the wrapper component receives new props (based on shallow equality comparisons). It will be given the store state as the first parameter, and the wrapper component's props as the second parameter. 💻 */}
+// https://react-redux.js.org/using-react-redux/connect-mapstate#return-values-determine-if-your-component-re-renders
 // Component State
 function profileState(state) {
   return {
     user: state.user
   }
 }
+  {/* 💻 subscribe to store updates (profileState) 💻 */}
+  {/* 💻 {logout} object shorthand(?) for mapDispatchToProps param - an action creator - to clear user's cookies, etc. on logout 💻 */}
 
 export default connect(profileState, { logout })(Profile)

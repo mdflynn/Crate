@@ -49,8 +49,10 @@ const Header = (props) => {
           </Menu>
         </GridCell>
 
+
         {/* Right menu */}
         <GridCell style={{ textAlign: 'right' }}>
+        {/* 💻 some conditional rendering for the signed in user menu, user history will live here 💻 */}
           {
             props.user.isAuthenticated
               ?
@@ -85,10 +87,20 @@ Header.propTypes = {
 }
 
 // Component State
+{/* 💻 create wrapper - equivalent to mapStateToProps 💻 */}
 function headerState(state) {
   return {
     user: state.user
   }
 }
+
+{/* 💻 subscribe to store updates (headerState) 💻 */}
+{/* 💻 The number of declared function parameters (a.k.a. arity) affects when it will be called. 💻 */}
+{/* 💻 it will be called whenever the store state changes or when the wrapper component receives new props. 
+It will be given the store state as the first parameter, and the wrapper component's props as the second parameter.. 💻 */}
+{/* 💻 withRouter - Some components (commonly a header component) appear on every page, so are not wrapped in a <Route> 💻 */}
+{/* 💻 This means the header cannot redirect the user. To get around this problem, the header component can be wrapped in a withRouter function, either when it is exported 💻 */}
+{/* 💻 This gives the Header component access to this.props.history, which means the header can now redirect the user 💻 */}
+
 
 export default withRouter(connect(headerState, {})(Header))

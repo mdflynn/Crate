@@ -15,15 +15,16 @@ export const LOGOUT = 'AUTH/LOGOUT'
 
 // Set a user after login or using localStorage token
 
-/* 💻  here we need to add to the setUser action to include the additional fields for user profile  💻 */
+{/* 💻  here we need to add to the setUser action to include the additional fields for user profile  💻 */}
 
+{/* 💻 if authenticated, dispatch action to set the user's state with data in `user`object 💻 */}
 export function setUser(token, user) {
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   } else {
     delete axios.defaults.headers.common['Authorization'];
   }
-
+  
   return { type: SET_USER, user }
 }
 
@@ -34,7 +35,8 @@ export function login(userCredentials, isLoading = true) {
       type: LOGIN_REQUEST,
       isLoading
     })
-
+    
+    {/* 💻 fires off user inputted info to validate 💻 */}
     return axios.post(routeApi, query({
       operation: 'userLogin',
       variables: userCredentials,
@@ -42,18 +44,22 @@ export function login(userCredentials, isLoading = true) {
     }))
       .then(response => {
         let error = ''
-
+        
+        {/* 💻 if invalid, will receive error 💻 */}
         if (response.data.errors && response.data.errors.length > 0) {
           error = response.data.errors[0].message
         } else if (response.data.data.userLogin.token !== '') {
           const token = response.data.data.userLogin.token
           const user = response.data.data.userLogin.user
-
+          
+          {/* 💻 if valid, will dispatch the above setUser function to set state of user 💻 */}
           dispatch(setUser(token, user))
-
+          
+          {/* 💻 then add token and user info to local storage - track page info, etc. - func declared below 💻 */}
           loginSetUserLocalStorageAndCookie(token, user)
         }
-
+        
+        {/* 💻 tell user (console) what happened 💻 */}
         dispatch({
           type: LOGIN_RESPONSE,
           error
@@ -79,6 +85,8 @@ export function loginSetUserLocalStorageAndCookie(token, user) {
 }
 
 // Register a user
+
+{/* 💻 POST for newly registered user - will need to update registration fields/modify 1st UX 💻 */}
 export function register(userDetails) {
   return dispatch => {
     return axios.post(routeApi, mutation({
