@@ -32,9 +32,17 @@ const Profile = (props) => (
       </GridCell>
     </Grid>
     
-    {/* this could be its own image upload component */}
+
+    {/*💻  need image upload functionality, may be a part of 1st UX  💻 */}
     {/*💻  onChange will be key in collecting the uploaded file info, not an onClick  💻 */}
     {/*💻  onClick of the submit will need to call ACTION to vet file then upload if OK  💻 */}
+    {/*💻  image upload could be its own component 💻 */}
+
+    {/*💻  need user description field, may be a part of 1st UX 💻 */}
+    
+    {/*💻  need user address, may be a part of 1st UX 💻 */}
+
+    {/*💻  need user availability (i.e. deliver on second monday of each month - canned choices), may be a part of 1st UX 💻 */}
 
     <File onChange={(e) => console.log(e.target.files)}/>
     <Button theme="secondary" onClick={(e) => console.log(e.target.files)}>test upload</Button>

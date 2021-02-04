@@ -45,6 +45,7 @@ const Header = (props) => {
             <MenuItem to={home.howItWorks.path}>How It Works</MenuItem>
 
             <MenuItem to={home.whatsNew.path}>What's New</MenuItem>
+
           </Menu>
         </GridCell>
 
@@ -61,6 +62,9 @@ const Header = (props) => {
                 <MenuItem to={user.subscriptions.path}>Subscriptions</MenuItem>
 
                 <MenuItem to={user.profile.path}>Profile</MenuItem>
+
+                {/* 💻  need MenuItem for NEW page, USER HISTORY 💻` */}
+
               </Menu>
               :
               <Menu>

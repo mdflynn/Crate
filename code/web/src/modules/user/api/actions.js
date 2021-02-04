@@ -11,13 +11,12 @@ export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
 export const SET_USER = 'AUTH/SET_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
-/* 💻  here we need to declare a new action type, something like UPDATE_USER_DETAILS  💻 */
-/* 💻  the action will need to provide an object that contains whatever updated information for the user  💻 */
-
-
 // Actions
 
 // Set a user after login or using localStorage token
+
+/* 💻  here we need to add to the setUser action to include the additional fields for user profile  💻 */
+
 export function setUser(token, user) {
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
