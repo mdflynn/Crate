@@ -7,6 +7,7 @@ import authentication from './authentication'
 import schema from './schema'
 
 // Setup GraphQL
+// 📝 Setting up graphQL. Likely won't need to modify anything here
 export default function (server) {
   console.info('SETUP - GraphQL...')
 

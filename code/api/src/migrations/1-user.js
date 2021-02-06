@@ -1,4 +1,5 @@
 module.exports = {
+  // 📝 This creates our user table. We will need to create an additional migration file to add image, description, address
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
       id: {

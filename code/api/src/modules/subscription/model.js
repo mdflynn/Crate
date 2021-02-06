@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   })
 
+// 📝 Add: A subscription will have many orders/deliveries
   Subscription.associate = function(models) {
     Subscription.belongsTo(models.User)
     Subscription.belongsTo(models.Crate)

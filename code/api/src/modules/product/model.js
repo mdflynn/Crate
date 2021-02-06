@@ -23,3 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   })
 }
+
+// 📝 A product currently has no associations. But a product will eventually need to be tied to an order. Products and Orders are a many to many relationship, so a join table order_products will be needed.
+// 📝 Product has many order_products
+// 📝 Product has many orders through order products

@@ -20,12 +20,15 @@ export async function create(parentValue, { name, email, password }) {
       name,
       email,
       password: passwordHashed
+      // 📝 May need to add additional fields here if FE implements more details at signup. Our extra fields of address, description, etc. will be nil upon creation if not defined here.
     })
   } else {
     // User exists
     throw new Error(`The email ${ email } is already registered. Please try to login.`)
   }
 }
+
+// 📝 An update function will be added here. Might look similar to the create action above. 
 
 export async function login(parentValue, { email, password }) {
   const user = await models.User.findOne({ where: { email } })
