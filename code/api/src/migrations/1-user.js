@@ -1,4 +1,9 @@
 module.exports = {
+
+
+  // 🌟 User table. We need to add additional migrations(image, description, shipping address).
+
+
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('users', {
       id: {
