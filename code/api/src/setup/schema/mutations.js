@@ -2,6 +2,11 @@
 import { GraphQLObjectType } from 'graphql'
 
 // App Imports
+
+
+// 🌟 Import any new models here
+
+
 import * as user from '../../modules/user/mutations'
 import * as product from '../../modules/product/mutations'
 import * as crate from '../../modules/crate/mutations'
@@ -17,6 +22,11 @@ const mutation = new GraphQLObjectType({
     ...product,
     ...crate,
     ...subscription
+
+
+    // 🌟 Add new fields here
+
+
   }
 })
 

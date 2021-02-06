@@ -68,6 +68,10 @@ export async function getAll() {
   return await models.User.findAll()
 }
 
+
+// 🌟 Update User 
+
+
 // Delete
 export async function remove(parentValue, { id }) {
   return await models.User.destroy({ where: { id } })

@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     }
   })
 
+
+  //  🌟 A subscription will have many orders
+
+
   Subscription.associate = function(models) {
     Subscription.belongsTo(models.User)
     Subscription.belongsTo(models.Crate)
