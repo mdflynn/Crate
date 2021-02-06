@@ -17,6 +17,7 @@ const query = new GraphQLObjectType({
     ...product,
     ...crate,
     ...subscription
+    // not sure if we need to add order model here??
   })
 })
 

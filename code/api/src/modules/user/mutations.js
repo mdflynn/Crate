@@ -27,6 +27,8 @@ export const userSignup = {
   resolve: create
 }
 
+// make new update mutations...see resolvers
+
 // Remove
 export const userRemove = {
   type: UserType,
