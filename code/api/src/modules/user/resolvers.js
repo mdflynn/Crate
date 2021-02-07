@@ -27,6 +27,29 @@ export async function create(parentValue, { name, email, password }) {
   }
 }
 
+// Update User
+export async function update(parentValue, { id, image, email, description, streetAddress, city, state, zip, country }, { auth}) {
+  const user = await models.User.findOne({ where: { id } })
+
+  if(user) {
+    return await user.update(
+      {
+        email,
+        image,
+        description,
+        streetAddress,
+        city,
+        state,
+        zip,
+        country
+      },
+      { where: { id } }
+    )
+  } else {
+    throw new Error('Please login to update information.')
+  }
+}
+
 export async function login(parentValue, { email, password }) {
   const user = await models.User.findOne({ where: { email } })
 
@@ -67,10 +90,6 @@ export async function getById(parentValue, { id }) {
 export async function getAll() {
   return await models.User.findAll()
 }
-
-
-// 🌟 Update User 
-
 
 // Delete
 export async function remove(parentValue, { id }) {
