@@ -27,10 +27,6 @@ export const userSignup = {
   resolve: create
 }
 
-
-// 🌟 Add new mutation here for userUpdate
-
-
 // Remove
 export const userRemove = {
   type: UserType,
@@ -41,4 +37,57 @@ export const userRemove = {
     }
   },
   resolve: remove
+}
+
+
+// Update
+export const userUpdate = {
+  type: UserType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    },
+
+    image: {
+      name: 'image',
+      type: GraphQLString
+    },
+
+    email: {
+      name: 'email',
+      type: GraphQLString
+    },
+
+    description: {
+      name: 'description',
+      type: GraphQLString
+    },
+
+    streetAddress: {
+      name: 'streetAddress',
+      type: GraphQLString
+    },
+
+    city: {
+      name: 'city',
+      type: GraphQLString
+    },
+
+    state: {
+      name: 'state',
+      type: GraphQLString
+    },
+
+    zip: {
+      name: 'zip',
+      type: GraphQLString
+    },
+
+    country: {
+      name: 'country',
+      type: GraphQLString
+    }
+  },
+  resolve: update
 }
