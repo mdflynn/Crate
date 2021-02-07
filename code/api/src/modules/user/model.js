@@ -2,11 +2,6 @@
 
 // User
 module.exports = function(sequelize, DataTypes) {
-
-
-  // 🌟 Add shipping address, image, and description attributes here
-
-
   let User = sequelize.define('users', {
     name: {
       type: DataTypes.STRING
@@ -19,17 +14,32 @@ module.exports = function(sequelize, DataTypes) {
     },
     role: {
       type: DataTypes.TEXT
+    },
+    image: {
+      type: DataTypes.TEXT
+    },
+    description: {
+      type: DataTypes.STRING
+    },
+    streetAddress: {
+      type: DataTypes.STRING
+    },
+    city: {
+      type: DataTypes.STRING
+    },
+    state: {
+      type: DataTypes.STRING
+    },
+    zip: {
+      type: DataTypes.STRING
+    },
+    country: {
+      type: DataTypes.STRING
     }
   })
 
   User.associate = function(models) {
     User.hasMany(models.Subscription)
-
-
-    // 🌟 Add associations here
-
-
   }
-
   return User
 }
