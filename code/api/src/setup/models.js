@@ -1,6 +1,8 @@
 // Imports
 import Sequelize from 'sequelize'
 
+// Add/Import new models here
+
 // App Imports
 import databaseConnection from './database'
 

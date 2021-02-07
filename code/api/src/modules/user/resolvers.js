@@ -26,7 +26,7 @@ export async function create(parentValue, { name, email, password }) {
     throw new Error(`The email ${ email } is already registered. Please try to login.`)
   }
 }
-
+// Update User Action?, or Function?....
 export async function login(parentValue, { email, password }) {
   const user = await models.User.findOne({ where: { email } })
 

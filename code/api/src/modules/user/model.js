@@ -1,5 +1,7 @@
 'use strict'
 
+// Add shipping address, image, and description attributes here
+
 // User
 module.exports = function(sequelize, DataTypes) {
   let User = sequelize.define('users', {
@@ -16,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT
     }
   })
-
+// Add associations
   User.associate = function(models) {
     User.hasMany(models.Subscription)
   }

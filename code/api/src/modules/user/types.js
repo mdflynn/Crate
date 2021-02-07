@@ -1,6 +1,8 @@
 // Imports
 import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
 
+// Add shipping address, image, and description attributes here
+
 // User type
 const UserType = new GraphQLObjectType({
   name: 'user',
