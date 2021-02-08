@@ -15,6 +15,9 @@ export const LOGOUT = 'AUTH/LOGOUT'
 // Actions
 
 // Set a user after login or using localStorage token
+
+/* 🐉 we need to ensure that the additional profile details aer included in profile through the set user function 🐉 */ 
+
 export function setUser(token, user) {
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -32,6 +35,7 @@ export function login(userCredentials, isLoading = true) {
       type: LOGIN_REQUEST,
       isLoading
     })
+    /* 🐉 validation of user info, checking to ensure all  🐉 */ 
 
     return axios.post(routeApi, query({
       operation: 'userLogin',
@@ -40,14 +44,18 @@ export function login(userCredentials, isLoading = true) {
     }))
       .then(response => {
         let error = ''
+        /* 🐉 conditional checking for error if invalid 🐉 */ 
 
         if (response.data.errors && response.data.errors.length > 0) {
           error = response.data.errors[0].message
         } else if (response.data.data.userLogin.token !== '') {
           const token = response.data.data.userLogin.token
           const user = response.data.data.userLogin.user
+          /* 🐉 if valid will dispatch the setUser function declared above with token and user 🐉 */ 
 
           dispatch(setUser(token, user))
+        
+          /* 🐉 setting local storage for token and user 🐉 */
 
           loginSetUserLocalStorageAndCookie(token, user)
         }
@@ -77,6 +85,9 @@ export function loginSetUserLocalStorageAndCookie(token, user) {
 }
 
 // Register a user
+
+/* 🐉 posts newly created user details to api 🐉 */
+
 export function register(userDetails) {
   return dispatch => {
     return axios.post(routeApi, mutation({
@@ -99,6 +110,9 @@ export function logout() {
 }
 
 // Unset user token and info in localStorage and cookie
+
+/* 🐉 clears local storage 🐉 */
+
 export function logoutUnsetUserLocalStorageAndCookie() {
   // Remove token
   window.localStorage.removeItem('token')
