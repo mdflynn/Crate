@@ -2,6 +2,8 @@
 import { isEmpty } from '../../../setup/helpers'
 import { SET_USER, LOGIN_REQUEST, LOGIN_RESPONSE, LOGOUT } from './actions'
 
+/* 🐉 Since we created new properties in user state we need to import actions to update profile info when profile is edited 🐉 */ 
+
 // Initial State
 export const userInitialState = {
   error: null,
