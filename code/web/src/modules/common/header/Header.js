@@ -76,11 +76,15 @@ const Header = (props) => {
 }
 
 // Component Properties
+/* 🐉 declares prop types 🐉 */ 
+
 Header.propTypes = {
   user: PropTypes.object.isRequired
 }
 
 // Component State
+/* 🐉 creates state 🐉 */ 
+
 function headerState(state) {
   return {
     user: state.user
