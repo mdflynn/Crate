@@ -72,8 +72,6 @@ describe("user mutations", () => {
         //.set('Authorization', `Bearer ${token}`)
         .expect(200)
 
-        console.log(response.body)
-
       expect(response.body.data.userUpdate.name).toEqual(user1.name)
       expect(response.body.data.userUpdate.image).toEqual(user1.image)
       expect(response.body.data.userUpdate.email).toEqual(email)
