@@ -77,3 +77,27 @@ export async function remove(parentValue, { id }) {
 export async function getGenders() {
   return Object.values(params.user.gender)
 }
+
+
+// Update
+export async function update(parentValue, { name, description, email, image, streetAddress, city, state, zip, country }, { auth }) {
+  if (auth.isAuthenticated) {
+    await models.User.update(
+      {
+        name,
+        description,
+        email,
+        image,
+        streetAddress,
+        city,
+        state,
+        country
+      },
+      {
+        where: { id: auth.user.id }
+			});
+		return await models.User.findOne({ where: { id: auth.user.id } })
+  } else {
+    throw new Error('Please login to update information.')
+  }
+}
