@@ -101,25 +101,3 @@ export async function update(parentValue, { name, description, email, image, str
     throw new Error('Please login to update information.')
   }
 }
-
-// Update User
-// export async function update(parentValue, { id, image, email, description, streetAddress, city, state, zip, country }, { auth }) {
-//
-//   if(auth.user && auth.user.id > 0) {
-//     return await models.User.update(
-//       {
-//         email,
-//         image,
-//         description,
-//         streetAddress,
-//         city,
-//         state,
-//         zip,
-//         country
-//       },
-//       { where: { id } }
-//     )
-//   } else {
-//     throw new Error('Please login to update information.')
-//   }
-// }
