@@ -13,10 +13,125 @@ import { white, grey, grey2, black } from "../../ui/common/colors";
 import { Tile } from "../../ui/image";
 import Card from "../../ui/card";
 import { level1 } from "../../ui/common/shadows";
+import { APP_URL } from "../../setup/config/env";
 
 // App Imports
 import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
+// props.user.details.name
+
+const mockData = [
+  {
+    user: {
+      details: {
+        id: 1,
+        crateName: "Men's Accesories",
+        deliveryDate: "02/20/2021",
+        orderProducts: [
+          {
+            name: "Belt for Men",
+            returned: false,
+          },
+          {
+            name: "Watch for Men",
+            returned: true,
+          },
+        ],
+        status: "delivered",
+      },
+    },
+  },
+  {
+    user: {
+      details: {
+        id: 2,
+        crateName: "Men's Clothing",
+        deliveryDate: "03/20/2021",
+        orderProducts: [
+          {
+            name: "Shirt for Men",
+            returned: false,
+          },
+          {
+            name: "Pants for Men",
+            returned: false,
+          },
+        ],
+        status: "pending delivery",
+      },
+    },
+  },
+  {
+    user: {
+      details: {
+        id: 3,
+        crateName: "Men's Clothing",
+        deliveryDate: "04/20/2021",
+        orderProducts: [
+          {
+            name: "Shirt for Men",
+            returned: false,
+          },
+        ],
+        status: "pending delivery",
+      },
+    },
+  },
+];
+
+const generateOrderHistory = () => {
+  return mockData.map((order) => {
+    return (
+      <Card
+        key={order.user.details.id}
+        style={{
+          display: "flex",
+          width: "80em",
+          backgroundColor: white,
+          marginBottom: "2em",
+          justifyContent: "space-between",
+          borderRadius: "1em",
+        }}
+      >
+        <div style={{ padding: "1em 1.2em", width: "250px" }}>
+          <img
+            src={`${APP_URL}/images/crate.png`}
+            alt={order.crateName}
+            style={{ width: "100%" }}
+          />
+          <p style={{ color: grey2, marginTop: "1em" }}>
+            {order.user.details.crateName}
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly",
+            padding: "1em 1.2em",
+          }}
+        >
+          <H3 font="secondary">
+            Deliverd on: {order.user.details.deliveryDate}
+          </H3>
+          <H3 font="secondary">Items: TBD </H3>
+          <H3 font="secondary">Status: {order.user.details.status}</H3>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "1em 1.2em",
+          }}
+        >
+          <Button style={{marginBottom: "10px"}} theme="primary">KEEP Items</Button>
+          <Button style={{marginTop: "10px"}} theme="secondary">RETURN Items</Button>
+        </div>
+      </Card>
+    );
+  });
+};
 
 // Component
 const Profile = (props) => (
@@ -64,105 +179,7 @@ const Profile = (props) => (
     </Grid>
 
     <Grid style={{ padding: "2em" }}>
-      <GridCell style={{ padding: "2em" }}>
-        {/* create function to generate cards */}
-
-        <Card
-          style={{
-            display: "flex",
-            width: "80em",
-            backgroundColor: white,
-            marginBottom: "2em",
-            justifyContent: "space-around"
-          }}
-        >
-          <div style={{ padding: "1em 1.2em" }}>
-            <H4 font="secondary" style={{ color: black }}>
-              CRATE INFO
-            </H4>
-            <p style={{ color: grey2, marginTop: "1em" }}>More Info</p>
-          </div>
-          <div style={{ padding: "1em 1.2em" }}>
-            <H3 font="secondary">Deliverd on</H3>
-            <H3 font="secondary">Items</H3>
-            <H3 font="secondary">Status</H3>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: "1em 1.2em",
-            }}
-          >
-            <Button theme="primary">KEEP Items</Button>
-            <Button theme="secondary">RETURN Items</Button>
-          </div>
-        </Card>
-
-        <Card
-          style={{
-            display: "flex",
-            width: "80em",
-            backgroundColor: white,
-            marginBottom: "2em",
-            justifyContent: "space-around"
-          }}
-        >
-          <div style={{ padding: "1em 1.2em" }}>
-            <H4 font="secondary" style={{ color: black }}>
-              CRATE INFO
-            </H4>
-            <p style={{ color: grey2, marginTop: "1em" }}>More Info</p>
-          </div>
-          <div style={{ padding: "1em 1.2em" }}>
-            <H3 font="secondary">Deliverd on</H3>
-            <H3 font="secondary">Items</H3>
-            <H3 font="secondary">Status</H3>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: "1em 1.2em",
-            }}
-          >
-            <Button theme="primary">KEEP Items</Button>
-            <Button theme="secondary">RETURN Items</Button>
-          </div>
-        </Card>
-
-        <Card
-          style={{
-            display: "flex",
-            width: "80em",
-            backgroundColor: white,
-            marginBottom: "2em",
-            justifyContent: "space-around"
-          }}
-        >
-          <div style={{ padding: "1em 1.2em" }}>
-            <H4 font="secondary" style={{ color: black }}>
-              CRATE INFO
-            </H4>
-            <p style={{ color: grey2, marginTop: "1em" }}>More Info</p>
-          </div>
-          <div style={{ padding: "1em 1.2em" }}>
-            <H3 font="secondary">Deliverd on</H3>
-            <H3 font="secondary">Items</H3>
-            <H3 font="secondary">Status</H3>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              padding: "1em 1.2em",
-            }}
-          >
-            <Button theme="primary">KEEP Items</Button>
-            <Button theme="secondary">RETURN Items</Button>
-          </div>
-        </Card>
-      </GridCell>
+      <GridCell style={{ padding: "2em" }}>{generateOrderHistory()}</GridCell>
     </Grid>
 
     <Grid style={{ padding: "2em", textAlign: "center" }}>
