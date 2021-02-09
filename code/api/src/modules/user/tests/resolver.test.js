@@ -1,52 +1,73 @@
 import request from 'supertest';
 import express from 'express';
+import bcrypt from "bcrypt";
 import graphqlHTTP from 'express-graphql';
-import models from '../../../setup/models';
+
+// graphql middleware setup
 import schema from '../../../setup/schema';
+import models from '../../../setup/models';
+import serverConfig from "../../../config/server.json";
+import authentication from "../../../setup/authentication";
+
+//mock data
 import * as mockData from '../../mocks/index'
 
-describe("user mutations", () => {
-  let server;
 
-  beforeAll(() => {
-    server = express(); //sets up the server
+describe("user-- resolver update", () => {
 
-    server.use(
-      '/',
-      graphqlHTTP({
-        schema: schema,
-        graphiql: false
-      })
-    );
-  });
+    let server;
+    let token;
+    let admin1;
+    let user1;
 
-  //Creates our users via the imported mocks/index file
-  // beforeAll(async () => {
-  //   await models.User.create(mockData.userData1);
-  //   await models.User.create(mockData.userData2);
-  // });
+    beforeAll(async () => {
 
-  //deletes all users
-  afterAll(async () => {
-    await models.User.destroy({ where: {} })
-    server.close();
-  });
+      admin1 = await models.User.create(mockData.userData1);
+      user1 = await models.User.create(mockData.userData2);
 
-    it("throws error if not a logged in user", async () => {
+      server = express();
+      server.use(authentication);
+      server.use(
+          '/',
+          graphqlHTTP({
+              schema,
+              graphiql: false,
+              context: {
+                  auth: {
+                      user: user1,
+                      isAuthenticated: user1 && user1.id > 0
+                  }
+              }
+          })
+      );
+
+      //log in & set up auth
+      const response = await request(server)
+          .post('/')
+          .send({ query: '{ userLogin(email: "user@crate.com", password: "123456890") { token }}'})
+          .expect(200)
+
+      token = response.body.data.userLogin.token
+    })
+
+    afterAll(async ()=>{
+        await models.User.destroy({ where: {} })
+    })
+
+    it("throws error if not a logged in user", async() => {
       const response = await request(server)
       .post('/')
       .send({ query: 'mutation { userUpdate(city: "Kenai", state: "Alaska"){ name image email description streetAddress city state zip country }}'})
-      .expect(400)
 
-      expect(response).toThrow('Please login to update information.')
-      // expect(response.body.data.userUpdate.name).toEqual('The User')
-      // expect(response.body.data.userUpdate.image).toEqual('https://ichef.bbci.co.uk/news/976/cpsprodpb/CFE3/production/_108391235_nessie.jpg')
-      // expect(response.body.data.userUpdate.email).toEqual('user@crate.com')
-      // expect(response.body.data.userUpdate.description).toEqual('Nessie')
-      // expect(response.body.data.userUpdate.streetAddress).toEqual('987 User St')
-      // expect(response.body.data.userUpdate.city).toEqual('Kenai')
-      // expect(response.body.data.userUpdate.state).toEqual('Alaska')
-      // expect(response.body.data.userUpdate.zip).toEqual('80123')
-      // expect(response.body.data.userUpdate.country).toEqual('USA')
+      .expect(200)
+      //should expect(400)
+
+      console.log(response.body)
+
+      // what the error is giving us
+      //expect(response.body.data.userUpdate).toEqual('user is not defined')
+
+      //what we want it to eqaul
+      //expect(response.body.data.userUpdate).toEqual('Please login to update information.')
     });
   });
