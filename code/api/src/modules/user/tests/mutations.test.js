@@ -64,25 +64,25 @@ describe("user mutations", () => {
     // })
 
     it("updateUser - can update user profile information", async(done) => {
-        let email = 'test email address'
-        let description = 'test description'
-        const response = await request(server)
-          .post('/')
-          .send({ query: `mutation { userUpdate(description: "${description}", email: "${email}") {name email image description streetAddress city state zip country }}`})
-          //.set('Authorization', `Bearer ${token}`)
-          .expect(200)
+      let email = 'test email address'
+      let description = 'test description'
+      const response = await request(server)
+        .post('/')
+        .send({ query: `mutation { userUpdate(description: "${description}", email: "${email}") {name email image description streetAddress city state zip country }}`})
+        //.set('Authorization', `Bearer ${token}`)
+        .expect(200)
 
-          console.log(response.body)
+        console.log(response.body)
 
-        expect(response.body.data.userUpdate.name).toEqual(user1.name)
-        expect(response.body.data.userUpdate.image).toEqual(user1.image)
-        expect(response.body.data.userUpdate.email).toEqual(email)
-        expect(response.body.data.userUpdate.description).toEqual(description)
-        expect(response.body.data.userUpdate.streetAddress).toEqual(user1.streetAddress)
-        expect(response.body.data.userUpdate.city).toEqual(user1.city)
-        expect(response.body.data.userUpdate.state).toEqual(user1.state)
-        expect(response.body.data.userUpdate.zip).toEqual(user1.zip)
-        expect(response.body.data.userUpdate.country).toEqual(user1.country)
-        done();
+      expect(response.body.data.userUpdate.name).toEqual(user1.name)
+      expect(response.body.data.userUpdate.image).toEqual(user1.image)
+      expect(response.body.data.userUpdate.email).toEqual(email)
+      expect(response.body.data.userUpdate.description).toEqual(description)
+      expect(response.body.data.userUpdate.streetAddress).toEqual(user1.streetAddress)
+      expect(response.body.data.userUpdate.city).toEqual(user1.city)
+      expect(response.body.data.userUpdate.state).toEqual(user1.state)
+      expect(response.body.data.userUpdate.zip).toEqual(user1.zip)
+      expect(response.body.data.userUpdate.country).toEqual(user1.country)
+      done();
     })
 })
