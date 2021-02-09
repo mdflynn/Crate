@@ -53,12 +53,13 @@ describe("user-- resolver update", () => {
         await models.User.destroy({ where: {} })
     })
 
-    it("throws error if not a logged in user", async() => {
+    it("throws error if not a logged in user", async(done) => {
       const response = await request(server)
       .post('/')
       .send({ query: 'mutation { userUpdate(city: "Kenai", state: "Alaska"){ name image email description streetAddress city state zip country }}'})
       .expect(200)
 
       expect(response.body.errors[0].message).toEqual('Please login to update information.')
+      done();
     });
   });
