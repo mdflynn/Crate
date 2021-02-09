@@ -1,5 +1,5 @@
 // Imports
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -102,7 +102,16 @@ const generateOrderHistory = () => {
 const displayOrders = generateOrderHistory();
 
 // Component
-const Profile = (props) => (
+const Profile = (props) => {
+  const {user} = props
+  
+  const [edit, setEdit] = useState(false)
+
+  const showEditProfileModal = (e) => {
+    setEdit(!edit)
+  }
+
+  return (
   <div>
     {/* SEO */}
     <Helmet>
@@ -116,59 +125,19 @@ const Profile = (props) => (
       </GridCell>
     </Grid>
 
-    {/* User image and description */}
-    <Grid
-      style={{
-        borderWidth: 5,
-        borderColor: primaryAccent,
-        borderStyle: "solid",
-      }}
-    >
-      <GridCell
-        style={{
-          width: "25%",
-          borderWidth: 5,
-          borderColor: secondaryAccent,
-          borderStyle: "solid",
-        }}
-      >
-        <Tile
-          image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
-          width={250}
-          height={250}
-          shadow={level5}
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "50px",
-            marginBottom: "50px",
-          }}
-        ></Tile>
-        <H3
-          font="secondary"
-          style={{
-            textAlign: "center",
-            width: "50%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            backgroundColor: "lightblue",
-          }}
-        >
-          I ❤️ taking pictures of food and buying clothes
-        </H3>
-      </GridCell>
-    <Grid style={{ backgroundColor: 'hotpink'}}>
-      <GridCell style={{ padding: '2em', textAlign: 'center' }}>
-        <ProfileModal visible={true}>
-          <h1>I am a top modal</h1>
-          <EditProfileForm true={true}/>
+    {/* <Grid style={{ backgroundColor: 'hotpink'}}>
+      <GridCell style={{ padding: '2em', textAlign: 'center' }}> */}
+        <ProfileModal visible={edit}>
+          <EditProfileForm user={user}>
+            <Button theme="secondary" onClick={() => setEdit(!edit)} style={{ marginLeft: '1em' }}>CLOSE</Button>
+          </EditProfileForm>
         </ProfileModal>
-      </GridCell>
-    </Grid>
+      {/* </GridCell>
+    </Grid> */}
 
     <Grid>
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>
-        <H4 style={{ marginBottom: '0.5em' }}>{props.user.details.name}</H4>
+        <H4 style={{ marginBottom: '0.5em' }}>{user.details.name}</H4>
 
       {/* User Profile Details */}
       <GridCell
@@ -246,6 +215,7 @@ const Profile = (props) => (
         {displayOrders}
       </GridCell>
     </Grid>
+        <p style={{ color: grey2, marginBottom: '2em' }}>{user.details.email}</p>
 
     {/* Subsription and logout buttons */}
     <Grid style={{ padding: "2em", textAlign: "center" }}>
@@ -253,18 +223,12 @@ const Profile = (props) => (
         <Link to={userRoutes.subscriptions.path}>
           <Button theme="primary">Subscriptions</Button>
         </Link>
-
-        <Button
-          theme="secondary"
-          onClick={props.logout}
-          style={{ marginLeft: "1em" }}
-        >
-          Logout
-        </Button>
+        <Button theme="secondary" onClick={logout} style={{ marginLeft: '1em' }}>Logout</Button>
+        <Button theme="secondary" onClick={() => setEdit(!edit)} style={{ marginLeft: '1em' }}>EDIT PREFS</Button>
       </GridCell>
     </Grid>
   </div>
-);
+  )}
 
 // Component Properties
 Profile.propTypes = {

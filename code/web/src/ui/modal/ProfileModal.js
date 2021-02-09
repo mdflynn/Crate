@@ -1,10 +1,11 @@
 // Imports
 import React from 'react'
 import PropTypes from 'prop-types'
+import EditProfileForm from '../form/EditProfileForm'
 
 // Component
 const Modal = (props) => {
-  const { children, visible, ...other } = props
+  const { children, visible, setEdit, ...other } = props
 
   return (
     <div {...other} style={{
@@ -36,9 +37,8 @@ const Modal = (props) => {
         // filter: 'blur(25px)'
       }}>
       
-      {children}
+        {children}
       </div>
-
     </div>
   )
 }

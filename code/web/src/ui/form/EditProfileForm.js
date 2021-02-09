@@ -1,9 +1,31 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+// import PropTypes from 'prop-types'
+// import { connect } from 'react-redux'
+// UI 
 import Textarea from "../input/Textarea";
 import Input from "../input/Input";
 import { grey2, grey4, black } from "../common/colors";
+// App
+import { routeImage } from "../../setup/routes"
+import { renderIf, slug } from '../../setup/helpers'
+import { upload, messageShow, messageHide } from '../../modules/common/api/actions'
+import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
 
-const EditProfileForm = (props) => {
+// TODO add dispatch inside this component
+
+const EditProfileForm = ({children, user}) => {  
+  const initialUserState = {
+    email: user.details.email,
+    name: user.details.name,
+    description: '',
+    address: '',
+    image: '',
+    twitter: '',
+  }
+  
+  const [profile, setProfile] = useState(initialUserState) //TODO user data from props
+
   return (
     <form onSubmit={e => console.log(e.target)}>
       {/* <form onSubmit={this.onSubmit}> */}
@@ -11,7 +33,7 @@ const EditProfileForm = (props) => {
         {/* Name */}
         <Input
           type="text"
-          fullWidth={props.true}
+          fullWidth={true}
           placeholder="Name"
           required="required"
           name="name"
@@ -24,7 +46,7 @@ const EditProfileForm = (props) => {
 
         {/* Description */}
         <Textarea
-          fullWidth={props.true}
+          fullWidth={true}
           placeholder="Description"
           required="required"
           name="description"
@@ -93,6 +115,7 @@ const EditProfileForm = (props) => {
       />
     ))} */}
       </div>
+      {children}
     </form>
   );
 };
