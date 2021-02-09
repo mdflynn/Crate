@@ -68,7 +68,13 @@ const Profile = (props) => (
         {/* create function to generate cards */}
 
         <Card
-          style={{ display: "flex", width: "80em", backgroundColor: white }}
+          style={{
+            display: "flex",
+            width: "80em",
+            backgroundColor: white,
+            marginBottom: "2em",
+            justifyContent: "space-around"
+          }}
         >
           <div style={{ padding: "1em 1.2em" }}>
             <H4 font="secondary" style={{ color: black }}>
@@ -94,7 +100,13 @@ const Profile = (props) => (
         </Card>
 
         <Card
-          style={{ display: "flex", width: "80em", backgroundColor: white }}
+          style={{
+            display: "flex",
+            width: "80em",
+            backgroundColor: white,
+            marginBottom: "2em",
+            justifyContent: "space-around"
+          }}
         >
           <div style={{ padding: "1em 1.2em" }}>
             <H4 font="secondary" style={{ color: black }}>
@@ -120,7 +132,13 @@ const Profile = (props) => (
         </Card>
 
         <Card
-          style={{ display: "flex", width: "80em", backgroundColor: white }}
+          style={{
+            display: "flex",
+            width: "80em",
+            backgroundColor: white,
+            marginBottom: "2em",
+            justifyContent: "space-around"
+          }}
         >
           <div style={{ padding: "1em 1.2em" }}>
             <H4 font="secondary" style={{ color: black }}>
