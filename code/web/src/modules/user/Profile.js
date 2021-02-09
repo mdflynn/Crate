@@ -222,23 +222,16 @@ const Profile = (props) => (
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
             {props.user.details.email}
           </p>
-          {/* <Button type="button" theme="primary" style={{ marginLeft: "1em", height: "50%" }}>
-            edit
-          </Button> */}
         </div>
         <div
           style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
         >
           <H4>ADDRESS </H4>
-
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
             12345 Main Lane
             <br />
             Coolsville, CO, 80420
           </p>
-          {/* <Button type="button" theme="primary" style={{ marginLeft: "1em", height: "50%" }}>
-            edit
-          </Button> */}
         </div>
         <div
           style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
@@ -256,15 +249,11 @@ const Profile = (props) => (
           </p>
         </div>
         <div style={{ flex: 1, alignSelf: "flex-end" }}>
-         <Link to="/edit-profle">
-         <Button
-            type="button"
-            theme="primary"
-            style={{ marginLeft: "1em" }}
-          >
-            edit profile
-          </Button>
-         </Link>
+          <Link to="/edit-profle">
+            <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
+              edit profile
+            </Button>
+          </Link>
         </div>
       </GridCell>
     </Grid>
@@ -327,20 +316,3 @@ function profileState(state) {
 }
 
 export default connect(profileState, { logout })(Profile);
-
-{
-  /* <Card style={{ width: "18em", backgroundColor: white }}>
-<p style={{ padding: "2em 3em 0 3em" }}>
-  <img
-    src='https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg'
-    alt="test alt"
-    style={{ width: "100%" }}
-  />
-</p>
-<div style={{ padding: "1em 1.2em" }}>
-  <H4 font="secondary" style={{ color: black }}>
-    Men's Clothes
-  </H4>
-</div>
-</Card> */
-}
