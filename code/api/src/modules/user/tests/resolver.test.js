@@ -34,8 +34,7 @@ describe("user-- resolver update", () => {
               graphiql: false,
               context: {
                   auth: {
-                      user: user1,
-                      isAuthenticated: user1 && user1.id > 0
+                      user: user1
                   }
               }
           })
@@ -58,16 +57,8 @@ describe("user-- resolver update", () => {
       const response = await request(server)
       .post('/')
       .send({ query: 'mutation { userUpdate(city: "Kenai", state: "Alaska"){ name image email description streetAddress city state zip country }}'})
-
       .expect(200)
-      //should expect(400)
 
-      console.log(response.body)
-
-      // what the error is giving us
-      //expect(response.body.data.userUpdate).toEqual('user is not defined')
-
-      //what we want it to eqaul
-      //expect(response.body.data.userUpdate).toEqual('Please login to update information.')
+      expect(response.body.errors[0].message).toEqual('Please login to update information.')
     });
   });
