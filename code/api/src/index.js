@@ -1,6 +1,3 @@
-// 🌟 start point of our new functionality
-
-
 // Imports
 import express from 'express'
 

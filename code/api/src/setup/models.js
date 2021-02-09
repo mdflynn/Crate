@@ -4,10 +4,6 @@ import Sequelize from 'sequelize'
 // App Imports
 import databaseConnection from './database'
 
-
-// 🌟 Add/Import new models here
-
-
 const models = {
   User: databaseConnection.import('../modules/user/model'),
   Product: databaseConnection.import('../modules/product/model'),
