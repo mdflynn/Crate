@@ -159,39 +159,17 @@ const Profile = (props) => (
     {/* Top title bar */}
     <Grid style={{ backgroundColor: grey }}>
       <GridCell style={{ padding: "2em", textAlign: "center" }}>
-        <H3 font="secondary">My profile</H3>
+        <H3 font="secondary">{props.user.details.name}'s profile</H3>
       </GridCell>
     </Grid>
-
-    <Grid>
-      <GridCell style={{ padding: "2em", textAlign: "center" }}>
-        <H4 style={{ marginBottom: "0.5em" }}>{props.user.details.name}</H4>
-
-        <p style={{ color: grey2, marginBottom: "2em" }}>
-          {props.user.details.email}
-        </p>
-      </GridCell>
-    </Grid>
-
-    <Grid>
-      <GridCell
-        style={{
-          borderWidth: 5,
-          borderColor: primaryAccent,
-          borderStyle: "solid",
-        }}
-      >
-        <Tile
-          image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
-          width={250}
-          height={250}
-          shadow={level1}
-          style={{ margin: "auto" }}
-        ></Tile>
-        <H3 font="secondary" style={{ textAlign: "center" }}>
-          I ❤️ taking pictures of food and buying clothes
-        </H3>
-      </GridCell>
+    {/* User image and general info */}
+    <Grid
+      style={{
+        borderWidth: 5,
+        borderColor: primaryAccent,
+        borderStyle: "solid",
+      }}
+    >
       <GridCell
         style={{
           borderWidth: 5,
@@ -204,23 +182,88 @@ const Profile = (props) => (
           width={250}
           height={250}
           shadow={level1}
+          style={{ margin: "auto" }}
         ></Tile>
+        <H3
+          font="secondary"
+          style={{
+            textAlign: "center",
+            width: "50%",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
+          I ❤️ taking pictures of food and buying clothes
+        </H3>
+      </GridCell>
+      <GridCell
+        style={{
+          borderWidth: 5,
+          borderColor: secondaryAccent,
+          borderStyle: "solid",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <H4>EMAIL </H4>
+          <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
+            {props.user.details.email}
+          </p>
+          <Button theme="primary" style={{ marginLeft: "1em" }}>
+            edit
+          </Button>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between"  }}>
+          <H4>ADDRESS </H4>
+
+          <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
+            12345 Main Lane
+            <br />
+            Coolsville, CO, 80420
+          </p>
+          <Button theme="primary" style={{ marginLeft: "1em" }}>
+            edit
+          </Button>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between"  }}>
+          <H4>Perferred Shipping Date: </H4>
+          <p
+            style={{
+              color: grey2,
+              fontSize: "1.5em",
+              marginBottom: "2em",
+              alignSelf: "center",
+            }}
+          >
+            2nd week of the month
+          </p>
+          <Button theme="primary" style={{ marginLeft: "1em" }}>
+            edit
+          </Button>
+        </div>
       </GridCell>
     </Grid>
-
-    <Grid style={{ padding: "2em",  display: "flex", flexDirection: "column", alignItems: "center"}}>
+    {/* Order history display */}
+    <Grid
+      style={{
+        padding: "2em",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <GridCell
         style={{
           padding: "2em",
           borderWidth: 5,
           borderColor: primaryAccent,
           borderStyle: "solid",
+          borderRadius: "1em",
         }}
       >
         {generateOrderHistory()}
       </GridCell>
     </Grid>
-
+    {/* Subsription and logout buttons */}
     <Grid style={{ padding: "2em", textAlign: "center" }}>
       <GridCell>
         <Link to={userRoutes.subscriptions.path}>
