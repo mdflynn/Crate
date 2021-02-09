@@ -7,19 +7,18 @@ import { Link } from "react-router-dom";
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
-import { H3, H4 } from "../../ui/typography";
+import { H2, H3, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
 import {
   white,
   grey,
   grey2,
-  black,
   primaryAccent,
   secondaryAccent,
 } from "../../ui/common/colors";
 import { Tile } from "../../ui/image";
 import Card from "../../ui/card";
-import { level1 } from "../../ui/common/shadows";
+import { level5 } from "../../ui/common/shadows";
 import { APP_URL } from "../../setup/config/env";
 
 // App Imports
@@ -183,8 +182,13 @@ const Profile = (props) => (
           image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
           width={250}
           height={250}
-          shadow={level1}
-          style={{ margin: "auto" }}
+          shadow={level5}
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "50px",
+            marginBottom: "50px",
+          }}
         ></Tile>
         <H3
           font="secondary"
@@ -193,7 +197,7 @@ const Profile = (props) => (
             width: "50%",
             marginLeft: "auto",
             marginRight: "auto",
-            backgroundColor: "lightblue"
+            backgroundColor: "lightblue",
           }}
         >
           I ❤️ taking pictures of food and buying clothes
@@ -208,19 +212,23 @@ const Profile = (props) => (
           borderColor: secondaryAccent,
           borderStyle: "solid",
           display: "flex",
-          flexDirection: "column"
+          flexDirection: "column",
         }}
       >
-        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
+        >
           <H4>EMAIL </H4>
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
             {props.user.details.email}
           </p>
-          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
+          {/* <Button type="button" theme="primary" style={{ marginLeft: "1em", height: "50%" }}>
             edit
-          </Button>
+          </Button> */}
         </div>
-        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
+        >
           <H4>ADDRESS </H4>
 
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
@@ -228,11 +236,13 @@ const Profile = (props) => (
             <br />
             Coolsville, CO, 80420
           </p>
-          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
+          {/* <Button type="button" theme="primary" style={{ marginLeft: "1em", height: "50%" }}>
             edit
-          </Button>
+          </Button> */}
         </div>
-        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
+        >
           <H4>Perferred Shipping Date: </H4>
           <p
             style={{
@@ -244,9 +254,17 @@ const Profile = (props) => (
           >
             2nd week of the month
           </p>
-          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
-            edit
+        </div>
+        <div style={{ flex: 1, alignSelf: "flex-end" }}>
+         <Link to="/edit-profle">
+         <Button
+            type="button"
+            theme="primary"
+            style={{ marginLeft: "1em" }}
+          >
+            edit profile
           </Button>
+         </Link>
         </div>
       </GridCell>
     </Grid>
@@ -260,7 +278,9 @@ const Profile = (props) => (
         alignItems: "center",
       }}
     >
-      <H3 font="secondary" style={{ alignSelf: "start" }}>Orders</H3>
+      <H2 font="secondary" style={{ alignSelf: "start" }}>
+        Orders
+      </H2>
       <GridCell
         style={{
           padding: "2em",
