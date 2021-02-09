@@ -25,8 +25,8 @@ import { APP_URL } from "../../setup/config/env";
 // App Imports
 import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
-// props.user.details.name
 
+// props.user.details.name
 const mockOrderData = [
   {
     user: {
@@ -162,7 +162,8 @@ const Profile = (props) => (
         <H3 font="secondary">{props.user.details.name}'s profile</H3>
       </GridCell>
     </Grid>
-    {/* User image and general info */}
+
+    {/* User image and description */}
     <Grid
       style={{
         borderWidth: 5,
@@ -172,6 +173,7 @@ const Profile = (props) => (
     >
       <GridCell
         style={{
+          width: "25%",
           borderWidth: 5,
           borderColor: secondaryAccent,
           borderStyle: "solid",
@@ -191,28 +193,34 @@ const Profile = (props) => (
             width: "50%",
             marginLeft: "auto",
             marginRight: "auto",
+            backgroundColor: "lightblue"
           }}
         >
           I ❤️ taking pictures of food and buying clothes
         </H3>
       </GridCell>
+
+      {/* User Profile Details */}
       <GridCell
         style={{
+          width: "25%",
           borderWidth: 5,
           borderColor: secondaryAccent,
           borderStyle: "solid",
+          display: "flex",
+          flexDirection: "column"
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
           <H4>EMAIL </H4>
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
             {props.user.details.email}
           </p>
-          <Button theme="primary" style={{ marginLeft: "1em" }}>
+          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
             edit
           </Button>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between"  }}>
+        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
           <H4>ADDRESS </H4>
 
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
@@ -220,11 +228,11 @@ const Profile = (props) => (
             <br />
             Coolsville, CO, 80420
           </p>
-          <Button theme="primary" style={{ marginLeft: "1em" }}>
+          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
             edit
           </Button>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between"  }}>
+        <div style={{ flex: 1, display: "flex", justifyContent: "space-between" }}>
           <H4>Perferred Shipping Date: </H4>
           <p
             style={{
@@ -236,12 +244,13 @@ const Profile = (props) => (
           >
             2nd week of the month
           </p>
-          <Button theme="primary" style={{ marginLeft: "1em" }}>
+          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
             edit
           </Button>
         </div>
       </GridCell>
     </Grid>
+
     {/* Order history display */}
     <Grid
       style={{
@@ -251,6 +260,7 @@ const Profile = (props) => (
         alignItems: "center",
       }}
     >
+      <H3 font="secondary" style={{ alignSelf: "start" }}>Orders</H3>
       <GridCell
         style={{
           padding: "2em",
@@ -263,6 +273,7 @@ const Profile = (props) => (
         {generateOrderHistory()}
       </GridCell>
     </Grid>
+
     {/* Subsription and logout buttons */}
     <Grid style={{ padding: "2em", textAlign: "center" }}>
       <GridCell>
