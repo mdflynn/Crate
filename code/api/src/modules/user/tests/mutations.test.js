@@ -67,12 +67,12 @@ describe("user mutations", () => {
         let email = 'test email address'
         let description = 'test description'
         const response = await request(server)
-            .post('/')
-            .send({ query: `mutation { userUpdate(description: "${description}", email: "${email}") {name email image description streetAddress city state zip country }}`})
-            //.set('Authorization', `Bearer ${token}`)
-            .expect(200)
+          .post('/')
+          .send({ query: `mutation { userUpdate(description: "${description}", email: "${email}") {name email image description streetAddress city state zip country }}`})
+          //.set('Authorization', `Bearer ${token}`)
+          .expect(200)
 
-            console.log(response.body)
+          console.log(response.body)
 
         expect(response.body.data.userUpdate.name).toEqual(user1.name)
         expect(response.body.data.userUpdate.image).toEqual(user1.image)
