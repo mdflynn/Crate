@@ -9,7 +9,14 @@ import { Link } from "react-router-dom";
 import { Grid, GridCell } from "../../ui/grid";
 import { H3, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
-import { white, grey, grey2, black } from "../../ui/common/colors";
+import {
+  white,
+  grey,
+  grey2,
+  black,
+  primaryAccent,
+  secondaryAccent,
+} from "../../ui/common/colors";
 import { Tile } from "../../ui/image";
 import Card from "../../ui/card";
 import { level1 } from "../../ui/common/shadows";
@@ -20,7 +27,7 @@ import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
 // props.user.details.name
 
-const mockData = [
+const mockOrderData = [
   {
     user: {
       details: {
@@ -80,11 +87,15 @@ const mockData = [
 ];
 
 const generateOrderHistory = () => {
-  return mockData.map((order) => {
+  return mockOrderData.map((order) => {
     return (
       <Card
         key={order.user.details.id}
         style={{
+          backgroundColor: grey,
+          borderWidth: 5,
+          borderColor: secondaryAccent,
+          borderStyle: "solid",
           display: "flex",
           width: "80em",
           backgroundColor: white,
@@ -125,8 +136,12 @@ const generateOrderHistory = () => {
             padding: "1em 1.2em",
           }}
         >
-          <Button style={{marginBottom: "10px"}} theme="primary">KEEP Items</Button>
-          <Button style={{marginTop: "10px"}} theme="secondary">RETURN Items</Button>
+          <Button style={{ marginBottom: "10px" }} theme="primary">
+            KEEP Items
+          </Button>
+          <Button style={{ marginTop: "10px" }} theme="secondary">
+            RETURN Items
+          </Button>
         </div>
       </Card>
     );
@@ -159,16 +174,31 @@ const Profile = (props) => (
     </Grid>
 
     <Grid>
-      <GridCell>
+      <GridCell
+        style={{
+          borderWidth: 5,
+          borderColor: primaryAccent,
+          borderStyle: "solid",
+        }}
+      >
         <Tile
           image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
           width={250}
           height={250}
           shadow={level1}
+          style={{ margin: "auto" }}
         ></Tile>
-        <H3 font="secondary">User Description</H3>
+        <H3 font="secondary" style={{ textAlign: "center" }}>
+          I ❤️ taking pictures of food and buying clothes
+        </H3>
       </GridCell>
-      <GridCell>
+      <GridCell
+        style={{
+          borderWidth: 5,
+          borderColor: secondaryAccent,
+          borderStyle: "solid",
+        }}
+      >
         <Tile
           image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
           width={250}
@@ -178,8 +208,17 @@ const Profile = (props) => (
       </GridCell>
     </Grid>
 
-    <Grid style={{ padding: "2em" }}>
-      <GridCell style={{ padding: "2em" }}>{generateOrderHistory()}</GridCell>
+    <Grid style={{ padding: "2em",  display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <GridCell
+        style={{
+          padding: "2em",
+          borderWidth: 5,
+          borderColor: primaryAccent,
+          borderStyle: "solid",
+        }}
+      >
+        {generateOrderHistory()}
+      </GridCell>
     </Grid>
 
     <Grid style={{ padding: "2em", textAlign: "center" }}>
