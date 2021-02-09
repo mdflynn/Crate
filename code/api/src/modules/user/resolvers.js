@@ -27,29 +27,6 @@ export async function create(parentValue, { name, email, password }) {
   }
 }
 
-// Update User
-export async function update(parentValue, { id, image, email, description, streetAddress, city, state, zip, country }, { auth }) {
-  // const user = await models.User.findOne({ where: { id } })
-
-  if(auth.user && auth.user.id > 0) {
-    return await user.update(
-      {
-        email,
-        image,
-        description,
-        streetAddress,
-        city,
-        state,
-        zip,
-        country
-      },
-      { where: { id } }
-    )
-  } else {
-    throw new Error('Please login to update information.')
-  }
-}
-
 export async function login(parentValue, { email, password }) {
   const user = await models.User.findOne({ where: { email } })
 
@@ -100,3 +77,49 @@ export async function remove(parentValue, { id }) {
 export async function getGenders() {
   return Object.values(params.user.gender)
 }
+
+
+// Update
+export async function update(parentValue, { name, description, email, image, streetAddress, city, state, zip, country }, { auth }) {
+  if (auth.isAuthenticated) {
+    await models.User.update(
+      {
+        name,
+        description,
+        email,
+        image,
+        streetAddress,
+        city,
+        state,
+        country
+      },
+      {
+        where: { id: auth.user.id }
+			});
+		return await models.User.findOne({ where: { id: auth.user.id } })
+  } else {
+    throw new Error('Please login to update information.')
+  }
+}
+
+// Update User
+// export async function update(parentValue, { id, image, email, description, streetAddress, city, state, zip, country }, { auth }) {
+//
+//   if(auth.user && auth.user.id > 0) {
+//     return await models.User.update(
+//       {
+//         email,
+//         image,
+//         description,
+//         streetAddress,
+//         city,
+//         state,
+//         zip,
+//         country
+//       },
+//       { where: { id } }
+//     )
+//   } else {
+//     throw new Error('Please login to update information.')
+//   }
+// }
