@@ -22,17 +22,23 @@ const Modal = (props) => {
         backgroundColor: 'gold',
         backgroundSize: 'cover',
         position: 'fixed',
-        top: '-40px',
-        right: '-40px',
-        bottom: '-40px',
-        left: '-40px',
+        top: '10%',
+        right: '10%',
+        // top: '-40px',
+        // right: '-40px',
+        // bottom: '-40px',
+        // left: '-40px',
         zIndex: -1,
         height: '80%',
-        width: '80%'
+        width: '80%',
+        borderRadius: '10px',
+        boxShadow: '5px 11px 20px 7px #000000a1'
         // filter: 'blur(25px)'
-      }}/>
-
+      }}>
+      
       {children}
+      </div>
+
     </div>
   )
 }

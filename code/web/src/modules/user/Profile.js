@@ -1,9 +1,12 @@
 // Imports
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
+import { Link } from 'react-router-dom'
+import { ProfileModal } from '../../ui/modal/index'
+import EditProfileForm from '../../ui/form/EditProfileForm'
+
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
@@ -154,6 +157,18 @@ const Profile = (props) => (
           I ❤️ taking pictures of food and buying clothes
         </H3>
       </GridCell>
+    <Grid style={{ backgroundColor: 'hotpink'}}>
+      <GridCell style={{ padding: '2em', textAlign: 'center' }}>
+        <ProfileModal visible={true}>
+          <h1>I am a top modal</h1>
+          <EditProfileForm true={true}/>
+        </ProfileModal>
+      </GridCell>
+    </Grid>
+
+    <Grid>
+      <GridCell style={{ padding: '2em', textAlign: 'center' }}>
+        <H4 style={{ marginBottom: '0.5em' }}>{props.user.details.name}</H4>
 
       {/* User Profile Details */}
       <GridCell
