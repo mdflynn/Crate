@@ -126,12 +126,12 @@ const Profile = (props) => {
       </GridCell>
     </Grid>
 
-        <ProfileModal visible={edit}>
-          {/* <EditProfileForm user={user}> */}
-          <EditProfileForm>
-            <Button theme="secondary" onClick={() => setEdit(!edit)} style={{ marginLeft: '1em' }}>CLOSE</Button>
-          </EditProfileForm>
-        </ProfileModal>
+    <ProfileModal visible={edit}>
+      {/* <EditProfileForm user={user}> */}
+      <EditProfileForm>
+        <Button theme="secondary" onClick={() => setEdit(!edit)}>CLOSE</Button>
+      </EditProfileForm>
+    </ProfileModal>
 
     <Grid>
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>

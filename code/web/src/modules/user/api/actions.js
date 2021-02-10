@@ -5,6 +5,7 @@ import cookie from 'js-cookie'
 
 // App Imports
 import { routeApi } from '../../../setup/routes'
+import { store } from '../../../setup/store'
 
 // Actions Types
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
@@ -36,6 +37,7 @@ export function login(userCredentials, isLoading = true) {
     return axios.post(routeApi, query({
       operation: 'userLogin',
       variables: userCredentials,
+      // fields: ['user {name, email, role, image, description, address, twitter}', 'token'] // add additional fields in request
       fields: ['user {name, email, role}', 'token']
     }))
       .then(response => {
@@ -87,6 +89,29 @@ export function register(userDetails) {
   }
 }
 
+// TEST EDIT USER INFO              &&&&&&%%%*******************************
+export function updateUser(user) {
+  const token = window.localStorage.getItem('token')
+  if (token && token !== 'undefined' && token !== '') {
+    // const user = JSON.parse(window.localStorage.getItem('user'))
+    // if (user) {
+      // Dispatch action
+      store.dispatch(setUser(token, user))
+  
+      loginSetUserLocalStorageAndCookie(token, user)
+    // }
+  }  
+}
+// export function updateUser(userDetails) {
+//   return dispatch => {
+//     return axios.post(routeApi, mutation({
+//       operation: 'userSignup',
+//       variables: userDetails,
+//       fields: ['id', 'name', 'email', 'description', 'address', 'twitter']
+//     }))
+//   }
+// }
+
 // Log out user and remove token from localStorage
 export function logout() {
   return dispatch => {
@@ -101,6 +126,7 @@ export function logout() {
 // Unset user token and info in localStorage and cookie
 export function logoutUnsetUserLocalStorageAndCookie() {
   // Remove token
+  console.log('rookie move');
   window.localStorage.removeItem('token')
   window.localStorage.removeItem('user')
 

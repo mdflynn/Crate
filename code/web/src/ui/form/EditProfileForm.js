@@ -13,130 +13,169 @@ import { grey2, grey4, black, white } from "../common/colors";
 
 // App
 import { routeImage } from "../../setup/routes"
+// import { store } from '../../setup/store'
 import { renderIf, slug } from '../../setup/helpers'
 import { upload, messageShow, messageHide } from '../../modules/common/api/actions'
-import {createOrUpdate} from '../../modules/product/api/actions'
+// import {createOrUpdate} from '../../modules/product/api/actions'
+// import {updateUser} from '../../modules/user/api/actions'
 
 // TODO add dispatch inside this component to edit options
 // TODO add dispatch to profile on login to pull more data
 
-  class EditProfileForm extends Component {  
-    constructor (props) {
-      super(props)
-    }
+class EditProfileForm extends Component {  
+  constructor (props) {
+    super(props)
+  }
 
-    state = {
-      isLoading: false,
-      user: this.props.user,
-      editName: this.props.user.details.name,
-      editEmail: this.props.user.details.email,
-      editAddress: '123 madeup address',
-      editDescription: 'I am such a wonderful person',
-      editTwitter: '@dickhands',
-      editImage: this.props.user.details.image | null
-    }
+  state = {
+    isLoading: false,
+    editName: this.props.user.details.name,
+    editEmail: this.props.user.details.email,
+    editAddress: '123 madeup address',
+    editDescription: 'I am such a wonderful person',
+    editTwitter: '@dickhands',
+    editImage: this.props.user.details.image | null,
+    user: this.props.user,
+  }
 
-    componentDidMount() {
-      this.setState({user: this.props.user})
-    }
+  componentDidMount() {
+    this.setState({user: this.props.user})
+  }
 
-    onChange = (e) => {
-      let formField = e.target.name
-      this.setState({
-        [formField]: e.target.value
-      })
-    }
-  
-    onUpload = (event) => {
-      this.props.messageShow('Uploading profile image, please wait...')
-  
-      this.setState({
-        isLoading: true
-      })
-  
-      let data = new FormData()
-      console.log('upload formData => data', data);
-      // data.append('userimage', event.target.files[0]) // change to user+id
-      data.append('file', event.target.files[0]) 
-      console.log('data.append', data);
-  
-      // Upload image
-      this.props.upload(data)
-        .then(response => {
-          if (response.status === 200) {
-            this.props.messageShow('Profile image uploaded successfully.')
-            console.log(response);
-            let user = this.state.user
-            user.details.image = `/images/uploads/${ response.data.file }`
-  
-            this.setState({
-              user
-            })
-          } else {
-            this.props.messageShow('Please try again.')
-          }
-        })
-        .catch(error => {
-          this.props.messageShow('There was some error. Please try again.')
-  
-        })
-        .then(() => {
+  onChange = (e) => {
+    let formField = e.target.name
+    // let userDetailKey = e.target.placeholder
+
+    // let user = this.state.user
+    // user.details[userDetailKey] = e.target.value
+
+    this.setState({
+      [formField]: e.target.value,
+      // user,
+    })
+  }
+
+  onUpload = (event) => {
+    this.props.messageShow('Uploading profile image, please wait...')
+
+    this.setState({
+      isLoading: true
+    })
+
+    let data = new FormData()
+    // data.append('userimage', event.target.files[0]) // change to user+id
+    data.append('file', event.target.files[0]) 
+
+    // Upload image
+    this.props.upload(data)
+      .then(response => {
+        if (response.status === 200) {
+          this.props.messageShow('Profile image uploaded successfully.')
+          console.log(response);
+
+          let user = this.state.user
+          user.details.image = `/images/uploads/${ response.data.file }`
+
           this.setState({
-            isLoading: false
+            user,
+            editImage: user.details.image
           })
-  
-          window.setTimeout(() => {
-            this.props.messageHide()
-          }, 5000)
-        })
-    }
-
-    onSubmit = (event) => {
-      event.preventDefault()
-  
-      this.setState({
-        isLoading: true
+        } else {
+          this.props.messageShow('Please try again.')
+        }
       })
-  
-      this.props.messageShow('Saving image, please wait...')
-  
-      // Save image
-      // this.props.productCreateOrUpdate(this.state.product)
-      this.props.createOrUpdate(this.state.user)
-        .then(response => {
-          this.setState({
-            isLoading: false
-          })
-  
-          if (response.data.errors && response.data.errors.length > 0) {
-            this.props.messageShow(response.data.errors[0].message)
-          } else {
-            this.props.messageShow('Product saved successfully.')
-  
-            // this.props.history.push(admin.productList.path)
-          }
+      .catch(error => {
+        this.props.messageShow('There was some error. Please try again.')
+
+      })
+      .then(() => {
+        this.setState({
+          isLoading: false
         })
-        .catch(error => {
-          this.props.messageShow('There was some error. Please try again.')
-  
-          this.setState({
-            isLoading: false
-          })
-        })
-        .then(() => {
-          window.setTimeout(() => {
-            this.props.messageHide()
-          }, 5000)
-        })
+
+        window.setTimeout(() => {
+          this.props.messageHide()
+        }, 5000)
+      })
+  }
+
+
+  // updateUser = (user) => {
+  //   const token = window.localStorage.getItem('token')
+  //   if (token && token !== 'undefined' && token !== '') {
+  //     // const user = JSON.parse(window.localStorage.getItem('user'))
+  //     // if (user) {
+  //       // Dispatch action
+  //       store.dispatch(setUser(token, user))
+    
+  //       loginSetUserLocalStorageAndCookie(token, user)
+  //     // }
+  //   }  
+  // }
+
+
+  onSubmit = (event) => {
+    event.preventDefault()
+
+    this.setState({
+      isLoading: true
+    })
+
+    this.props.messageShow('Saving, please wait...')
+    
+    let user = this.state.user
+    user.details = {
+      name: this.state.editName,
+      email: this.state.editEmail,
+      address:  this.state.editAddress,
+      description:  this.state.editDescription,
+      twitter:  this.state.editTwitter,
+      image: this.state.editImage,
     }
 
-    render() {
-      return (
-      <form onSubmit={this.onSubmit}>
+    this.setState({
+      user,
+    })
+
+    // Save information
+    
+    // this.props.createOrUpdate(this.state.user.details) // TODO need dispatch function to update store
+      // .then(response => {
+      //   this.setState({
+      //     isLoading: false
+      //   })
+
+      //   if (response.data.errors && response.data.errors.length > 0) {
+      //     this.props.messageShow(response.data.errors[0].message)
+      //   } else {
+      //     this.props.messageShow('Profile updated successfully.')
+
+      //     // this.props.history.push(admin.productList.path)
+      //   }
+      // })
+      // .catch(error => {
+      //   this.props.messageShow('There was some error. Please try again.')
+
+      //   this.setState({
+      //     isLoading: false
+      //   })
+      // })
+      // .then(() => {
+      //   window.setTimeout(() => {
+      //     this.props.messageHide()
+      //   }, 5000)
+      // })
+  }
+
+  render() {
+
+    return (
+      <form onSubmit={this.onSubmit} style={{ height: "100%" }}>
         {/* <form onSubmit={this.onSubmit}> */}
         <div style={{ width: "25em", margin: "0 auto" }}>
           {/* Name */}
           <Input
+            color="white"
             type="text"
             fullWidth={true}
             placeholder="Name"
@@ -148,6 +187,7 @@ import {createOrUpdate} from '../../modules/product/api/actions'
           />
           {/* Email */}
           <Input
+            color="white"
             type="text"
             fullWidth={true}
             placeholder="Email"
@@ -159,6 +199,7 @@ import {createOrUpdate} from '../../modules/product/api/actions'
           />
           {/* Address */}
           <Input
+            color="white"
             type="text"
             fullWidth={true}
             placeholder="Address"
@@ -170,6 +211,7 @@ import {createOrUpdate} from '../../modules/product/api/actions'
           />
           {/* Description */}
           <Input
+            color="white"
             type="text"
             fullWidth={true}
             placeholder="Description"
@@ -181,6 +223,7 @@ import {createOrUpdate} from '../../modules/product/api/actions'
           />
           {/* Twitter */}
           <Input
+            color="white"
             type="text"
             fullWidth={true}
             placeholder="Twitter"
@@ -195,6 +238,7 @@ import {createOrUpdate} from '../../modules/product/api/actions'
           <div style={{ marginTop: "1em" }}>
             <input
               type="file"
+              style={{ color: white }}
               onChange={this.onUpload}
               required={this.state.user.details.image}
             />
@@ -211,14 +255,26 @@ import {createOrUpdate} from '../../modules/product/api/actions'
             />
           }
 
-          {/* Form submit */}
-          <div style={{ marginTop: '2em', textAlign: 'center' }}>
-            <Button type="submit" theme="secondary" disabled={this.state.isLoading}>
-              <Icon size={1.2} style={{ color: white }}>check</Icon> Save
-            </Button>
-          </div>
         </div>
-        {this.props.children}
+        {/* Form submit */}
+        <section style={{ marginTop: '2em', textAlign: 'center' }}>
+          <Button type="submit" theme="secondary" disabled={this.state.isLoading}>
+            <Icon size={1.2} style={{ color: white }}>check</Icon> Save
+          </Button>
+          {this.props.children}
+        </section>
+        <style jsx>{`
+          form {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+          }
+          section {
+            display: flex;
+            justify-content: space-around;
+          }
+        `}</style>
       </form>
     )
   };
@@ -237,7 +293,8 @@ function profileState(state) {
 
 export default withRouter(connect(profileState, {
 // export default withRouter(connect(null, {
-  createOrUpdate,
+  // createOrUpdate,
+  // updateUser,
   upload,
   messageShow,
   messageHide

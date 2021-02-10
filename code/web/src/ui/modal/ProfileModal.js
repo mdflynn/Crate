@@ -20,7 +20,9 @@ const Modal = (props) => {
       transition: 'opacity 0.25s ease-in-out'
     }}>
       <div style={{
-        backgroundColor: 'gold',
+        // backgroundColor: 'gold',
+        backgroundImage: "linear-gradient(89deg, #7e349094, #1600ff91)",
+        backdropFilter: "blur(15px)",
         backgroundSize: 'cover',
         position: 'fixed',
         top: '10%',
