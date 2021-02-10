@@ -18,15 +18,6 @@ import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
 
 // TODO add dispatch inside this component
 
-// const EditProfileForm = ({children, user}) => {  
-  // const initialUserState = {
-  //   email: user.details.email,
-  //   name: user.details.name,
-  //   description: '',
-  //   address: '',
-  //   image: '',
-  //   twitter: '',
-  // }
   class EditProfileForm extends Component {  
     constructor (props) {
       super(props)
@@ -36,14 +27,14 @@ import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
       user: this.props.user,
       editName: this.props.user.details.name,
       editEmail: this.props.user.details.email,
-      editAddress: '',
-      editDescription: '',
-      editTwitter: '',
+      editAddress: '123 madeup address',
+      editDescription: 'I am such a wonderful person',
+      editTwitter: '@dickhands',
       editImage: ''
     }
 
     componentDidMount() {
-      console.log(this.props.user)
+      console.log('edit profile form mount', this.props.user)
     }
 
     onChange = (e) => {
@@ -63,10 +54,32 @@ import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
             type="text"
             fullWidth={true}
             placeholder="Name"
-            // required="required"
+            required="required"
             name="editName"
             autoComplete="off"
             value={this.state.editName}
+            onChange={this.onChange}
+          />
+          {/* Email */}
+          <Input
+            type="text"
+            fullWidth={true}
+            placeholder="Email"
+            required="required"
+            name="editEmail"
+            autoComplete="off"
+            value={this.state.editEmail}
+            onChange={this.onChange}
+          />
+          {/* Address */}
+          <Input
+            type="text"
+            fullWidth={true}
+            placeholder="Address"
+            required="required"
+            name="editAddress"
+            autoComplete="off"
+            value={this.state.editAddress}
             onChange={this.onChange}
           />
           {/* Description */}
@@ -80,61 +93,17 @@ import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
             value={this.state.editDescription}
             onChange={this.onChange}
           />
-
-          {/* email, physical address, twitter */}
-
-          {/* Description */}
-          <Textarea
+          {/* Twitter */}
+          <Input
+            type="text"
             fullWidth={true}
-            placeholder="Description"
+            placeholder="Twitter"
             required="required"
-            name="description"
-            // value={this.state.product.description}
-            // onChange={this.onChange}
-            style={{ marginTop: "1em" }}
+            name="editTwitter"
+            autoComplete="off"
+            value={this.state.editTwitter}
+            onChange={this.onChange}
           />
-
-          {/* Type */}
-          {/* <Select
-        fullWidth={true}
-        required="required"
-        name="type"
-        value={this.state.product.type}
-        onChange={this.onChangeSelect}
-        style={{ marginTop: "1em" }}>
-        {this.state.productTypes.length > 0 ? (
-          this.state.productTypes.map(type => (
-            <option value={type.id} key={type.id}>
-              {type.name}
-            </option>
-          ))
-        ) : (
-          <option disabled="disabled" selected="selected">
-            Select type
-          </option>
-        )}
-      </Select> */}
-
-          {/* Gender */}
-          {/* <Select
-        fullWidth={true}
-        required="required"
-        name="gender"
-        value={this.state.product.gender}
-        onChange={this.onChangeSelect}
-        style={{ marginTop: "1em" }}>
-        {this.state.userGenders.length > 0 ? (
-          this.state.userGenders.map(gender => (
-            <option value={gender.id} key={gender.id}>
-              {gender.name}
-            </option>
-          ))
-        ) : (
-          <option disabled="disabled" selected="selected">
-            Select gender
-          </option>
-        )}
-      </Select> */}
 
           {/* Upload File */}
           <div style={{ marginTop: "1em" }}>
@@ -146,13 +115,13 @@ import CreateOrEdit from '../../modules/admin/product/CreateOrEdit'
           </div>
 
           {/* Uploaded image */}
-          {/* {renderIf(this.state.product.image !== "", () => (
+          {renderIf(this.state.editImage !== "", () => (
         <img
-          src={routeImage + this.state.product.image}
-          alt="Product Image"
-          style={{ width: 200, marginTop: "1em" }}
+          src={routeImage + this.state.editImage}
+          alt="User Image"
+          style={{ width: 400, marginTop: "1em" }}
         />
-      ))} */}
+      ))}
 
           {/* Form submit */}
           <div style={{ marginTop: '2em', textAlign: 'center' }}>

@@ -103,7 +103,7 @@ const displayOrders = generateOrderHistory();
 
 // Component
 const Profile = (props) => {
-  const {user} = props
+  const {user, logout} = props
   
   const [edit, setEdit] = useState(false)
 
