@@ -1,7 +1,6 @@
 // Imports
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 // UI Imports
 import { H3 } from "../../ui/typography";
@@ -18,7 +17,6 @@ import { APP_URL } from "../../setup/config/env";
 const OrderHistory = ({ data }) => {
   return (
     <Card
-      key={data.user.details.id}
       style={{
         backgroundColor: grey,
         borderWidth: 5,
@@ -73,11 +71,8 @@ const OrderHistory = ({ data }) => {
   );
 };
 
-// Component State
-function profileState(state) {
-  return {
-    user: state.user,
-  };
-}
+OrderHistory.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
-export default connect(profileState)(OrderHistory);
+export default OrderHistory;
