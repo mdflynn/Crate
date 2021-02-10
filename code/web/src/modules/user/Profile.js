@@ -20,6 +20,7 @@ import { Tile } from "../../ui/image";
 import Card from "../../ui/card";
 import { level5 } from "../../ui/common/shadows";
 import { APP_URL } from "../../setup/config/env";
+import OrderHistory from "./OrderHistory";
 
 // App Imports
 import userRoutes from "../../setup/routes/user";
@@ -86,64 +87,8 @@ const mockOrderData = [
 ];
 
 const generateOrderHistory = () => {
-  return mockOrderData.map((order) => {
-    return (
-      <Card
-        key={order.user.details.id}
-        style={{
-          backgroundColor: grey,
-          borderWidth: 5,
-          borderColor: secondaryAccent,
-          borderStyle: "solid",
-          display: "flex",
-          width: "80em",
-          backgroundColor: white,
-          marginBottom: "2em",
-          justifyContent: "space-between",
-          borderRadius: "1em",
-        }}
-      >
-        <div style={{ padding: "1em 1.2em", width: "250px" }}>
-          <img
-            src={`${APP_URL}/images/crate.png`}
-            alt={order.crateName}
-            style={{ width: "100%" }}
-          />
-          <p style={{ color: grey2, marginTop: "1em" }}>
-            {order.user.details.crateName}
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            padding: "1em 1.2em",
-          }}
-        >
-          <H3 font="secondary">
-            Deliverd on: {order.user.details.deliveryDate}
-          </H3>
-          <H3 font="secondary">Items: TBD </H3>
-          <H3 font="secondary">Status: {order.user.details.status}</H3>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "1em 1.2em",
-          }}
-        >
-          <Button style={{ marginBottom: "10px" }} theme="primary">
-            KEEP Items
-          </Button>
-          <Button style={{ marginTop: "10px" }} theme="secondary">
-            RETURN Items
-          </Button>
-        </div>
-      </Card>
-    );
+  return mockOrderData.map((order, index) => {
+    return <OrderHistory key={index} data={order} />;
   });
 };
 
