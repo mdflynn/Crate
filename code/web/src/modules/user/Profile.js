@@ -25,6 +25,7 @@ import OrderHistory from "./OrderHistory";
 // App Imports
 import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
+import { routeImage } from "../../setup/routes/index"
 
 // props.user.details.name
 const mockOrderData = [
@@ -125,20 +126,17 @@ const Profile = (props) => {
       </GridCell>
     </Grid>
 
-    {/* <Grid style={{ backgroundColor: 'hotpink'}}>
-      <GridCell style={{ padding: '2em', textAlign: 'center' }}> */}
         <ProfileModal visible={edit}>
-          <EditProfileForm user={user}>
+          {/* <EditProfileForm user={user}> */}
+          <EditProfileForm>
             <Button theme="secondary" onClick={() => setEdit(!edit)} style={{ marginLeft: '1em' }}>CLOSE</Button>
           </EditProfileForm>
         </ProfileModal>
-      {/* </GridCell>
-    </Grid> */}
 
     <Grid>
       <GridCell style={{ padding: '2em', textAlign: 'center' }}>
         <H4 style={{ marginBottom: '0.5em' }}>{user.details.name}</H4>
-
+      </GridCell>
       {/* User Profile Details */}
       <GridCell
         style={{
@@ -216,17 +214,19 @@ const Profile = (props) => {
       </GridCell>
     </Grid>
         <p style={{ color: grey2, marginBottom: '2em' }}>{user.details.email}</p>
-
-    {/* Subsription and logout buttons */}
-    <Grid style={{ padding: "2em", textAlign: "center" }}>
-      <GridCell>
+        { user.details.image &&
+        <img
+          src={routeImage + user.details.image}
+          alt="User Image"
+          style={{ width: 400, marginTop: "1em" }}
+        />
+        }
+        
         <Link to={userRoutes.subscriptions.path}>
           <Button theme="primary">Subscriptions</Button>
         </Link>
         <Button theme="secondary" onClick={logout} style={{ marginLeft: '1em' }}>Logout</Button>
         <Button theme="secondary" onClick={() => setEdit(!edit)} style={{ marginLeft: '1em' }}>EDIT PREFS</Button>
-      </GridCell>
-    </Grid>
   </div>
   )}
 
