@@ -15,6 +15,25 @@ import Card from "../../ui/card";
 import { APP_URL } from "../../setup/config/env";
 
 const OrderHistory = ({ data }) => {
+
+  const filterKeptItems = () => {
+    return data.user.details.orderProducts.filter(product => {
+        return !product.returned
+    })
+  }
+
+  const keptItems = filterKeptItems();
+
+  const generateItemDisplay = () => {
+    if (!keptItems.length) {
+      return <p>No items kept from this order</p>
+    } else {
+      return keptItems.map(item => {
+        return <p>{item.name}</p>
+      })
+    }
+  }
+
   return (
     <Card
       style={{
@@ -49,7 +68,7 @@ const OrderHistory = ({ data }) => {
         }}
       >
         <H3 font="secondary">Deliverd on: {data.user.details.deliveryDate}</H3>
-        <H3 font="secondary">Items: TBD </H3>
+        <H3 font="secondary">Items: {generateItemDisplay()} </H3>
         <H3 font="secondary">Status: {data.user.details.status}</H3>
       </div>
       <div
