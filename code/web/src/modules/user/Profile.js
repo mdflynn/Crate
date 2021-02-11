@@ -23,9 +23,21 @@ import { APP_URL } from "../../setup/config/env";
 
 // App Imports
 import userRoutes from "../../setup/routes/user";
-import { logout } from "./api/actions";
+import { logout, update } from "./api/actions";
 
-// props.user.details.name
+const mockedDetails = 
+{
+  name: "DUH ADMIN",
+  streetAddress: "123 Admin St",
+  email: "coolemail@stuff.com",
+  city: "Denver",
+  state: "Colorado",
+  zip: "80123",
+  country: "USA",
+  image: "https://www.chicagotribune.com/resizer/NUc4EPJ-swl5GzWbfbKR8vH0pd0=/800x440/top/www.trbimg.com/img-546459ac/turbine/redeye-jake-from-state-farm-commercial-20141112",
+  description: "Jake from State Farm"
+}
+
 const mockOrderData = [
   {
     user: {
@@ -148,7 +160,15 @@ const generateOrderHistory = () => {
 };
 
 // Component
-const Profile = (props) => (
+const Profile = (props) => {
+  
+  const {user} = props
+
+  function saveFakeDataToUser() {
+    update(mockedDetails)
+  }
+
+  return(
   <div>
     {/* SEO */}
     <Helmet>
@@ -158,7 +178,7 @@ const Profile = (props) => (
     {/* Top title bar */}
     <Grid style={{ backgroundColor: grey }}>
       <GridCell style={{ padding: "2em", textAlign: "center" }}>
-        <H3 font="secondary">{props.user.details.name}'s profile</H3>
+        <H3 font="secondary">{user.details.name}'s profile</H3>
       </GridCell>
     </Grid>
 
@@ -179,7 +199,7 @@ const Profile = (props) => (
         }}
       >
         <Tile
-          image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
+          image={user.details.image ? user.details.image : "https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"}
           width={250}
           height={250}
           shadow={level5}
@@ -200,7 +220,7 @@ const Profile = (props) => (
             backgroundColor: "lightblue",
           }}
         >
-          I ❤️ taking pictures of food and buying clothes
+          {user.details.description}
         </H3>
       </GridCell>
 
@@ -220,7 +240,7 @@ const Profile = (props) => (
         >
           <H4>EMAIL </H4>
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
-            {props.user.details.email}
+            {user.details.email}
           </p>
         </div>
         <div
@@ -228,9 +248,9 @@ const Profile = (props) => (
         >
           <H4>ADDRESS </H4>
           <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
-            12345 Main Lane
+            {user.details.streetAddress}
             <br />
-            Coolsville, CO, 80420
+            {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
           </p>
         </div>
         <div
@@ -249,11 +269,11 @@ const Profile = (props) => (
           </p>
         </div>
         <div style={{ flex: 1, alignSelf: "flex-end" }}>
-          <Link to="/edit-profle">
-            <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
-              edit profile
+          {/* <Link to="/edit-profle"> */}
+            <Button type="button" theme="primary" style={{ marginLeft: "1em" }} onClick={saveFakeDataToUser}>
+              UPDATE WITH CANNED DATA
             </Button>
-          </Link>
+          {/* </Link> */}
         </div>
       </GridCell>
     </Grid>
@@ -300,12 +320,13 @@ const Profile = (props) => (
       </GridCell>
     </Grid>
   </div>
-);
+)};
 
 // Component Properties
 Profile.propTypes = {
   user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
+  update: PropTypes.func.isRequired
 };
 
 // Component State
@@ -315,4 +336,4 @@ function profileState(state) {
   };
 }
 
-export default connect(profileState, { logout })(Profile);
+export default connect(profileState, { logout, update })(Profile);
