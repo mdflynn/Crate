@@ -12,27 +12,12 @@ export async function get(parentValue, { id }) {
 }
 
 // Get order by user
-// 🛠 This function needs some work to get orders by a user
 export async function getByUser(parentValue, { id }) {
   return await models.sequelize.query(`SELECT * FROM "orders" INNER JOIN "subscriptions" ON "subscriptions".id = "orders".id WHERE "subscriptions"."userId" = ${id};`, {
     model: models.Order,
     mapToModel: true
   })
 }
-// export async function getByUser(parentValue, {}, { auth }) {
-//   if(auth.user && auth.user.id > 0) {
-//     return await models.Order.findAll({
-//       where: {
-//         userId: auth.user.id
-//       },
-//       include: [
-//         { model: models.Subscription, as: 'subscription' }
-//       ]
-//     })
-//   } else {
-//     throw new Error('Please login to view your orders.')
-//   }
-// }
 
 // Get all orders
 export async function getAll() {
