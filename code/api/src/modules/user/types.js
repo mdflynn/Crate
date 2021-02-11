@@ -18,6 +18,7 @@ const UserType = new GraphQLObjectType({
     city: { type: GraphQLString },
     state: { type: GraphQLString },
     zip: { type: GraphQLString },
+    // 🌟 Add orders field
     country: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString }
