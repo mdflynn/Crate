@@ -3,8 +3,8 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import OrderHistory from "./OrderHistory";
-import { store } from "../../setup/store";
+import OrderHistory from "../modules/user/OrderHistory";
+import { store } from "../setup/store";
 import { Provider } from "react-redux";
 
 describe("OrderHistory", () => {
