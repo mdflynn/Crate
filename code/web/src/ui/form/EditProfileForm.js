@@ -31,8 +31,12 @@ class EditProfileForm extends Component {
     isLoading: false,
     editName: this.props.user.details.name,
     editEmail: this.props.user.details.email,
-    editAddress: '123 madeup address',
-    editDescription: 'I am such a wonderful person',
+    editStreetAddress: '123 madeup address',
+    editCity: 'Denver',
+    editState: 'CO',
+    editZip: '88888',
+    editCountry: 'USA',
+    editDescription: 'I like to play with rusty spoons ipsum',
     editTwitter: '@quickhands',
     editImage: this.props.user.details.image | null,
     user: this.props.user,
@@ -114,19 +118,39 @@ class EditProfileForm extends Component {
 
     this.props.messageShow('Saving, please wait...')
     
-    let user = this.state.user
-    user.details = {
+    let updatedUser = this.state.user
+    updatedUser.details = {
       name: this.state.editName,
       email: this.state.editEmail,
-      address:  this.state.editAddress,
+      streetAddress:  this.state.editStreetAddress,
+      city: this.state.editCity,
+      state: this.state.editState,
+      zip: this.state.editZip,
+      country: this.state.editCountry,
       description:  this.state.editDescription,
       twitter:  this.state.editTwitter,
       image: this.state.editImage,
     }
 
     this.setState({
-      user,
+      user: updatedUser,
     })
+
+    // .then(() => {
+        window.setTimeout(() => {
+          this.props.messageHide()
+        }, 5000)
+    //   })
+
+
+      //     isLoading: false
+      //   })
+      // })
+      // .then(() => {
+      //   window.setTimeout(() => {
+      //     this.props.messageHide()
+      //   }, 5000)
+      // })
 
     // Save information
     
@@ -193,11 +217,55 @@ class EditProfileForm extends Component {
             color="white"
             type="text"
             fullWidth={true}
-            placeholder="Address"
+            placeholder="StreetAddress"
             required="required"
-            name="editAddress"
+            name="editStreetAddress"
             autoComplete="off"
-            value={this.state.editAddress}
+            value={this.state.editStreetAddress}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="City"
+            required="required"
+            name="editCity"
+            autoComplete="off"
+            value={this.state.editCity}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="Zip"
+            required="required"
+            name="editZip"
+            autoComplete="off"
+            value={this.state.editZip}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="State"
+            required="required"
+            name="editState"
+            autoComplete="off"
+            value={this.state.editState}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="Country"
+            required="required"
+            name="editCountry"
+            autoComplete="off"
+            value={this.state.editCountry}
             onChange={this.onChange}
           />
           {/* Description */}
@@ -236,10 +304,8 @@ class EditProfileForm extends Component {
           </div>
 
           {/* Uploaded image */}
-          {/* {renderIf(this.state.user.details.image !== "", () => ( */}
           {this.state.user.details.image &&
             <img
-              // src={this.state.editImage}
               src={routeImage + this.state.user.details.image}
               alt="User Image"
               style={{ width: 400, marginTop: "1em" }}
