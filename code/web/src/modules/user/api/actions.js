@@ -10,9 +10,9 @@ import { store } from '../../../setup/store'
 // Actions Types
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
+export const UPDATE_USER = 'AUTH/UPDATE_USER'
 export const SET_USER = 'AUTH/SET_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
-
 // Actions
 
 // Set a user after login or using localStorage token
@@ -90,17 +90,50 @@ export function register(userDetails) {
 
 // TEST EDIT USER INFO              &&&&&&%%%*******************************
 export function updateUser(user) {
-  const token = window.localStorage.getItem('token')
-  if (token && token !== 'undefined' && token !== '') {
-    // const user = JSON.parse(window.localStorage.getItem('user'))
-    // if (user) {
-      // Dispatch action
-      store.dispatch(setUser(token, user))
-  
+  console.log('update action fired with:', user);
+
+  // pass in correct user info
+  // make mutation and wait for success response
+  // err handle bad response
+  // if response is OK then get user info
+  // then set it in state
+
+  return dispatch => {
+    // return axios.post(routeApi, mutation({
+    //   operation: 'userUpdate',
+    //   variables: userDetails,
+    //   // fields: ['user {name, email, streetAddress, city, state, zip, country, image, description}']
+    //   fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
+    // })).then(response => {
+    //   // return dispatch({
+    //   //   type: UPDATE_USER,
+    //   //   user: userDetails
+    //   // })
+    // }).catch(error => {
+    //   console.log(error)
+    // })
+
+    const token = window.localStorage.getItem('token')
+    if (token && token !== 'undefined' && token !== '') {
+      dispatch(setUser(token, user))
       loginSetUserLocalStorageAndCookie(token, user)
-    // }
-  }  
+      // dispatch UPDATE_USER
+    }
+  }
 }
+
+// export function updateUser(user) {
+//   const token = window.localStorage.getItem('token')
+//   if (token && token !== 'undefined' && token !== '') {
+//     // const user = JSON.parse(window.localStorage.getItem('user'))
+//     // if (user) {
+//       // Dispatch action
+//       store.dispatch(setUser(token, user))
+  
+//       loginSetUserLocalStorageAndCookie(token, user)
+//     // }
+//   }  
+// }
 // export function updateUser(userDetails) {
 //   return dispatch => {
 //     return axios.post(routeApi, mutation({
