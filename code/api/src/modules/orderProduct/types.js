@@ -2,7 +2,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean } from 'graphql'
 
 // App Imports
-import ProductType from '../product/types'
+import { ProductType } from '../product/types'
 import OrderType from '../order/types'
 
 // OrderProduct type
