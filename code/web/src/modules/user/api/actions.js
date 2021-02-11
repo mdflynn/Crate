@@ -36,7 +36,7 @@ export function login(userCredentials, isLoading = true) {
     return axios.post(routeApi, query({
       operation: 'userLogin',
       variables: userCredentials,
-      fields: ['user {name, email, role, streetAddress, city, state, zip, country, image, description}', 'token']
+      fields: ['user { name, email, role, streetAddress, city, state, zip, country, image, description}', 'token']
     }))
       .then(response => {
         let error = ''
@@ -91,15 +91,16 @@ export function register(userDetails) {
 export function update(userDetails) {
   return dispatch => {
     return axios.post(routeApi, mutation({
-      operation: 'userUpdate',
+      // operation: `userUpdate(${})`,
+      operation: `userUpdate`, // pass in argument???
       variables: userDetails,
-      // fields: ['user {name, email, streetAddress, city, state, zip, country, image, description}']
       fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
+      // fields: ['user {name, description, email, image, streetAddress, city, state, zip, country}']
     })).then(response => {
-      // return dispatch({
-      //   type: UPDATE_USER,
-      //   user: userDetails
-      // })
+      return dispatch({
+        type: UPDATE_USER,
+        user: userDetails
+      })
     }).catch(error => {
       console.log(error)
     })
