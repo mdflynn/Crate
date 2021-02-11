@@ -1,9 +1,11 @@
 // Imports
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { ProfileModal } from "../../ui/modal/index";
+import EditProfileForm from "../../ui/form/EditProfileForm";
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
@@ -22,6 +24,7 @@ import OrderHistory from "./OrderHistory";
 // App Imports
 import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
+import { routeImage } from "../../setup/routes/index";
 
 // props.user.details.name
 const mockOrderData = [
@@ -99,157 +102,189 @@ const generateOrderHistory = () => {
 const displayOrders = generateOrderHistory();
 
 // Component
-const Profile = (props) => (
-  <div>
-    {/* SEO */}
-    <Helmet>
-      <title>My Profile - Crate</title>
-    </Helmet>
+const Profile = props => {
+  const { user, logout } = props;
 
-    {/* Top title bar */}
-    <Grid style={{ backgroundColor: grey }}>
-      <GridCell style={{ padding: "2em", textAlign: "center" }}>
-        <H3 font="secondary">{props.user.details.name}'s profile</H3>
-      </GridCell>
-    </Grid>
+  const [edit, setEdit] = useState(false);
 
-    {/* User image and description */}
-    <Grid
-      style={{
-        borderWidth: 5,
-        borderColor: primaryAccent,
-        borderStyle: "solid",
-      }}
-    >
-      <GridCell
-        style={{
-          width: "25%",
-          borderWidth: 5,
-          borderColor: secondaryAccent,
-          borderStyle: "solid",
-        }}
-      >
-        <Tile
-          image="https://pbs.twimg.com/profile_images/949787136030539782/LnRrYf6e.jpg"
-          width={250}
-          height={250}
-          shadow={level5}
-          style={{
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "50px",
-            marginBottom: "50px",
-          }}
-        ></Tile>
-        <H3
-          font="secondary"
-          style={{
-            textAlign: "center",
-            width: "50%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            backgroundColor: "lightblue",
-          }}
-        >
-          I ❤️ taking pictures of food and buying clothes
-        </H3>
-      </GridCell>
+  const showEditProfileModal = e => {
+    setEdit(!edit);
+  };
 
-      {/* User Profile Details */}
-      <GridCell
-        style={{
-          width: "25%",
-          borderWidth: 5,
-          borderColor: secondaryAccent,
-          borderStyle: "solid",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-        >
-          <H4>EMAIL </H4>
-          <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
-            {props.user.details.email}
-          </p>
-        </div>
-        <div
-          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-        >
-          <H4>ADDRESS </H4>
-          <p style={{ color: grey2, fontSize: "1.5em", marginBottom: "2em" }}>
-            12345 Main Lane
-            <br />
-            Coolsville, CO, 80420
-          </p>
-        </div>
-        <div
-          style={{ flex: 1, display: "flex", justifyContent: "space-between" }}
-        >
-          <H4>Perferred Shipping Date: </H4>
-          <p
-            style={{
-              color: grey2,
-              fontSize: "1.5em",
-              marginBottom: "2em",
-              alignSelf: "center",
-            }}
-          >
-            2nd week of the month
-          </p>
-        </div>
-        <div style={{ flex: 1, alignSelf: "flex-end" }}>
-          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
-            edit profile
+  return (
+    <div>
+      {/* SEO */}
+      <Helmet>
+        <title>My Profile - Crate</title>
+      </Helmet>
+
+      {/* Top title bar */}
+      <Grid style={{ backgroundColor: grey }}>
+        <GridCell style={{ padding: "2em", textAlign: "center" }}>
+          <H3 font="primary">Details & Orders</H3>
+        </GridCell>
+      </Grid>
+
+      {/* modal fixed and hidden */}
+      <ProfileModal visible={edit}>
+        <EditProfileForm>
+          <Button theme="secondary" onClick={() => setEdit(!edit)}>
+            CLOSE
           </Button>
-        </div>
-      </GridCell>
-    </Grid>
+        </EditProfileForm>
+      </ProfileModal>
 
-    {/* Order history display */}
-    <Grid
-      style={{
-        padding: "2em",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <H2 font="secondary" style={{ alignSelf: "start" }}>
-        Orders
-      </H2>
-      <GridCell
+      <Grid>
+        <GridCell style={{ margin: "2em", minHeight: "60vh", display:'flex' }}>
+          <div style={{display:'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            {user.details.image && (
+              <img
+                src={routeImage + user.details.image}
+                alt="User Image"
+                style={{
+                  width: "100%",
+                  maxHeight: "70vh",
+                  borderRadius: "15px",
+                  boxShadow: '4px 4px 20px 0px #00000038'
+                }}
+              />
+            )}
+          </div>
+        </GridCell>
+
+        {/* User Profile Details */}
+        <GridCell
+          style={{
+            width: "25%",
+            // backgroundImage: 'linear-gradient(76deg, #cf9ffc57, #7368f0ba)',
+            borderRadius: '15px',
+            padding: '3em',
+            border: 'solid',
+            // borderColor: secondaryAccent,
+            // borderStyle: "solid",
+            display: "flex",
+            flexDirection: "column",
+            margin: '2em'
+          }}>
+          <caption
+            style={{
+              // backgroundColor: "hotpink",
+              // border: "solid 3px gray",
+              borderRadius: "5px",
+              width: "100%",
+              height: '8em'
+            }}>
+            <h3 style={{ marginBottom: "0.5em", fontSize:'2em', color: 'black' }}>
+              {user.details?.description}
+            </h3>
+          </caption>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
+              <H4>
+                {props.user.details.name}
+              </H4>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
+              <H4>EMAIL </H4>
+              <p
+                style={{
+                  color: 'black',
+                  fontSize: "1.5em",
+                  marginBottom: "2em",
+                }}>
+                {props.user.details.email}
+              </p>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
+            <H4>ADDRESS </H4>
+            <p style={{ color: 'black', fontSize: "1.5em", marginBottom: "2em" }}>
+              {`${user.details.streetAddress}`}
+              <br />
+              {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
+            </p>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
+            <H4>Perferred Shipping Date: </H4>
+            <p
+              style={{
+                color: 'black',
+                fontSize: "1.5em",
+                marginBottom: "2em",
+                alignSelf: "center",
+              }}>
+              2nd week of the month
+            </p>
+          </div>
+        </GridCell>
+      </Grid>
+
+      <section
         style={{
-          padding: "2em",
-          borderWidth: 5,
-          borderColor: primaryAccent,
-          borderStyle: "solid",
-          borderRadius: "1em",
-        }}
-      >
-        {displayOrders}
-      </GridCell>
-    </Grid>
-
-    {/* Subsription and logout buttons */}
-    <Grid style={{ padding: "2em", textAlign: "center" }}>
-      <GridCell>
+          display: "flex",
+          justifyContent: "space-evenly",
+          margin: "3em",
+        }}>
         <Link to={userRoutes.subscriptions.path}>
           <Button theme="primary">Subscriptions</Button>
         </Link>
-
         <Button
           theme="secondary"
-          onClick={props.logout}
-          style={{ marginLeft: "1em" }}
-        >
+          onClick={logout}
+          style={{ marginLeft: "1em" }}>
           Logout
         </Button>
-      </GridCell>
-    </Grid>
-  </div>
-);
+        <Button
+          theme="secondary"
+          onClick={() => setEdit(!edit)}
+          style={{ marginLeft: "1em" }}>
+          EDIT PREFS
+        </Button>
+      </section>
+
+      {/* Order history display */}
+      <Grid
+        style={{
+          padding: "2em",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}>
+        <H2 font="secondary" style={{ alignSelf: "start" }}>
+          Orders
+        </H2>
+        <GridCell
+          style={{
+            padding: "2em",
+            borderWidth: 5,
+            borderColor: primaryAccent,
+            borderStyle: "solid",
+            borderRadius: "1em",
+          }}>
+          {displayOrders}
+        </GridCell>
+      </Grid>
+    </div>
+  );
+};
 
 // Component Properties
 Profile.propTypes = {
