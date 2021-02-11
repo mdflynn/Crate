@@ -31,14 +31,14 @@ class EditProfileForm extends Component {
     isLoading: false,
     editName: this.props.user.details.name,
     editEmail: this.props.user.details.email,
-    editStreetAddress: '123 madeup address',
-    editCity: 'Denver',
-    editState: 'CO',
-    editZip: '88888',
-    editCountry: 'USA',
-    editDescription: 'I like to play with rusty spoons ipsum',
-    editTwitter: '@quickhands',
-    editImage: this.props.user.details.image | null,
+    editStreetAddress: this.props.user.details.streetAddress,
+    editCity: this.props.user.details.city,
+    editState: this.props.user.details.state,
+    editZip: this.props.user.details.zip,
+    editCountry: this.props.user.details.country,
+    editDescription: this.props.user.details.description,
+    editTwitter: this.props.user.details.twitter,
+    editImage: this.props.user.details.image,
     user: this.props.user,
   }
 
@@ -135,11 +135,14 @@ class EditProfileForm extends Component {
     this.setState({
       user: updatedUser,
     })
-
+    
     // .then(() => {
-        window.setTimeout(() => {
-          this.props.messageHide()
-        }, 5000)
+      window.setTimeout(() => {
+        this.setState({
+          isLoading: false,
+        })
+        this.props.messageHide()
+      }, 3000)
     //   })
 
 
