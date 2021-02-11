@@ -11,8 +11,9 @@ import { APP_URL } from "../../setup/config/env";
 
 const OrderHistory = ({ data }) => {
   const filterKeptItems = () => {
-    return data.user.details.orderProducts.filter((product) => {
-      return !product.returned
+    const crateProducts = data.user.details.orderProducts;
+    return crateProducts.filter((product) => {
+      return !product.returned;
     });
   };
 
@@ -35,7 +36,7 @@ const OrderHistory = ({ data }) => {
 
   const itemDisplay = generateItemDisplay();
 
-  const dateDisplay = convertDate(data.user.details.deliveryDate)
+  const dateDisplay = convertDate(data.user.details.deliveryDate);
 
   return (
     <Card
@@ -52,6 +53,8 @@ const OrderHistory = ({ data }) => {
         borderRadius: "1em",
       }}
     >
+
+      {/* crate and create type */}
       <div style={{ padding: "1em 1.2em", width: "250px" }}>
         <img
           src={`${APP_URL}/images/crate.png`}
@@ -70,9 +73,8 @@ const OrderHistory = ({ data }) => {
           padding: "1em 1.2em",
         }}
       >
-        <H3 font="secondary">
-          Delivered on: {dateDisplay}
-        </H3>
+        {/* create details  */}
+        <H3 font="secondary">Delivered on: {dateDisplay}</H3>
         <H3 font="secondary">Items: {itemDisplay} </H3>
         <H3 font="secondary">Status: {data.user.details.status}</H3>
       </div>
