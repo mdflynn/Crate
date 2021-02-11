@@ -1,5 +1,5 @@
 import { screen, render } from "@testing-library/react";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -25,20 +25,34 @@ describe("OrderHistory", () => {
           },
         ],
         status: "delivered",
-      }
+      },
     };
-  });
-
-  it("should render an OrderHistory", () => {
     const history = createMemoryHistory();
 
     render(
-        <Router history={history}>
-          <OrderHistory data={store} />
-        </Router>
+      <Router history={history}>
+        <OrderHistory data={store} />
+      </Router>
     );
+  });
 
-    const crate = screen.getByRole('img');
+  it("should render an OrderHistory", () => {
+    const crate = screen.getByRole("img");
     expect(crate).toBeInTheDocument();
   });
+
+  it("should display a formatted date", () => {
+    const date = screen.getByRole('heading', { name: /delivered on: feb\/01\/2021/i });
+    expect(date).toBeInTheDocument();
+  });
+
+  it("should display kept items", () => {
+    const keptItem = screen.getByText('Belt for Men');
+    expect(keptItem).toBeInTheDocument();
+  });
+
+  it('should not have returned items', () => {
+    const returnedItem = screen.queryByText('Watch for Men');
+    expect(returnedItem).not.toBeInTheDocument();
+  })
 });
