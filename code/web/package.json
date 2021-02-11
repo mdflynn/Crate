@@ -12,7 +12,9 @@
     "build:client:prod": "webpack -p",
     "build:server:prod": "babel src -s -D -d build",
     "start:server:prod": " node build/index.js",
-    "storybook": "start-storybook -p 9000 -c storybook"
+    "storybook": "start-storybook -p 9000 -c storybook",
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "keywords": [],
   "author": "",
@@ -26,15 +28,18 @@
     "@babel/preset-react": "7.10.4",
     "@storybook/addons": "^6.0.21",
     "@storybook/react": "^6.0.21",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
     "babel-loader": "8.1.0",
     "dotenv-webpack": "^1.8.0",
+    "jest": "^26.6.3",
     "nodemon": "2.0.4",
     "webpack": "4.44.2",
     "webpack-cli": "3.3.12"
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",
-    "axios": "0.20.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
