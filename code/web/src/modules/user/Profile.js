@@ -175,10 +175,6 @@ const Profile = props => {
 
   const [edit, setEdit] = useState(false);
 
-  const showEditProfileModal = e => {
-    setEdit(!edit);
-  };
-
   return (
     <div>
       {/* SEO */}
