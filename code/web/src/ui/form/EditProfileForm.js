@@ -33,7 +33,7 @@ class EditProfileForm extends Component {
     editEmail: this.props.user.details.email,
     editAddress: '123 madeup address',
     editDescription: 'I am such a wonderful person',
-    editTwitter: '@dickhands',
+    editTwitter: '@quickhands',
     editImage: this.props.user.details.image | null,
     user: this.props.user,
   }
@@ -44,14 +44,8 @@ class EditProfileForm extends Component {
 
   onChange = (e) => {
     let formField = e.target.name
-    // let userDetailKey = e.target.placeholder
-
-    // let user = this.state.user
-    // user.details[userDetailKey] = e.target.value
-
     this.setState({
       [formField]: e.target.value,
-      // user,
     })
   }
 
@@ -63,7 +57,6 @@ class EditProfileForm extends Component {
     })
 
     let data = new FormData()
-    // data.append('userimage', event.target.files[0]) // change to user+id
     data.append('file', event.target.files[0]) 
 
     // Upload image
@@ -86,7 +79,6 @@ class EditProfileForm extends Component {
       })
       .catch(error => {
         this.props.messageShow('There was some error. Please try again.')
-
       })
       .then(() => {
         this.setState({
@@ -98,7 +90,6 @@ class EditProfileForm extends Component {
         }, 5000)
       })
   }
-
 
   // updateUser = (user) => {
   //   const token = window.localStorage.getItem('token')
