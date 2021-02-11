@@ -10,16 +10,13 @@ import { Grid, GridCell } from "../../ui/grid";
 import { H2, H3, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
 import {
-  white,
   grey,
   grey2,
   primaryAccent,
   secondaryAccent,
 } from "../../ui/common/colors";
 import { Tile } from "../../ui/image";
-import Card from "../../ui/card";
 import { level5 } from "../../ui/common/shadows";
-import { APP_URL } from "../../setup/config/env";
 import OrderHistory from "./OrderHistory";
 
 // App Imports
@@ -33,7 +30,7 @@ const mockOrderData = [
       details: {
         id: 1,
         crateName: "Men's Accesories",
-        deliveryDate: "02/20/2021",
+        deliveryDate: "1612221348680",
         orderProducts: [
           {
             name: "Belt for Men",
@@ -53,7 +50,7 @@ const mockOrderData = [
       details: {
         id: 2,
         crateName: "Men's Clothing",
-        deliveryDate: "03/20/2021",
+        deliveryDate: "1612221348744",
         orderProducts: [
           {
             name: "Shirt for Men",
@@ -73,11 +70,11 @@ const mockOrderData = [
       details: {
         id: 3,
         crateName: "Men's Clothing",
-        deliveryDate: "04/20/2021",
+        deliveryDate: "1612303095881",
         orderProducts: [
           {
             name: "Shirt for Men",
-            returned: false,
+            returned: true,
           },
         ],
         status: "pending delivery",
@@ -86,11 +83,21 @@ const mockOrderData = [
   },
 ];
 
+
+const sortOrderHistory = () => {
+  return mockOrderData.sort((a, b) => {
+    return  b.user.details.deliveryDate - a.user.details.deliveryDate
+  });
+};
+
 const generateOrderHistory = () => {
-  return mockOrderData.map((order, index) => {
+  const sortedOrders = sortOrderHistory();
+  return sortedOrders.map((order, index) => {
     return <OrderHistory key={index} data={order} />;
   });
 };
+
+const displayOrders = generateOrderHistory();
 
 // Component
 const Profile = (props) => (
@@ -224,7 +231,7 @@ const Profile = (props) => (
           borderRadius: "1em",
         }}
       >
-        {generateOrderHistory()}
+        {displayOrders}
       </GridCell>
     </Grid>
 
