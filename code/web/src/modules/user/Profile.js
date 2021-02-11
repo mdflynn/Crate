@@ -83,10 +83,9 @@ const mockOrderData = [
   },
 ];
 
-
 const sortOrderHistory = () => {
   return mockOrderData.sort((a, b) => {
-    return  b.user.details.deliveryDate - a.user.details.deliveryDate
+    return b.user.details.deliveryDate - a.user.details.deliveryDate;
   });
 };
 
@@ -201,11 +200,9 @@ const Profile = (props) => (
           </p>
         </div>
         <div style={{ flex: 1, alignSelf: "flex-end" }}>
-          <Link to="/edit-profle">
-            <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
-              edit profile
-            </Button>
-          </Link>
+          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
+            edit profile
+          </Button>
         </div>
       </GridCell>
     </Grid>
