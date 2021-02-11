@@ -10,6 +10,7 @@ import { routeApi } from '../../../setup/routes'
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
 export const SET_USER = 'AUTH/SET_USER'
+export const UPDATE_USER = 'AUTH/UPDATE_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
 
 // Actions
@@ -21,7 +22,6 @@ export function setUser(token, user) {
   } else {
     delete axios.defaults.headers.common['Authorization'];
   }
-
   return { type: SET_USER, user }
 }
 
@@ -48,7 +48,6 @@ export function login(userCredentials, isLoading = true) {
           const user = response.data.data.userLogin.user
 
           dispatch(setUser(token, user))
-
           loginSetUserLocalStorageAndCookie(token, user)
         }
 
@@ -71,11 +70,12 @@ export function loginSetUserLocalStorageAndCookie(token, user) {
   // Update token
   window.localStorage.setItem('token', token)
   window.localStorage.setItem('user', JSON.stringify(user))
-
   // Set cookie for SSR
   cookie.set('auth', { token, user }, { path: '/' })
 }
 
+
+// TODO add additional fields for 1st UX
 // Register a user
 export function register(userDetails) {
   return dispatch => {
@@ -83,7 +83,26 @@ export function register(userDetails) {
       operation: 'userSignup',
       variables: userDetails,
       fields: ['id', 'name', 'email']
-    }))
+    }))    
+  }
+}
+
+// update a user details
+export function update(userDetails) {
+  return dispatch => {
+    return axios.post(routeApi, mutation({
+      operation: 'userUpdate',
+      variables: userDetails,
+      // fields: ['user {name, email, streetAddress, city, state, zip, country, image, description}']
+      fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
+    })).then(response => {
+      // return dispatch({
+      //   type: UPDATE_USER,
+      //   user: userDetails
+      // })
+    }).catch(error => {
+      console.log(error)
+    })
   }
 }
 
