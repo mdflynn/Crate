@@ -13,8 +13,9 @@ export async function get(parentValue, { id }) {
 }
 
 // Get orderProducts by user
+// Nested products and orders are not working
 export async function getByUser(parentValue, { id }) {
-  return await models.sequelize.query(`SELECT * FROM "orders" INNER JOIN "subscriptions" ON "subscriptions".id = "orders".id WHERE "subscriptions"."userId" = ${id};`, {
+  return await models.sequelize.query(`SELECT * FROM "orderProducts" INNER JOIN "subscriptions" ON "subscriptions".id = "orderProducts"."orderId" WHERE "subscriptions"."userId" = ${id};`, {
     model: models.OrderProduct,
     mapToModel: true
   })
