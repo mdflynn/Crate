@@ -5,34 +5,37 @@ import PropTypes from "prop-types";
 // UI Imports
 import { H3 } from "../../ui/typography";
 import Button from "../../ui/button";
-import {
-  white,
-  grey,
-  grey2,
-  secondaryAccent
-} from "../../ui/common/colors";
+import { white, grey, grey2, secondaryAccent } from "../../ui/common/colors";
 import Card from "../../ui/card";
 import { APP_URL } from "../../setup/config/env";
 
 const OrderHistory = ({ data }) => {
-
   const filterKeptItems = () => {
-    return data.user.details.orderProducts.filter(product => {
-        return !product.returned
-    })
-  }
-
-  const keptItems = filterKeptItems();
+    return data.user.details.orderProducts.filter((product) => {
+      return !product.returned;
+    });
+  };
 
   const generateItemDisplay = () => {
+    const keptItems = filterKeptItems();
     if (!keptItems.length) {
-      return <p>No items kept from this order</p>
+      return <p>No items kept from this order</p>;
     } else {
-      return keptItems.map(item => {
-        return <p>{item.name}</p>
-      })
+      return keptItems.map((item) => {
+        return <p>{item.name}</p>;
+      });
     }
-  }
+  };
+
+  const convertDate = (date) => {
+    const newDate = new Date(parseInt(date));
+    const formatDate = newDate.toString().split(" ").slice(1, 4).join("/");
+    return formatDate;
+  };
+
+  const itemDisplay = generateItemDisplay();
+
+  const dateDisplay = convertDate(data.user.details.deliveryDate)
 
   return (
     <Card
@@ -55,7 +58,7 @@ const OrderHistory = ({ data }) => {
           alt={data.crateName}
           style={{ width: "100%" }}
         />
-        <p style={{ color: grey2, marginTop: "1em" }}>
+        <p style={{ color: grey2, marginTop: "1em", textAlign: "center" }}>
           {data.user.details.crateName}
         </p>
       </div>
@@ -67,10 +70,14 @@ const OrderHistory = ({ data }) => {
           padding: "1em 1.2em",
         }}
       >
-        <H3 font="secondary">Deliverd on: {data.user.details.deliveryDate}</H3>
-        <H3 font="secondary">Items: {generateItemDisplay()} </H3>
+        <H3 font="secondary">
+          Delivered on: {dateDisplay}
+        </H3>
+        <H3 font="secondary">Items: {itemDisplay} </H3>
         <H3 font="secondary">Status: {data.user.details.status}</H3>
       </div>
+
+      {/* remove buttons. functionality not needed */}
       <div
         style={{
           display: "flex",
