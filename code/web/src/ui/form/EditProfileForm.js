@@ -13,14 +13,10 @@ import { grey2, grey4, black, white } from "../common/colors";
 
 // App
 import { routeImage } from "../../setup/routes"
-// import { store } from '../../setup/store'
 import { renderIf, slug } from '../../setup/helpers'
 import { upload, messageShow, messageHide } from '../../modules/common/api/actions'
-// import {createOrUpdate} from '../../modules/product/api/actions'
-// import {updateUser} from '../../modules/user/api/actions'
+import {updateUser} from '../../modules/user/api/actions'
 
-// TODO add dispatch inside this component to edit options
-// TODO add dispatch to profile on login to pull more data
 
 class EditProfileForm extends Component {  
   constructor (props) {
@@ -95,20 +91,6 @@ class EditProfileForm extends Component {
       })
   }
 
-  // updateUser = (user) => {
-  //   const token = window.localStorage.getItem('token')
-  //   if (token && token !== 'undefined' && token !== '') {
-  //     // const user = JSON.parse(window.localStorage.getItem('user'))
-  //     // if (user) {
-  //       // Dispatch action
-  //       store.dispatch(setUser(token, user))
-    
-  //       loginSetUserLocalStorageAndCookie(token, user)
-  //     // }
-  //   }  
-  // }
-
-
   onSubmit = (event) => {
     event.preventDefault()
 
@@ -118,8 +100,7 @@ class EditProfileForm extends Component {
 
     this.props.messageShow('Saving, please wait...')
     
-    let updatedUser = this.state.user
-    updatedUser.details = {
+    let userUpdates = {
       name: this.state.editName,
       email: this.state.editEmail,
       streetAddress:  this.state.editStreetAddress,
@@ -133,9 +114,11 @@ class EditProfileForm extends Component {
     }
 
     this.setState({
-      user: updatedUser,
+      user: {...this.state.user, userUpdates},
     })
-    
+
+    this.props.updateUser(userUpdates)
+
     // .then(() => {
       window.setTimeout(() => {
         this.setState({
@@ -340,10 +323,6 @@ class EditProfileForm extends Component {
   };
 }
 
-// TODO subscribe to user???
-
-// export default EditProfileForm;
-
 // Component State
 function profileState(state) {
   return {
@@ -352,9 +331,7 @@ function profileState(state) {
 }
 
 export default withRouter(connect(profileState, {
-// export default withRouter(connect(null, {
-  // createOrUpdate,
-  // updateUser,
+  updateUser,
   upload,
   messageShow,
   messageHide
