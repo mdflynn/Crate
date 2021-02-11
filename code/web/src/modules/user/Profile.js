@@ -165,7 +165,8 @@ const Profile = (props) => {
   const {user} = props
 
   function saveFakeDataToUser() {
-    update(mockedDetails)
+    console.log(user)
+    props.update(mockedDetails)
   }
 
   return(
