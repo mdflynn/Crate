@@ -12,7 +12,7 @@ import { APP_URL } from "../../setup/config/env";
 const OrderHistory = ({ data }) => {
   const filterKeptItems = () => {
     return data.user.details.orderProducts.filter((product) => {
-      return !product.returned;
+      return !product.returned
     });
   };
 
@@ -21,8 +21,8 @@ const OrderHistory = ({ data }) => {
     if (!keptItems.length) {
       return <p>No items kept from this order</p>;
     } else {
-      return keptItems.map((item) => {
-        return <p>{item.name}</p>;
+      return keptItems.map((item, index) => {
+        return <p key={index}>{item.name}</p>;
       });
     }
   };
