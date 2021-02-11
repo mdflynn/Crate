@@ -10,16 +10,14 @@ import { Grid, GridCell } from "../../ui/grid";
 import { H2, H3, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
 import {
-  white,
   grey,
   grey2,
   primaryAccent,
   secondaryAccent,
 } from "../../ui/common/colors";
 import { Tile } from "../../ui/image";
-import Card from "../../ui/card";
 import { level5 } from "../../ui/common/shadows";
-import { APP_URL } from "../../setup/config/env";
+import OrderHistory from "./OrderHistory";
 
 // App Imports
 import userRoutes from "../../setup/routes/user";
@@ -32,7 +30,7 @@ const mockOrderData = [
       details: {
         id: 1,
         crateName: "Men's Accesories",
-        deliveryDate: "02/20/2021",
+        deliveryDate: "1612221348680",
         orderProducts: [
           {
             name: "Belt for Men",
@@ -52,7 +50,7 @@ const mockOrderData = [
       details: {
         id: 2,
         crateName: "Men's Clothing",
-        deliveryDate: "03/20/2021",
+        deliveryDate: "1612221348744",
         orderProducts: [
           {
             name: "Shirt for Men",
@@ -72,11 +70,11 @@ const mockOrderData = [
       details: {
         id: 3,
         crateName: "Men's Clothing",
-        deliveryDate: "04/20/2021",
+        deliveryDate: "1612303095881",
         orderProducts: [
           {
             name: "Shirt for Men",
-            returned: false,
+            returned: true,
           },
         ],
         status: "pending delivery",
@@ -85,67 +83,20 @@ const mockOrderData = [
   },
 ];
 
-const generateOrderHistory = () => {
-  return mockOrderData.map((order) => {
-    return (
-      <Card
-        key={order.user.details.id}
-        style={{
-          backgroundColor: grey,
-          borderWidth: 5,
-          borderColor: secondaryAccent,
-          borderStyle: "solid",
-          display: "flex",
-          width: "80em",
-          backgroundColor: white,
-          marginBottom: "2em",
-          justifyContent: "space-between",
-          borderRadius: "1em",
-        }}
-      >
-        <div style={{ padding: "1em 1.2em", width: "250px" }}>
-          <img
-            src={`${APP_URL}/images/crate.png`}
-            alt={order.crateName}
-            style={{ width: "100%" }}
-          />
-          <p style={{ color: grey2, marginTop: "1em" }}>
-            {order.user.details.crateName}
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-evenly",
-            padding: "1em 1.2em",
-          }}
-        >
-          <H3 font="secondary">
-            Deliverd on: {order.user.details.deliveryDate}
-          </H3>
-          <H3 font="secondary">Items: TBD </H3>
-          <H3 font="secondary">Status: {order.user.details.status}</H3>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "1em 1.2em",
-          }}
-        >
-          <Button style={{ marginBottom: "10px" }} theme="primary">
-            KEEP Items
-          </Button>
-          <Button style={{ marginTop: "10px" }} theme="secondary">
-            RETURN Items
-          </Button>
-        </div>
-      </Card>
-    );
+const sortOrderHistory = () => {
+  return mockOrderData.sort((a, b) => {
+    return b.user.details.deliveryDate - a.user.details.deliveryDate;
   });
 };
+
+const generateOrderHistory = () => {
+  const sortedOrders = sortOrderHistory();
+  return sortedOrders.map((order, index) => {
+    return <OrderHistory key={index} data={order} />;
+  });
+};
+
+const displayOrders = generateOrderHistory();
 
 // Component
 const Profile = (props) => (
@@ -249,11 +200,9 @@ const Profile = (props) => (
           </p>
         </div>
         <div style={{ flex: 1, alignSelf: "flex-end" }}>
-          <Link to="/edit-profle">
-            <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
-              edit profile
-            </Button>
-          </Link>
+          <Button type="button" theme="primary" style={{ marginLeft: "1em" }}>
+            edit profile
+          </Button>
         </div>
       </GridCell>
     </Grid>
@@ -279,7 +228,7 @@ const Profile = (props) => (
           borderRadius: "1em",
         }}
       >
-        {generateOrderHistory()}
+        {displayOrders}
       </GridCell>
     </Grid>
 
