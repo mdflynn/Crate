@@ -14,6 +14,9 @@ export const orders = {
 // Orders by user
 export const ordersByUser = {
   type: new GraphQLList(OrderType),
+  args: {
+    id: { type: GraphQLInt }
+  },
   resolve: getByUser
 }
 
