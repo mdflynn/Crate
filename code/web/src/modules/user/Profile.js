@@ -156,10 +156,10 @@ const Profile = props => {
         <GridCell
           style={{
             width: "25%",
-            backgroundImage: 'linear-gradient(76deg, #cf9ffc57, #7368f0ba)',
-            borderRadius: '6px',
+            // backgroundImage: 'linear-gradient(76deg, #cf9ffc57, #7368f0ba)',
+            borderRadius: '15px',
             padding: '3em',
-            // border: 'solid 2px black',
+            border: 'solid',
             // borderColor: secondaryAccent,
             // borderStyle: "solid",
             display: "flex",
@@ -172,8 +172,9 @@ const Profile = props => {
               // border: "solid 3px gray",
               borderRadius: "5px",
               width: "100%",
+              height: '8em'
             }}>
-            <h3 style={{ marginBottom: "0.5em", fontSize:'2em', color: 'wheat' }}>
+            <h3 style={{ marginBottom: "0.5em", fontSize:'2em', color: 'black' }}>
               {user.details?.description}
             </h3>
           </caption>
@@ -183,10 +184,20 @@ const Profile = props => {
               display: "flex",
               justifyContent: "space-between",
             }}>
+              <H4>
+                {props.user.details.name}
+              </H4>
+          </div>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
               <H4>EMAIL </H4>
               <p
                 style={{
-                  color: 'wheat',
+                  color: 'black',
                   fontSize: "1.5em",
                   marginBottom: "2em",
                 }}>
@@ -200,10 +211,10 @@ const Profile = props => {
               justifyContent: "space-between",
             }}>
             <H4>ADDRESS </H4>
-            <p style={{ color: 'wheat', fontSize: "1.5em", marginBottom: "2em" }}>
-              12345 Main Lane
+            <p style={{ color: 'black', fontSize: "1.5em", marginBottom: "2em" }}>
+              {`${user.details.streetAddress}`}
               <br />
-              Coolsville, CO, 80420
+              {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
             </p>
           </div>
           <div
@@ -215,7 +226,7 @@ const Profile = props => {
             <H4>Perferred Shipping Date: </H4>
             <p
               style={{
-                color: 'wheat',
+                color: 'black',
                 fontSize: "1.5em",
                 marginBottom: "2em",
                 alignSelf: "center",
