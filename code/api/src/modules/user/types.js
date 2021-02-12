@@ -19,6 +19,7 @@ const UserType = new GraphQLObjectType({
     state: { type: GraphQLString },
     zip: { type: GraphQLString },
     country: { type: GraphQLString },
+    twitter: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString }
   })
