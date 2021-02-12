@@ -27,13 +27,25 @@ import { logout } from "./api/actions";
 import { routeImage } from "../../setup/routes/index";
 
 // props.user.details.name
-const mockOrderData = [
-  {
-    user: {
-      details: {
+
+const mockOrderData = {
+  user: {
+    id: 1,
+    name: "Mike",
+    email: "user@crate.com",
+    image: "some image url link",
+    description:
+      "Hi, I'm the main user. I love clothes and accessories! Follow my insta!",
+    streetAddress: "123 Admin St",
+    city: "Kenai",
+    state: "Alaska",
+    country: "USA",
+    orders: [
+      {
         id: 1,
-        crateName: "Men's Accesories",
         deliveryDate: "1612221348680",
+        status: "pending shipment",
+        crateName: "Men's Accessories",
         orderProducts: [
           {
             name: "Belt for Men",
@@ -44,51 +56,26 @@ const mockOrderData = [
             returned: true,
           },
         ],
-        status: "delivered",
       },
-    },
-  },
-  {
-    user: {
-      details: {
+      {
         id: 2,
-        crateName: "Men's Clothing",
         deliveryDate: "1612221348744",
-        orderProducts: [
-          {
-            name: "Shirt for Men",
-            returned: false,
-          },
-          {
-            name: "Pants for Men",
-            returned: false,
-          },
-        ],
-        status: "pending delivery",
-      },
-    },
-  },
-  {
-    user: {
-      details: {
-        id: 3,
+        status: "delivered",
         crateName: "Men's Clothing",
-        deliveryDate: "1612303095881",
         orderProducts: [
           {
             name: "Shirt for Men",
-            returned: true,
+            returned: false,
           },
         ],
-        status: "pending delivery",
       },
-    },
+    ],
   },
-];
+};
 
 const sortOrderHistory = () => {
-  return mockOrderData.sort((a, b) => {
-    return b.user.details.deliveryDate - a.user.details.deliveryDate;
+  return mockOrderData.user.orders.sort((a, b) => {
+    return b.deliveryDate - a.deliveryDate;
   });
 };
 
