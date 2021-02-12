@@ -208,13 +208,13 @@ const Profile = props => {
               {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
             </p>
           </div>
-          <div
+          {user.details.twitter && <div
             style={{
               flex: 1,
               display: "flex",
               justifyContent: "space-between",
             }}>
-            <H4>Perferred Shipping Date: </H4>
+            <H4>TWITTER: </H4>
             <p
               style={{
                 color: 'black',
@@ -222,9 +222,9 @@ const Profile = props => {
                 marginBottom: "2em",
                 alignSelf: "center",
               }}>
-              2nd week of the month
+              {user.details.twitter}
             </p>
-          </div>
+          </div>}
         </GridCell>
       </Grid>
 

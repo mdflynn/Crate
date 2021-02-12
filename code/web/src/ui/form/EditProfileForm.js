@@ -10,6 +10,7 @@ import Textarea from "../input/Textarea";
 import Input from "../input/Input";
 import Icon from "../icon/Icon";
 import { grey2, grey4, black, white } from "../common/colors";
+import { H1 } from "../typography/index";
 
 // App
 import { routeImage } from "../../setup/routes"
@@ -162,6 +163,7 @@ class EditProfileForm extends Component {
     return (
       <form onSubmit={this.onSubmit} style={{ height: "100%" }}>
         {/* <form onSubmit={this.onSubmit}> */}
+        <H1 font={'secondary'} style={{ textAlign: "center", color: "white", fontWeight: '800', fontSize: '3rem'}}>Edit Profile</H1><br/>
         <div style={{ width: "25em", margin: "0 auto" }}>
           {/* Name */}
           <Input
