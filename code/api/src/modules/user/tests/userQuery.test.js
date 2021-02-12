@@ -37,7 +37,7 @@ describe("user queries", () => {
     server.use(
         '/',
         graphqlHTTP({
-            schema,
+            schema: schema,
             graphiql: false,
             context: {
                 auth: {
@@ -61,11 +61,10 @@ describe("user queries", () => {
   it("user - can view user profile information", async(done) => {
     const response = await request(server)
       .post('/')
-      .send({ query: `query { user(id: 1){ name } }`})
-      //.set('Authorization', `Bearer ${token}`)
+      .send({ query: `{ user(id: ${ user1.id }) { name email }}`})
       .expect(200)
 
-    console.log(user1)
+    console.log(user1.id)
     console.log(response.body.data)
     expect(response.body.data.user.name).toEqual(user1.name)
     // expect(response.body.data.user.subscriptions[0].crate.name).toEqual(crate1.name)
