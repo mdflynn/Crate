@@ -2,7 +2,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList } from 'graphql'
 
 // App Imports
-import OrderType from '../order/types'
 import SubscriptionType from '../subscription/types'
 
 // User type
@@ -22,8 +21,7 @@ const UserType = new GraphQLObjectType({
     city: { type: GraphQLString },
     state: { type: GraphQLString },
     zip: { type: GraphQLString },
-    subscriptions: { type: SubscriptionType },
-    orders: { type: new GraphQLList(OrderType) },
+    subscriptions: { type: new GraphQLList(SubscriptionType) },
     country: { type: GraphQLString },
     createdAt: { type: GraphQLString },
     updatedAt: { type: GraphQLString }
