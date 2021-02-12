@@ -203,7 +203,7 @@ const Profile = props => {
           <div style={{display:'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {user.details.image && (
               <img
-                src={routeImage + user.details.image}
+                src={user.details.image.charAt(0) === '/' ? (routeImage + user.details.image) : user.details.image}
                 alt="User Image"
                 style={{
                   width: "100%",
@@ -220,20 +220,15 @@ const Profile = props => {
         <GridCell
           style={{
             width: "25%",
-            // backgroundImage: 'linear-gradient(76deg, #cf9ffc57, #7368f0ba)',
             borderRadius: '15px',
             padding: '3em',
             border: 'solid',
-            // borderColor: secondaryAccent,
-            // borderStyle: "solid",
             display: "flex",
             flexDirection: "column",
             margin: '2em'
           }}>
           <caption
             style={{
-              // backgroundColor: "hotpink",
-              // border: "solid 3px gray",
               borderRadius: "5px",
               width: "100%",
               height: '8em'
