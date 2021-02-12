@@ -94,53 +94,37 @@ class EditProfileForm extends Component {
   onSubmit = (event) => {
     event.preventDefault()
 
-    this.setState({
-      isLoading: true
-    })
-
-    this.props.messageShow('Saving, please wait...')
+    // TODO should these be moved into action?
+    // this.setState({isLoading: true})
+    // this.props.messageShow('Saving, please wait...')
     
-    let userUpdates = {
+    const userUpdates = {
+      // id: this.props.user.details.id,
       name: this.state.editName,
+      // role: (this.props.user.details.id !== 1 ? 'USER' : 'ADMIN'),
       email: this.state.editEmail,
-      streetAddress:  this.state.editStreetAddress,
+      streetAddress: this.state.editStreetAddress,
       city: this.state.editCity,
       state: this.state.editState,
       zip: this.state.editZip,
       country: this.state.editCountry,
-      description:  this.state.editDescription,
-      twitter:  this.state.editTwitter,
+      description: this.state.editDescription,
+      twitter: this.state.editTwitter,
       image: this.state.editImage,
     }
 
-    this.setState({
-      user: {...this.state.user, userUpdates},
-    })
-
-    this.props.updateUser(userUpdates)
-
-    // .then(() => {
-      window.setTimeout(() => {
-        this.setState({
-          isLoading: false,
-        })
-        this.props.messageHide()
-      }, 3000)
-    //   })
-
-
-      //     isLoading: false
-      //   })
-      // })
-      // .then(() => {
-      //   window.setTimeout(() => {
-      //     this.props.messageHide()
-      //   }, 5000)
-      // })
-
-    // Save information
+    const updatedUser = this.state.user
+    updatedUser.details = {...updatedUser.details, ...userUpdates}
     
-    // this.props.createOrUpdate(this.state.user.details) // TODO need dispatch function to update store
+
+    // this.setState({
+    //   user: updatedUser,
+    // })
+
+    this.props.messageShow('Saving, please wait...')
+
+    this.props.updateUser(this.props.user.details.id, updatedUser) // this will be the axios post call
+    // this.props.updateUser(this.props.user.details.id, updatedUser) // this will be the axios post call
       // .then(response => {
       //   this.setState({
       //     isLoading: false
@@ -149,9 +133,7 @@ class EditProfileForm extends Component {
       //   if (response.data.errors && response.data.errors.length > 0) {
       //     this.props.messageShow(response.data.errors[0].message)
       //   } else {
-      //     this.props.messageShow('Profile updated successfully.')
-
-      //     // this.props.history.push(admin.productList.path)
+      //     this.props.messageShow('Information updated successfully.')
       //   }
       // })
       // .catch(error => {
@@ -164,8 +146,15 @@ class EditProfileForm extends Component {
       // .then(() => {
       //   window.setTimeout(() => {
       //     this.props.messageHide()
-      //   }, 5000)
+      //   }, 2200)
       // })
+
+    // window.setTimeout(() => {
+    //   this.setState({
+    //     isLoading: false,
+    //   })
+    //   this.props.messageHide()
+    // }, 3000)
   }
 
   render() {
@@ -184,6 +173,7 @@ class EditProfileForm extends Component {
             name="editName"
             autoComplete="off"
             value={this.state.editName}
+            // value={this.props.user.details.name}
             onChange={this.onChange}
           />
           {/* Email */}
@@ -196,6 +186,7 @@ class EditProfileForm extends Component {
             name="editEmail"
             autoComplete="off"
             value={this.state.editEmail}
+            // value={this.props.user.details.email}
             onChange={this.onChange}
           />
           {/* Address */}
@@ -208,6 +199,7 @@ class EditProfileForm extends Component {
             name="editStreetAddress"
             autoComplete="off"
             value={this.state.editStreetAddress}
+            // value={this.props.user.details.streetAddress}
             onChange={this.onChange}
           />
           <Input
@@ -219,6 +211,7 @@ class EditProfileForm extends Component {
             name="editCity"
             autoComplete="off"
             value={this.state.editCity}
+            // value={this.props.user.details.city}
             onChange={this.onChange}
           />
           <Input
@@ -230,6 +223,7 @@ class EditProfileForm extends Component {
             name="editZip"
             autoComplete="off"
             value={this.state.editZip}
+            // value={this.props.user.details.zip}
             onChange={this.onChange}
           />
           <Input
@@ -241,6 +235,7 @@ class EditProfileForm extends Component {
             name="editState"
             autoComplete="off"
             value={this.state.editState}
+            // value={this.props.user.details.state}
             onChange={this.onChange}
           />
           <Input
@@ -252,6 +247,7 @@ class EditProfileForm extends Component {
             name="editCountry"
             autoComplete="off"
             value={this.state.editCountry}
+            // value={this.props.user.details.country}
             onChange={this.onChange}
           />
           {/* Description */}
@@ -260,10 +256,11 @@ class EditProfileForm extends Component {
             type="text"
             fullWidth={true}
             placeholder="Description"
-            required="required"
+            // required="required"
             name="editDescription"
             autoComplete="off"
             value={this.state.editDescription}
+            // value={this.props.user.details.description}
             onChange={this.onChange}
           />
           {/* Twitter */}
@@ -272,10 +269,11 @@ class EditProfileForm extends Component {
             type="text"
             fullWidth={true}
             placeholder="Twitter"
-            required="required"
+            // required="not-required"
             name="editTwitter"
             autoComplete="off"
             value={this.state.editTwitter}
+            // value={this.props.user.details.twitter}
             onChange={this.onChange}
           />
 
@@ -285,14 +283,15 @@ class EditProfileForm extends Component {
               type="file"
               style={{ color: white }}
               onChange={this.onUpload}
-              required={this.state.user.details.image}
+              required={this.state.user.details.image ? false : true}
             />
           </div>
 
           {/* Uploaded image */}
           {this.state.user.details.image &&
             <img
-              src={routeImage + this.state.user.details.image}
+              // src={routeImage + this.state.user.details.image}
+              src={this.state.user.details.image.charAt(0) === '/' ? (routeImage + this.props.user.details.image) : this.props.user.details.image}
               alt="User Image"
               style={{ width: 400, marginTop: "1em" }}
             />
