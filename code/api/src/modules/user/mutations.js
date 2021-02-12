@@ -44,9 +44,25 @@ export const userRemove = {
 export const userUpdate = {
   type: UserType,
   args: {
+    
     id: {
       name: 'id',
       type: GraphQLInt
+    },
+
+    name: {
+      name: 'name',
+      type: GraphQLString
+    },
+    
+    role: {
+      name: 'role',
+      type: GraphQLString
+    },
+
+    twitter: {
+      name: 'twitter',
+      type: GraphQLString
     },
 
     image: {
