@@ -80,7 +80,7 @@ export async function getGenders() {
 
 
 // Update
-export async function update(parentValue, { name, description, email, image, streetAddress, city, state, zip, country }, { auth }) {
+export async function update(parentValue, { name, description, email, image, streetAddress, city, state, zip, country, twitter }, { auth }) {
   if (auth.isAuthenticated) {
     await models.User.update(
       {
@@ -91,7 +91,8 @@ export async function update(parentValue, { name, description, email, image, str
         streetAddress,
         city,
         state,
-        country
+        country,
+        twitter
       },
       {
         where: { id: auth.user.id }
