@@ -10,7 +10,8 @@ import { store } from '../../../setup/store'
 // Actions Types
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
-export const UPDATE_USER = 'AUTH/UPDATE_USER'
+export const UPDATE_USER_REQUEST = 'AUTH/UPDATE_USER_REQUEST'
+export const UPDATE_USER_RESPONSE = 'AUTH/UPDATE_USER_RESPONSE'
 export const SET_USER = 'AUTH/SET_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
 // Actions
@@ -89,36 +90,65 @@ export function register(userDetails) {
 }
 
 // TEST EDIT USER INFO              &&&&&&%%%*******************************
-export function updateUser(user) {
+export function updateUser(id, user) {
   console.log('update action fired with:', user);
-
-  // pass in correct user info
-  // make mutation and wait for success response
-  // err handle bad response
-  // if response is OK then get user info
-  // then set it in state
-
   return dispatch => {
-    // return axios.post(routeApi, mutation({
-    //   operation: 'userUpdate',
-    //   variables: userDetails,
-    //   // fields: ['user {name, email, streetAddress, city, state, zip, country, image, description}']
-    //   fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
-    // })).then(response => {
+    // dispatch to indicate loading
+    dispatch({
+      type: UPDATE_USER_REQUEST,
+      isLoading: true
+    })
+    // pass in correct user info
+    // make mutation and wait for success response
+    // err handle bad response
+    // if response is OK then get user info
+    // then set it in state
+    // islodading is false
+
+    axios.interceptors.request.use(x => {
+      console.log(x)
+      return x
+    })
+
+
+    return axios.post(routeApi, mutation({
+      operation: 'userUpdate',
+      variables: {
+        user
+        // id: {value: id, required: true},
+        // name: {value: user.name, required: false},
+      },
+      fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
+    }))
+
+
+      .then(response => {
+        if (response.data.errors && response.data.errors.length > 0) {
+          console.log(response.data.errors[0].message)
+        } else {
+          console.log('Information updated successfully.', response.data)
+        }
+      })
+      .catch(error => {
+        console.log('There was some error. Please try again.', error)
+      })
+      .then(() => dispatch({type: UPDATE_USER_RESPONSE, isLoading: false}))
+
+    // .then(response => {
     //   // return dispatch({
-    //   //   type: UPDATE_USER,
+    //   //   type: UPDATE_USER_REQUEST,
     //   //   user: userDetails
     //   // })
     // }).catch(error => {
     //   console.log(error)
     // })
 
-    const token = window.localStorage.getItem('token')
-    if (token && token !== 'undefined' && token !== '') {
-      dispatch(setUser(token, user))
-      loginSetUserLocalStorageAndCookie(token, user)
-      // dispatch UPDATE_USER
-    }
+
+    // const token = window.localStorage.getItem('token')
+    // if (token && token !== 'undefined' && token !== '') {
+    //   // dispatch(setUser(token, user)) // BUG would nest user inside of user
+    //   loginSetUserLocalStorageAndCookie(token, user)
+    // }
   }
 }
 
