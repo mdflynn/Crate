@@ -13,7 +13,7 @@ export async function get(parentValue, { id }) {
 
 // Get order by user
 export async function getByUser(parentValue, { id }) {
-  return await models.sequelize.query(`SELECT * FROM "orders" INNER JOIN "subscriptions" ON "subscriptions".id = "orders".id WHERE "subscriptions"."userId" = ${id};`, {
+  return await models.sequelize.query(`SELECT "orders".* FROM "orders" INNER JOIN "subscriptions" ON "subscriptions".id = "orders".id INNER JOIN "users" ON "subscriptions"."userId" = "users".id WHERE "subscriptions"."userId" = ${id};`, {
     model: models.Order,
     mapToModel: true
   })
