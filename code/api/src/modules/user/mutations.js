@@ -44,6 +44,7 @@ export const userRemove = {
 export const userUpdate = {
   type: UserType,
   args: {
+    
     id: {
       name: 'id',
       type: GraphQLInt
