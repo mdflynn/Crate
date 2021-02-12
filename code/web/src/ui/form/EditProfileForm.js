@@ -94,15 +94,11 @@ class EditProfileForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-
-    // TODO should these be moved into action?
-    // this.setState({isLoading: true})
-    // this.props.messageShow('Saving, please wait...')
     
     const userUpdates = {
       // id: this.props.user.details.id,
       name: this.state.editName,
-      // role: (this.props.user.details.id !== 1 ? 'USER' : 'ADMIN'),
+      role: (this.props.user.details.id !== 1 ? 'USER' : 'ADMIN'),
       email: this.state.editEmail,
       streetAddress: this.state.editStreetAddress,
       city: this.state.editCity,
@@ -124,7 +120,8 @@ class EditProfileForm extends Component {
 
     this.props.messageShow('Saving, please wait...')
 
-    this.props.updateUser(this.props.user.details.id, updatedUser) // this will be the axios post call
+    this.props.updateUser(updatedUser) // this will be the axios post call
+    
     // this.props.updateUser(this.props.user.details.id, updatedUser) // this will be the axios post call
       // .then(response => {
       //   this.setState({

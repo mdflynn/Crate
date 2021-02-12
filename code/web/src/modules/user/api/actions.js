@@ -90,39 +90,29 @@ export function register(userDetails) {
 }
 
 // TEST EDIT USER INFO              &&&&&&%%%*******************************
-export function updateUser(id, user) {
-  console.log('update action fired with:', user);
+export function updateUser(userDetails) {
+  console.log('update action fired with:', userDetails);
   return dispatch => {
-    // dispatch to indicate loading
-    dispatch({
-      type: UPDATE_USER_REQUEST,
-      isLoading: true
-    })
-    // pass in correct user info
-    // make mutation and wait for success response
-    // err handle bad response
-    // if response is OK then get user info
-    // then set it in state
-    // islodading is false
+    // dispatch({
+    //   type: UPDATE_USER_REQUEST,
+    //   isLoading: true
+    // })
 
-    axios.interceptors.request.use(x => {
-      console.log(x)
-      return x
-    })
-
+    // axios.interceptors.request.use(x => {
+    //   console.log(x)
+    //   return x
+    // })
+    const test = userDetails.details
 
     return axios.post(routeApi, mutation({
       operation: 'userUpdate',
-      variables: {
-        user
-        // id: {value: id, required: true},
-        // name: {value: user.name, required: false},
-      },
+      variables: test,
       fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
     }))
 
 
       .then(response => {
+        console.log('response', response)
         if (response.data.errors && response.data.errors.length > 0) {
           console.log(response.data.errors[0].message)
         } else {
@@ -205,3 +195,8 @@ export function getGenders() {
     }))
   }
 }
+
+
+
+
+// "{"query":"mutation ($user: String) {\n  userUpdate (user: $user) {\n    name, email, streetAddress, city, state, zip, country, image, description\n  }\n}","variables":{}}"
