@@ -49,6 +49,21 @@ export const userUpdate = {
       type: GraphQLInt
     },
 
+    name: {
+      name: 'name',
+      type: GraphQLString
+    },
+
+    role: {
+      name: 'role',
+      type: GraphQLString
+    },
+
+    twitter: {
+      name: 'twitter',
+      type: GraphQLString
+    },
+
     image: {
       name: 'image',
       type: GraphQLString
