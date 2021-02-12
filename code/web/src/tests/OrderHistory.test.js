@@ -11,33 +11,30 @@ describe("OrderHistory", () => {
   let history;
 
   beforeEach(() => {
-    store.user = {
-      details: {
-        id: 1,
-        crateName: "Men's Accesories",
-        deliveryDate: "1612221348680",
-        orderProducts: [
-          {
-            name: "Belt for Men",
-            returned: false,
-          },
-          {
-            name: "Watch for Men",
-            returned: true,
-          },
-        ],
-        status: "delivered",
-      },
-    };
-
-    history = createMemoryHistory();
+    (store.user = {
+      id: 1,
+      deliveryDate: "1612221348680",
+      status: "pending shipment",
+      crateName: "Men's Accessories",
+      orderProducts: [
+        {
+          name: "Belt for Men",
+          returned: false,
+        },
+        {
+          name: "Watch for Men",
+          returned: true,
+        },
+      ],
+    }),
+      (history = createMemoryHistory());
   });
 
   it("should render an OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
@@ -49,12 +46,12 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
 
-    const type = screen.getByText("Men's Accesories");
+    const type = screen.getByText("Men's Accessories");
     expect(type).toBeInTheDocument();
   });
 
@@ -62,7 +59,7 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
@@ -77,7 +74,7 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
@@ -90,7 +87,7 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
@@ -103,17 +100,17 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
 
-    const status = screen.getByRole("heading", { name: /status: delivered/i });
+    const status = screen.getByRole("heading", { name: /status: pending shipment/i });
     expect(status).toBeInTheDocument();
   });
 
   it("should display message if all items returned", () => {
-    store.user.details.orderProducts = [
+    store.user.orderProducts = [
       {
         name: "Watch for Men",
         returned: true,
@@ -123,7 +120,7 @@ describe("OrderHistory", () => {
     render(
       <Provider store={store}>
         <Router history={history}>
-          <OrderHistory data={store} />
+          <OrderHistory data={store.user} />
         </Router>
       </Provider>
     );
