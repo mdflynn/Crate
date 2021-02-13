@@ -1,9 +1,9 @@
 // Imports
-import { GraphQLInt } from 'graphql'
+import { GraphQLString, GraphQLInt } from 'graphql'
 
 // App Imports
 import OrderType from './types'
-import { create, remove } from './resolvers'
+import { create, remove, update } from './resolvers'
 
 // Order create
 export const orderCreate = {
@@ -27,4 +27,27 @@ export const orderRemove = {
     }
   },
   resolve: remove
+}
+
+// Update order
+export const orderUpdate = {
+  type: OrderType,
+  args: {
+    id: {
+      name: 'id',
+      type: GraphQLInt
+    },
+
+    status: {
+      name: 'status',
+      type: GraphQLString
+    },
+
+    deliveryDate: {
+      name: 'deliveryDate',
+      type: GraphQLString
+    }
+
+  },
+  resolve: update
 }
