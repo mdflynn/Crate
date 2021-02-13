@@ -35,6 +35,12 @@ class Signup extends Component {
         name: '',
         email: '',
         password: '',
+        streetAddress: '',
+        city: '',
+        zip: '',
+        state: '',
+        country: '',
+        image: '',
       }
     }
   }
@@ -56,6 +62,8 @@ class Signup extends Component {
     })
 
     this.props.messageShow('Signing you up, please wait...')
+
+    // TODO Adjust payload in recieving function
 
     this.props.register(this.state.user)
       .then(response => {
@@ -159,6 +167,94 @@ class Signup extends Component {
                 onChange={this.onChange}
                 style={{ marginTop: '1em' }}
               />
+
+            {/* Address */}
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="StreetAddress"
+            required="required"
+            name="streetAddress"
+            autoComplete="off"
+            value={this.state.user.streetAddress}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="City"
+            required="required"
+            name="city"
+            autoComplete="off"
+            value={this.state.user.city}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="Zip"
+            required="required"
+            name="zip"
+            autoComplete="off"
+            value={this.state.user.zip}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="State"
+            required="required"
+            name="state"
+            autoComplete="off"
+            value={this.state.user.state}
+            onChange={this.onChange}
+          />
+          <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="Country"
+            required="required"
+            name="country"
+            autoComplete="off"
+            value={this.state.user.country}
+            onChange={this.onChange}
+          />
+          {/* Description */}
+          {/* <Input
+            color="white"
+            type="text"
+            fullWidth={true}
+            placeholder="Description"
+            required="required"
+            name="description"
+            autoComplete="off"
+            value={this.state.user.description}
+            onChange={this.onChange}
+          /> */}
+
+          {/* Upload File */}
+          <div style={{ marginTop: "1em" }}>
+            <input
+              type="file"
+              style={{ color: white }}
+              onChange={this.onUpload}
+              required={this.state.user.image}
+            />
+          </div>
+
+          {/* Uploaded image */}
+          {this.state.user.image &&
+            <img
+              src={routeImage + this.state.user.image}
+              alt="User Image"
+              style={{ width: 400, marginTop: "1em" }}
+            />
+          }
             </div>
 
             <div style={{ marginTop: '2em' }}>
