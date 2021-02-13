@@ -276,23 +276,6 @@ const Profile = props => {
               {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
             </p>
           </div>
-          {user.details.twitter && <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}>
-            <H4>TWITTER: </H4>
-            <p
-              style={{
-                color: 'black',
-                fontSize: "1.5em",
-                marginBottom: "2em",
-                alignSelf: "center",
-              }}>
-              {user.details.twitter}
-            </p>
-          </div>}
         </GridCell>
       </Grid>
 

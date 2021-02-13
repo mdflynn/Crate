@@ -34,7 +34,6 @@ class EditProfileForm extends Component {
     editZip: this.props.user.details.zip,
     editCountry: this.props.user.details.country,
     editDescription: this.props.user.details.description,
-    editTwitter: this.props.user.details.twitter,
     editImage: this.props.user.details.image,
     user: this.props.user,
   }
@@ -98,7 +97,7 @@ class EditProfileForm extends Component {
     const userUpdates = {
       // id: this.props.user.details.id,
       name: this.state.editName,
-      role: (this.props.user.details.id !== 1 ? 'USER' : 'ADMIN'),
+      // role: (this.props.user.details.id !== 1 ? 'USER' : 'ADMIN'),
       email: this.state.editEmail,
       streetAddress: this.state.editStreetAddress,
       city: this.state.editCity,
@@ -106,7 +105,6 @@ class EditProfileForm extends Component {
       zip: this.state.editZip,
       country: this.state.editCountry,
       description: this.state.editDescription,
-      twitter: this.state.editTwitter,
       image: this.state.editImage,
     }
 
