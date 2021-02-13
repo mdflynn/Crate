@@ -84,7 +84,7 @@ const Profile = props => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'cornsilk'}}>
       {/* SEO */}
       <Helmet>
         <title>My Profile - Crate</title>
