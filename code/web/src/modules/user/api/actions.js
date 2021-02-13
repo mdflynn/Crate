@@ -10,7 +10,7 @@ import { store } from '../../../setup/store'
 // Actions Types
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
-export const UPDATE_USER_REQUEST = 'AUTH/UPDATE_USER_REQUEST'
+export const UPDATE_USER = 'AUTH/UPDATE_USER'
 export const UPDATE_USER_RESPONSE = 'AUTH/UPDATE_USER_RESPONSE'
 export const SET_USER = 'AUTH/SET_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
@@ -89,80 +89,33 @@ export function register(userDetails) {
   }
 }
 
-// TEST EDIT USER INFO              &&&&&&%%%*******************************
-export function updateUser(userDetails) {
-  console.log('update action fired with:', userDetails);
+// Update User Details
+export function updateUser(user) {
   return dispatch => {
-    // dispatch({
-    //   type: UPDATE_USER_REQUEST,
-    //   isLoading: true
-    // })
-
-    // axios.interceptors.request.use(x => {
-    //   console.log(x)
-    //   return x
-    // })
-    const test = userDetails.details
+    const updates = user.details
 
     return axios.post(routeApi, mutation({
       operation: 'userUpdate',
-      variables: test,
+      variables: updates,
       fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
     }))
-
-
       .then(response => {
-        console.log('response', response)
         if (response.data.errors && response.data.errors.length > 0) {
           console.log(response.data.errors[0].message)
+          // TODO add error state handling
         } else {
-          console.log('Information updated successfully.', response.data)
+          const userUpdates = response.data.data.userUpdate
+          console.log('Information updated successfully.', userUpdates)
+          dispatch({ type: UPDATE_USER, ...user})
+          // dispatch({ type: SET_USER, ...user})
+          // window.localStorage.setItem('user', JSON.stringify(user))
         }
       })
       .catch(error => {
-        console.log('There was some error. Please try again.', error)
+        console.log('There was some error. Please try again. ERROR:', error)
       })
-      .then(() => dispatch({type: UPDATE_USER_RESPONSE, isLoading: false}))
-
-    // .then(response => {
-    //   // return dispatch({
-    //   //   type: UPDATE_USER_REQUEST,
-    //   //   user: userDetails
-    //   // })
-    // }).catch(error => {
-    //   console.log(error)
-    // })
-
-
-    // const token = window.localStorage.getItem('token')
-    // if (token && token !== 'undefined' && token !== '') {
-    //   // dispatch(setUser(token, user)) // BUG would nest user inside of user
-    //   loginSetUserLocalStorageAndCookie(token, user)
-    // }
   }
 }
-
-// export function updateUser(user) {
-//   const token = window.localStorage.getItem('token')
-//   if (token && token !== 'undefined' && token !== '') {
-//     // const user = JSON.parse(window.localStorage.getItem('user'))
-//     // if (user) {
-//       // Dispatch action
-//       store.dispatch(setUser(token, user))
-  
-//       loginSetUserLocalStorageAndCookie(token, user)
-//     // }
-//   }  
-// }
-// export function updateUser(userDetails) {
-//   return dispatch => {
-//     return axios.post(routeApi, mutation({
-//       operation: 'userSignup',
-//       variables: userDetails,
-//       fields: ['id', 'name', 'email', 'description', 'address', 'twitter']
-//     }))
-//   }
-// }
 
 // Log out user and remove token from localStorage
 export function logout() {
@@ -195,8 +148,3 @@ export function getGenders() {
     }))
   }
 }
-
-
-
-
-// "{"query":"mutation ($user: String) {\n  userUpdate (user: $user) {\n    name, email, streetAddress, city, state, zip, country, image, description\n  }\n}","variables":{}}"
