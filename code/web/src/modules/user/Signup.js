@@ -18,7 +18,7 @@ import { white } from "../../ui/common/colors";
 // App Imports
 import { APP_URL } from "../../setup/config/env";
 import userRoutes from "../../setup/routes/user";
-import { messageShow, messageHide } from "../common/api/actions";
+import { messageShow, messageHide, upload } from "../common/api/actions";
 import { register } from "./api/actions";
 import AuthCheck from "../auth/AuthCheck";
 
@@ -53,6 +53,50 @@ class Signup extends Component {
     });
   };
 
+  onUpload = (event) => {
+    this.props.messageShow('Uploading profile image, please wait...')
+
+    let data = new FormData()
+    data.append('file', event.target.files[0]) 
+
+    this.setState({
+      isLoading: true,
+      // image: data
+    })
+
+
+    // Upload image
+    this.props.upload(data)
+      .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          this.props.messageShow('Profile image uploaded successfully.')
+
+          let user = this.state.user
+          user.image = `/images/uploads/${ response.data.file }`
+
+          this.setState({
+            user,
+            // image: user.image
+          })
+        } else {
+          this.props.messageShow('Please try again.')
+        }
+      })
+      .catch(error => {
+        this.props.messageShow('There was some error. Please try again.')
+      })
+      .then(() => {
+        this.setState({
+          isLoading: false
+        })
+        window.setTimeout(() => {
+          this.props.messageHide()
+        }, 2000)
+      })
+  }
+
+
   onSubmit = event => {
     event.preventDefault();
 
@@ -61,8 +105,6 @@ class Signup extends Component {
     });
 
     this.props.messageShow("Signing you up, please wait...");
-
-    // TODO Adjust payload in recieving function
 
     this.props
       .register(this.state.user)
@@ -265,15 +307,6 @@ class Signup extends Component {
                   required={this.state.user.image}
                 />
               </div>
-
-              {/* Uploaded image */}
-              {this.state.user.image && (
-                <img
-                  src={routeImage + this.state.user.image}
-                  alt="User Image"
-                  style={{ width: 400, marginTop: "1em" }}
-                />
-              )}
             </div>
 
             <div style={{ marginTop: "2em" }}>
@@ -308,10 +341,11 @@ class Signup extends Component {
 // Component Properties
 Signup.propTypes = {
   register: PropTypes.func.isRequired,
+  upload: PropTypes.func.isRequired,
   messageShow: PropTypes.func.isRequired,
   messageHide: PropTypes.func.isRequired,
 };
 
-export default connect(null, { register, messageShow, messageHide })(
+export default connect(null, { register, messageShow, messageHide, upload })(
   withRouter(Signup)
 );
