@@ -12,7 +12,7 @@ import authentication from "../../../setup/authentication";
 //mock data
 import * as mockData from '../../mocks/index'
 
-describe("user queries", () => {
+describe("order mutations", () => {
 
   let server;
   let admin1;
@@ -58,18 +58,15 @@ describe("user queries", () => {
     await models.User.destroy({ where: {} })
   })
 
-  it("user - can view user profile information", async(done) => {
+  it("order - can update deliveryDate and status", async(done) => {
+    let newDate = 'March 20, 2021 03:24:00'
     const response = await request(server)
       .post('/')
-      .send({ query: `{ user(id: ${user1.id}) { id name subscriptions { crate { name } orders { id status deliveryDate orderProducts { returned product { name }}}}}}`})
+      .send({ query: `mutation { orderUpdate(id: ${order1.id}, deliveryDate: "${newDate}") { deliveryDate status }}`})
       .expect(200)
 
-    expect(response.body.data.user.name).toEqual(user1.name)
-    expect(response.body.data.user.subscriptions[0].crate.name).toEqual(crate1.name)
-    expect(response.body.data.user.subscriptions[0].orders[0].status).toEqual(order1.status)
-    expect(response.body.data.user.subscriptions[0].orders[0].deliveryDate).toEqual(order1.deliveryDate.valueOf().toString())
-    expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].returned).toEqual(orderProduct1.returned)
-    expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].product.name).toEqual(product1.name)
+    expect(response.body.data.orderUpdate.deliveryDate).toEqual(new Date(newDate).valueOf().toString())
+    expect(response.body.data.orderUpdate.status).toEqual(order1.status)
     done();
   })
 })

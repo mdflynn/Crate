@@ -15,7 +15,6 @@ import * as mockData from '../../mocks/index'
 describe("user mutations", () => {
 
   let server;
-  //let token;
   let admin1;
   let user1;
 
@@ -39,14 +38,6 @@ describe("user mutations", () => {
             }
         })
     );
-
-    //log in & set up auth to grab token
-    // const response = await request(server)
-    //     .post('/')
-    //     .send({ query: '{ userLogin(email: "user@crate.com", password: "123456890") { token }}'})
-    //     .expect(200)
-    //
-    // token = response.body.data.userLogin.token
   })
 
   afterAll(async ()=>{
@@ -59,7 +50,6 @@ describe("user mutations", () => {
     const response = await request(server)
       .post('/')
       .send({ query: `mutation { userUpdate(description: "${description}", email: "${email}") {name email image description streetAddress city state zip country }}`})
-      //.set('Authorization', `Bearer ${token}`)
       .expect(200)
 
     expect(response.body.data.userUpdate.name).toEqual(user1.name)
