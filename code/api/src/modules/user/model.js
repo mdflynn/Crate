@@ -40,8 +40,6 @@ module.exports = function(sequelize, DataTypes) {
 
   User.associate = function(models) {
     User.hasMany(models.Subscription)
-    // User.hasMany(models.Order, {through: models.Subscription})
-    // User.belongsToMany(models.Order, {through: models.Subscription})
   }
   return User
 }

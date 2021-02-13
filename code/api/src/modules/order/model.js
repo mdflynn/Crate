@@ -17,8 +17,6 @@ module.exports = function(sequelize, DataTypes) {
   Order.associate = function(models) {
     Order.belongsTo(models.Subscription)
     Order.hasMany(models.OrderProduct)
-    // Order.belongsToMany(models.User, {through: models.Subscription})
-    // Order.belongsToMany(models.Product, {through: models.OrderProduct})
   }
 
   return Order

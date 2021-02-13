@@ -27,24 +27,3 @@ export async function getAll() {
     ]
   })
 }
-
-// Create order
-// export async function create(parentValue, { crateId }, { auth }) {
-//   if(auth.user && auth.user.id > 0) {
-//     return await models.Order.create({
-//       crateId,
-//       userId: auth.user.id
-//     })
-//   } else {
-//     throw new Error('Please login to subscribe to this crate.')
-//   }
-// }
-
-// Delete order
-// export async function remove(parentValue, { id }, { auth }) {
-//   if(auth.user && auth.user.id > 0) {
-//     return await models.Order.destroy({where: {id, userId: auth.user.id}})
-//   } else {
-//     throw new Error('Access denied.')
-//   }
-// }
