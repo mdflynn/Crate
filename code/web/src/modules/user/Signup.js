@@ -285,19 +285,7 @@ class Signup extends Component {
                 value={this.state.user.country}
                 onChange={this.onChange}
               />
-              {/* Description */}
-              {/* <Input
-            color="white"
-            type="text"
-            fullWidth={true}
-            placeholder="Description"
-            required="required"
-            name="description"
-            autoComplete="off"
-            value={this.state.user.description}
-            onChange={this.onChange}
-          /> */}
-
+              
               {/* Upload File */}
               <div style={{ marginTop: "1em" }}>
                 <input

@@ -20,24 +20,18 @@ const Modal = (props) => {
       transition: 'opacity 0.25s ease-in-out'
     }}>
       <div style={{
-        // backgroundColor: 'gold',
         backgroundImage: "linear-gradient(89deg, #7e349094, #1600ff91)",
         backdropFilter: "blur(15px)",
         backgroundSize: 'cover',
         position: 'fixed',
         top: '10%',
         right: '10%',
-        // top: '-40px',
-        // right: '-40px',
-        // bottom: '-40px',
-        // left: '-40px',
         zIndex: -1,
         minHeight: 'fit-content',
         width: '80%',
         borderRadius: '10px',
         boxShadow: '5px 11px 20px 7px #000000a1',
         padding: '3em'
-        // filter: 'blur(25px)'
       }}>
         {children}
       </div>
