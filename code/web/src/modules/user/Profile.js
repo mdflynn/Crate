@@ -131,39 +131,7 @@ const mockOrderData = {
   },
 };
 
-// orders: [
-//   {
-//     id: 1,
-//     crateName: "Men's Accessories",
-//     deliveryDate: "1612221348680",
-//     status: "pending shipment",
-//     orderProducts: [
-//       {
-//         name: "Belt for Men",
-//         returned: false,
-//       },
-//       {
-//         name: "Watch for Men",
-//         returned: true,
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     deliveryDate: "1612221348744",
-//     status: "delivered",
-//     crateName: "Men's Clothing",
-//     orderProducts: [
-//       {
-//         name: "Shirt for Men",
-//         returned: false,
-//       },
-//     ],
-//   },
-// ],
-
 const sortOrderHistory = () => {
-  //lloop through isloate orders and sorty based on delivery date
   const orderData = cleanData();
   return orderData.sort((a, b) => {
     return b.deliveryDate - a.deliveryDate;
