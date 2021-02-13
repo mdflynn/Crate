@@ -10,9 +10,10 @@ import { store } from '../../../setup/store'
 // Actions Types
 export const LOGIN_REQUEST = 'AUTH/LOGIN_REQUEST'
 export const LOGIN_RESPONSE = 'AUTH/LOGIN_RESPONSE'
+export const UPDATE_USER = 'AUTH/UPDATE_USER'
+export const UPDATE_USER_RESPONSE = 'AUTH/UPDATE_USER_RESPONSE'
 export const SET_USER = 'AUTH/SET_USER'
 export const LOGOUT = 'AUTH/LOGOUT'
-
 // Actions
 
 // Set a user after login or using localStorage token
@@ -37,8 +38,7 @@ export function login(userCredentials, isLoading = true) {
     return axios.post(routeApi, query({
       operation: 'userLogin',
       variables: userCredentials,
-      // fields: ['user {name, email, role, image, description, address, twitter}', 'token'] // add additional fields in request
-      fields: ['user {name, email, role}', 'token']
+      fields: ['user {id, name, email, role, streetAddress, city, state, zip, country, image, description}', 'token']
     }))
       .then(response => {
         let error = ''
@@ -89,28 +89,33 @@ export function register(userDetails) {
   }
 }
 
-// TEST EDIT USER INFO              &&&&&&%%%*******************************
-export function updateUser(user) {
-  const token = window.localStorage.getItem('token')
-  if (token && token !== 'undefined' && token !== '') {
-    // const user = JSON.parse(window.localStorage.getItem('user'))
-    // if (user) {
-      // Dispatch action
-      store.dispatch(setUser(token, user))
-  
-      loginSetUserLocalStorageAndCookie(token, user)
-    // }
-  }  
+// Update User Details
+export function updateUser(user, userUpdates) {
+  return dispatch => {
+    // const updates = user.details
+
+    return axios.post(routeApi, mutation({
+      operation: 'userUpdate',
+      variables: userUpdates,
+      fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
+    }))
+      .then(response => {
+        if (response.data.errors && response.data.errors.length > 0) {
+          console.log(response.data.errors[0].message)
+          // TODO add error state handling
+        } else {
+          const userUpdates = response.data.data.userUpdate
+          console.log('Information updated successfully.', userUpdates)
+          dispatch({ type: UPDATE_USER, ...user})
+          // dispatch({ type: SET_USER, ...user})
+          // window.localStorage.setItem('user', JSON.stringify(user))
+        }
+      })
+      .catch(error => {
+        console.log('There was some error. Please try again. ERROR:', error)
+      })
+  }
 }
-// export function updateUser(userDetails) {
-//   return dispatch => {
-//     return axios.post(routeApi, mutation({
-//       operation: 'userSignup',
-//       variables: userDetails,
-//       fields: ['id', 'name', 'email', 'description', 'address', 'twitter']
-//     }))
-//   }
-// }
 
 // Log out user and remove token from localStorage
 export function logout() {

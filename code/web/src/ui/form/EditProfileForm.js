@@ -1,26 +1,20 @@
 
-import React, { Component, useState } from 'react';
-// import PropTypes from 'prop-types'
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 // UI 
 import Button from '../button/Button'
-import Textarea from "../input/Textarea";
 import Input from "../input/Input";
 import Icon from "../icon/Icon";
 import { grey2, grey4, black, white } from "../common/colors";
+import { H1 } from "../typography/index";
 
 // App
 import { routeImage } from "../../setup/routes"
-// import { store } from '../../setup/store'
-import { renderIf, slug } from '../../setup/helpers'
 import { upload, messageShow, messageHide } from '../../modules/common/api/actions'
-// import {createOrUpdate} from '../../modules/product/api/actions'
-// import {updateUser} from '../../modules/user/api/actions'
+import {updateUser} from '../../modules/user/api/actions'
 
-// TODO add dispatch inside this component to edit options
-// TODO add dispatch to profile on login to pull more data
 
 class EditProfileForm extends Component {  
   constructor (props) {
@@ -37,7 +31,6 @@ class EditProfileForm extends Component {
     editZip: this.props.user.details.zip,
     editCountry: this.props.user.details.country,
     editDescription: this.props.user.details.description,
-    editTwitter: this.props.user.details.twitter,
     editImage: this.props.user.details.image,
     user: this.props.user,
   }
@@ -88,108 +81,48 @@ class EditProfileForm extends Component {
         this.setState({
           isLoading: false
         })
-
         window.setTimeout(() => {
           this.props.messageHide()
-        }, 5000)
+        }, 2200)
       })
   }
 
-  // updateUser = (user) => {
-  //   const token = window.localStorage.getItem('token')
-  //   if (token && token !== 'undefined' && token !== '') {
-  //     // const user = JSON.parse(window.localStorage.getItem('user'))
-  //     // if (user) {
-  //       // Dispatch action
-  //       store.dispatch(setUser(token, user))
-    
-  //       loginSetUserLocalStorageAndCookie(token, user)
-  //     // }
-  //   }  
-  // }
-
-
   onSubmit = (event) => {
     event.preventDefault()
-
-    this.setState({
-      isLoading: true
-    })
-
-    this.props.messageShow('Saving, please wait...')
     
-    let updatedUser = this.state.user
-    updatedUser.details = {
+    const userUpdates = {
       name: this.state.editName,
       email: this.state.editEmail,
-      streetAddress:  this.state.editStreetAddress,
+      streetAddress: this.state.editStreetAddress,
       city: this.state.editCity,
       state: this.state.editState,
       zip: this.state.editZip,
       country: this.state.editCountry,
-      description:  this.state.editDescription,
-      twitter:  this.state.editTwitter,
+      description: this.state.editDescription,
       image: this.state.editImage,
     }
-
-    this.setState({
-      user: updatedUser,
-    })
     
-    // .then(() => {
+    this.props.messageShow('Saving, please wait...')
+    this.setState({isLoading: true})
+    
+    let updatedUser = this.state.user
+    updatedUser.details = {...updatedUser.details, ...userUpdates}
+    
+    this.props.updateUser(updatedUser, userUpdates)   
+    .then(() => {
       window.setTimeout(() => {
-        this.setState({
-          isLoading: false,
-        })
-        this.props.messageHide()
-      }, 3000)
-    //   })
-
-
-      //     isLoading: false
-      //   })
-      // })
-      // .then(() => {
-      //   window.setTimeout(() => {
-      //     this.props.messageHide()
-      //   }, 5000)
-      // })
-
-    // Save information
-    
-    // this.props.createOrUpdate(this.state.user.details) // TODO need dispatch function to update store
-      // .then(response => {
-      //   this.setState({
-      //     isLoading: false
-      //   })
-
-      //   if (response.data.errors && response.data.errors.length > 0) {
-      //     this.props.messageShow(response.data.errors[0].message)
-      //   } else {
-      //     this.props.messageShow('Profile updated successfully.')
-
-      //     // this.props.history.push(admin.productList.path)
-      //   }
-      // })
-      // .catch(error => {
-      //   this.props.messageShow('There was some error. Please try again.')
-
-      //   this.setState({
-      //     isLoading: false
-      //   })
-      // })
-      // .then(() => {
-      //   window.setTimeout(() => {
-      //     this.props.messageHide()
-      //   }, 5000)
-      // })
+          this.setState({isLoading: false})
+          this.props.messageShow('Information updated successfully.')
+          this.props.messageHide()
+        }, 2200)
+      })
   }
 
   render() {
 
     return (
       <form onSubmit={this.onSubmit} style={{ height: "100%" }}>
-        {/* <form onSubmit={this.onSubmit}> */}
+        <H1 font={'secondary'} style={{ textAlign: "center", color: "white", fontWeight: '800', fontSize: '3rem'}}>Edit Profile</H1><br/>
         <div style={{ width: "25em", margin: "0 auto" }}>
           {/* Name */}
           <Input
@@ -283,18 +216,6 @@ class EditProfileForm extends Component {
             value={this.state.editDescription}
             onChange={this.onChange}
           />
-          {/* Twitter */}
-          <Input
-            color="white"
-            type="text"
-            fullWidth={true}
-            placeholder="Twitter"
-            required="required"
-            name="editTwitter"
-            autoComplete="off"
-            value={this.state.editTwitter}
-            onChange={this.onChange}
-          />
 
           {/* Upload File */}
           <div style={{ marginTop: "1em" }}>
@@ -302,14 +223,14 @@ class EditProfileForm extends Component {
               type="file"
               style={{ color: white }}
               onChange={this.onUpload}
-              required={this.state.user.details.image}
+              required={this.state.user.details.image ? false : true}
             />
           </div>
 
           {/* Uploaded image */}
           {this.state.user.details.image &&
             <img
-              src={routeImage + this.state.user.details.image}
+              src={this.state.user.details.image.charAt(0) === '/' ? (routeImage + this.props.user.details.image) : this.props.user.details.image}
               alt="User Image"
               style={{ width: 400, marginTop: "1em" }}
             />
@@ -340,10 +261,6 @@ class EditProfileForm extends Component {
   };
 }
 
-// TODO subscribe to user???
-
-// export default EditProfileForm;
-
 // Component State
 function profileState(state) {
   return {
@@ -352,9 +269,7 @@ function profileState(state) {
 }
 
 export default withRouter(connect(profileState, {
-// export default withRouter(connect(null, {
-  // createOrUpdate,
-  // updateUser,
+  updateUser,
   upload,
   messageShow,
   messageHide

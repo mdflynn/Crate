@@ -32,13 +32,13 @@ const Modal = (props) => {
         // bottom: '-40px',
         // left: '-40px',
         zIndex: -1,
-        height: '80%',
+        minHeight: 'fit-content',
         width: '80%',
         borderRadius: '10px',
-        boxShadow: '5px 11px 20px 7px #000000a1'
+        boxShadow: '5px 11px 20px 7px #000000a1',
+        padding: '3em'
         // filter: 'blur(25px)'
       }}>
-      
         {children}
       </div>
     </div>

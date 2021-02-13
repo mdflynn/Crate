@@ -175,10 +175,6 @@ const Profile = props => {
 
   const [edit, setEdit] = useState(false);
 
-  const showEditProfileModal = e => {
-    setEdit(!edit);
-  };
-
   return (
     <div>
       {/* SEO */}
@@ -207,7 +203,7 @@ const Profile = props => {
           <div style={{display:'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {user.details.image && (
               <img
-                src={routeImage + user.details.image}
+                src={user.details.image.charAt(0) === '/' ? (routeImage + user.details.image) : user.details.image}
                 alt="User Image"
                 style={{
                   width: "100%",
@@ -224,20 +220,15 @@ const Profile = props => {
         <GridCell
           style={{
             width: "25%",
-            // backgroundImage: 'linear-gradient(76deg, #cf9ffc57, #7368f0ba)',
             borderRadius: '15px',
             padding: '3em',
             border: 'solid',
-            // borderColor: secondaryAccent,
-            // borderStyle: "solid",
             display: "flex",
             flexDirection: "column",
             margin: '2em'
           }}>
           <caption
             style={{
-              // backgroundColor: "hotpink",
-              // border: "solid 3px gray",
               borderRadius: "5px",
               width: "100%",
               height: '8em'
@@ -283,23 +274,6 @@ const Profile = props => {
               {`${user.details.streetAddress}`}
               <br />
               {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
-            </p>
-          </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}>
-            <H4>Perferred Shipping Date: </H4>
-            <p
-              style={{
-                color: 'black',
-                fontSize: "1.5em",
-                marginBottom: "2em",
-                alignSelf: "center",
-              }}>
-              2nd week of the month
             </p>
           </div>
         </GridCell>
