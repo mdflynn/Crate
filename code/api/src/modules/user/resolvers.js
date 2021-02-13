@@ -8,7 +8,7 @@ import params from '../../config/params'
 import models from '../../setup/models'
 
 // Create
-export async function create(parentValue, { name, email, password }) {
+export async function create(parentValue, { name, email, password, description, image, streetAddress, city, state, zip, country }) {
   // Users exists with same email check
   const user = await models.User.findOne({ where: { email } })
 
@@ -19,6 +19,7 @@ export async function create(parentValue, { name, email, password }) {
     return await models.User.create({
       name,
       email,
+      description, image, streetAddress, city, state, zip, country,
       password: passwordHashed
     })
   } else {

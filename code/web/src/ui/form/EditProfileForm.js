@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Button from '../button/Button'
 import Input from "../input/Input";
 import Icon from "../icon/Icon";
-import { grey2, grey4, black, white } from "../common/colors";
+import { white } from "../common/colors";
 import { H1 } from "../typography/index";
 
 // App
