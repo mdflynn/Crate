@@ -15,7 +15,6 @@ import * as mockData from '../../mocks/index'
 describe("user-- resolver update", () => {
 
   let server;
-  let token;
   let admin1;
   let user1;
 

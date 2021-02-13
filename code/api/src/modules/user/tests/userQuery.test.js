@@ -17,20 +17,20 @@ describe("user queries", () => {
   let server;
   let admin1;
   let user1;
-  // let subscription1;
-  // let crate1;
-  // let order1;
-  // let orderProduct1;
-  // let product1;
+  let subscription1;
+  let crate1;
+  let order1;
+  let orderProduct1;
+  let product1;
 
   beforeAll(async () => {
 
     user1 = await models.User.create(mockData.userData1);
-    // crate1 = await models.Crate.create(mockData.crateData1);
-    // subscription1 = await models.Subscription.create(mockData.subscriptionData1);
-    // order1 = await models.Order.create(mockData.orderData1);
-    // orderProduct1 = await models.OrderProduct.create(mockData.orderProductData1);
-    // product1 = await models.Product.create(mockData.productData1);
+    crate1 = await models.Crate.create(mockData.crateData1);
+    subscription1 = await models.Subscription.create(mockData.subscriptionData1);
+    order1 = await models.Order.create(mockData.orderData1);
+    product1 = await models.Product.create(mockData.productData1);
+    orderProduct1 = await models.OrderProduct.create(mockData.orderProductData1);
 
     server = express();
     server.use(authentication);
@@ -50,28 +50,26 @@ describe("user queries", () => {
   })
 
   afterAll(async ()=>{
-      await models.User.destroy({ where: {} })
-      // await models.Subscription.destroy({ where: {} }),
-      // await models.Order.destroy({ where: {} }),
-      // await models.OrderProduct.destroy({ where: {} }),
-      // await models.Product.destroy({ where: {} }),
-      // await models.Crate.destroy({ where: {} })
+    await models.OrderProduct.destroy({ where: {} }),
+    await models.Product.destroy({ where: {} }),
+    await models.Order.destroy({ where: {} }),
+    await models.Subscription.destroy({ where: {} }),
+    await models.Crate.destroy({ where: {} })
+    await models.User.destroy({ where: {} })
   })
 
   it("user - can view user profile information", async(done) => {
     const response = await request(server)
       .post('/')
-      .send({ query: `{ user(id: ${ user1.id }) { name email }}`})
+      .send({ query: `{ user(id: ${user1.id}) { id name subscriptions { crate { name } orders { id status deliveryDate orderProducts { returned product { name }}}}}}`})
       .expect(200)
 
-    console.log(user1.id)
-    console.log(response.body.data)
     expect(response.body.data.user.name).toEqual(user1.name)
-    // expect(response.body.data.user.subscriptions[0].crate.name).toEqual(crate1.name)
-    // expect(response.body.data.user.subscriptions[0].orders[0].status).toEqual(order1.status)
-    // expect(response.body.data.user.subscriptions[0].orders[0].deliveryDate).toEqual(order1.deliveryDate)
-    // expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].returned).toEqual(orderProduct1.returned)
-    // expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].product.name).toEqual(product1.name)
+    expect(response.body.data.user.subscriptions[0].crate.name).toEqual(crate1.name)
+    expect(response.body.data.user.subscriptions[0].orders[0].status).toEqual(order1.status)
+    expect(response.body.data.user.subscriptions[0].orders[0].deliveryDate).toEqual(order1.deliveryDate.valueOf().toString())
+    expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].returned).toEqual(orderProduct1.returned)
+    expect(response.body.data.user.subscriptions[0].orders[0].orderProducts[0].product.name).toEqual(product1.name)
     done();
   })
 })
