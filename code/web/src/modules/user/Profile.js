@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { ProfileModal } from "../../ui/modal/index";
 import EditProfileForm from "../../ui/form/EditProfileForm";
+// impor {placeholder} from './profile-placeholder.svg'
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
@@ -172,8 +173,16 @@ const displayOrders = generateOrderHistory();
 // Component
 const Profile = props => {
   const { user, logout } = props;
-
   const [edit, setEdit] = useState(false);
+  const profileImage = () => { 
+    if (user.details.image === null || user.details.image === "") {
+      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
+    } else if (user.details.image.charAt(0) === '/') {
+      return (routeImage + user.details.image)
+    } else {
+      return user.details.image
+    }
+  }
 
   return (
     <div>
@@ -203,7 +212,7 @@ const Profile = props => {
           <div style={{display:'flex', flexDirection: 'column', justifyContent: 'center' }}>
             {user.details.image && (
               <img
-                src={user.details.image.charAt(0) === '/' ? (routeImage + user.details.image) : user.details.image}
+                src={profileImage()}
                 alt="User Image"
                 style={{
                   width: "100%",
@@ -234,7 +243,7 @@ const Profile = props => {
               height: '8em'
             }}>
             <h3 style={{ marginBottom: "0.5em", fontSize:'2em', color: 'black' }}>
-              {user.details?.description}
+              {user.details.description ? user.details.description : "Edit your profile and add a description to tell us a little about yourself..."}
             </h3>
           </caption>
           <div
