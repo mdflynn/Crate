@@ -65,8 +65,6 @@ describe("order mutations", () => {
       .send({ query: `mutation { orderUpdate(id: ${order1.id}, deliveryDate: "${newDate}") { deliveryDate status }}`})
       .expect(200)
 
-      console.log(response.body)
-
     expect(response.body.data.orderUpdate.deliveryDate).toEqual(new Date(newDate).valueOf().toString())
     expect(response.body.data.orderUpdate.status).toEqual(order1.status)
     done();
