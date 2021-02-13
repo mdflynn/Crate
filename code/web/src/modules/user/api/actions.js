@@ -90,13 +90,13 @@ export function register(userDetails) {
 }
 
 // Update User Details
-export function updateUser(user) {
+export function updateUser(user, userUpdates) {
   return dispatch => {
-    const updates = user.details
+    // const updates = user.details
 
     return axios.post(routeApi, mutation({
       operation: 'userUpdate',
-      variables: updates,
+      variables: userUpdates,
       fields: ['name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
     }))
       .then(response => {

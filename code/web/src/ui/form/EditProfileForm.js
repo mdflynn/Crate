@@ -101,15 +101,17 @@ class EditProfileForm extends Component {
       description: this.state.editDescription,
       image: this.state.editImage,
     }
-
-    let updatedUser = this.state.user
-    updatedUser.details = {...updatedUser.details, ...userUpdates}
     
     this.props.messageShow('Saving, please wait...')
     this.setState({isLoading: true})
-    this.props.updateUser(updatedUser)   
-      .then(() => {
-        window.setTimeout(() => {
+    
+    let updatedUser = this.state.user
+    updatedUser.details = {...updatedUser.details, ...userUpdates}
+    
+    this.props.updateUser(updatedUser, userUpdates)   
+    .then(() => {
+      window.setTimeout(() => {
+          this.setState({isLoading: false})
           this.props.messageShow('Information updated successfully.')
           this.props.messageHide()
         }, 2200)
