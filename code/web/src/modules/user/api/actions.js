@@ -85,6 +85,7 @@ export function register(userDetails) {
       operation: 'userSignup',
       variables: userDetails,
       fields: ['id', 'name', 'email']
+      // fields: ['id', 'name', 'email']
     }))
   }
 }
