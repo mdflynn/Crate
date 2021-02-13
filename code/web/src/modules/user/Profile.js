@@ -40,32 +40,90 @@ const mockOrderData = {
     city: "Kenai",
     state: "Alaska",
     country: "USA",
-    orders: [
+    subscriptions: [
       {
-        id: 1,
-        deliveryDate: "1612221348680",
-        status: "pending shipment",
-        crateName: "Men's Accessories",
-        orderProducts: [
+        crate: {
+          name: "Clothes for men",
+        },
+        orders: [
           {
-            name: "Belt for Men",
-            returned: false,
+            deliveryDate: Date.now(),
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: true,
+                product: {
+                  name: "watch for men",
+                },
+              },
+              {
+                returned: false,
+                product: {
+                  name: "pants for men",
+                },
+              },
+            ],
           },
           {
-            name: "Watch for Men",
-            returned: true,
+            deliveryDate: "1612221377730",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: false,
+                product: {
+                  name: "shirts for men",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "jeans for men",
+                },
+              },
+            ],
           },
         ],
       },
       {
-        id: 2,
-        deliveryDate: "1612221348744",
-        status: "delivered",
-        crateName: "Men's Clothing",
-        orderProducts: [
+        crate: {
+          name: "accesories for men",
+        },
+        orders: [
           {
-            name: "Shirt for Men",
-            returned: false,
+            deliveryDate: "1612221348744",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: true,
+                product: {
+                  name: "watch for women",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "pants for women",
+                },
+              },
+            ],
+          },
+          {
+            deliveryDate: "1612221348888",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: false,
+                product: {
+                  name: "watch for women",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "accesories for women",
+                },
+              },
+            ],
           },
         ],
       },
@@ -73,10 +131,65 @@ const mockOrderData = {
   },
 };
 
+// orders: [
+//   {
+//     id: 1,
+//     crateName: "Men's Accessories",
+//     deliveryDate: "1612221348680",
+//     status: "pending shipment",
+//     orderProducts: [
+//       {
+//         name: "Belt for Men",
+//         returned: false,
+//       },
+//       {
+//         name: "Watch for Men",
+//         returned: true,
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     deliveryDate: "1612221348744",
+//     status: "delivered",
+//     crateName: "Men's Clothing",
+//     orderProducts: [
+//       {
+//         name: "Shirt for Men",
+//         returned: false,
+//       },
+//     ],
+//   },
+// ],
+
 const sortOrderHistory = () => {
-  return mockOrderData.user.orders.sort((a, b) => {
+  //lloop through isloate orders and sorty based on delivery date
+  const orderData = cleanData();
+  return orderData.sort((a, b) => {
     return b.deliveryDate - a.deliveryDate;
   });
+};
+
+const cleanData = () => {
+  return mockOrderData.user.subscriptions.reduce((accum, subscription) => {
+    let orderData = {
+      deliveryDate: "",
+      status: "",
+      crateName: subscription.crate.name,
+      orderProducts: [],
+    };
+
+    subscription.orders.forEach((order) => {
+      orderData.deliveryDate = order.deliveryDate;
+      orderData.status = order.status;
+
+      order.orderProducts.forEach((product) => {
+        orderData.orderProducts.push(product);
+      });
+    });
+    accum.push(orderData);
+    return accum;
+  }, []);
 };
 
 const generateOrderHistory = () => {

@@ -10,12 +10,12 @@ import Card from "../../ui/card";
 import { APP_URL } from "../../setup/config/env";
 
 const OrderHistory = ({ data }) => {
-  const [itemType, setItemType] = useState(false);
+  const [itemType, setItemType] = useState(true);
 
   const filterKeptItems = () => {
     const crateProducts = data.orderProducts;
     return crateProducts.filter((product) => {
-      const itemFilter = itemType ? product.returned : !product.returned;
+      const itemFilter = itemType ? !product.returned : product.returned;
       return itemFilter;
     });
   };
@@ -26,7 +26,7 @@ const OrderHistory = ({ data }) => {
       return <p>No items kept from this order</p>;
     } else {
       return keptItems.map((item, index) => {
-        return <p key={index}>{item.name}</p>;
+        return <p key={index}>{item.product.name}</p>;
       });
     }
   };

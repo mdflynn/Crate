@@ -18,12 +18,16 @@ describe("OrderHistory", () => {
       crateName: "Men's Accessories",
       orderProducts: [
         {
-          name: "Belt for Men",
           returned: false,
+          product: {
+            name: "Belt for Men"
+          }
         },
         {
-          name: "Watch for Men",
           returned: true,
+          product: {
+            name: "Watch for Men"
+          }
         },
       ],
     }),
