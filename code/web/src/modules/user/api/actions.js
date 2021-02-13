@@ -84,7 +84,7 @@ export function register(userDetails) {
     return axios.post(routeApi, mutation({
       operation: 'userSignup',
       variables: userDetails,
-      fields: ['id', 'name', 'email']
+      fields: ['id', 'name', 'email', "streetAddress", "city", "state", "zip", "country", "image", "description"]
       // fields: ['id', 'name', 'email']
     }))
   }
