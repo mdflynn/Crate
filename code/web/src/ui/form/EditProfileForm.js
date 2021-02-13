@@ -294,7 +294,7 @@ class EditProfileForm extends Component {
             text-align: center;
           }
           img {
-            height: 100%;
+            max-width: fit-content;
           }
           .inputs {
             display: flex;
