@@ -27,69 +27,137 @@ import { logout } from "./api/actions";
 import { routeImage } from "../../setup/routes/index";
 
 // props.user.details.name
-const mockOrderData = [
-  {
-    user: {
-      details: {
-        id: 1,
-        crateName: "Men's Accesories",
-        deliveryDate: "1612221348680",
-        orderProducts: [
+
+const mockOrderData = {
+  user: {
+    id: 1,
+    name: "Mike",
+    email: "user@crate.com",
+    image: "some image url link",
+    description:
+      "Hi, I'm the main user. I love clothes and accessories! Follow my insta!",
+    streetAddress: "123 Admin St",
+    city: "Kenai",
+    state: "Alaska",
+    country: "USA",
+    subscriptions: [
+      {
+        crate: {
+          name: "Clothes for men",
+        },
+        orders: [
           {
-            name: "Belt for Men",
-            returned: false,
+            deliveryDate: Date.now(),
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: true,
+                product: {
+                  name: "watch for men",
+                },
+              },
+              {
+                returned: false,
+                product: {
+                  name: "pants for men",
+                },
+              },
+            ],
           },
           {
-            name: "Watch for Men",
-            returned: true,
+            deliveryDate: "1612221377730",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: false,
+                product: {
+                  name: "shirts for men",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "jeans for men",
+                },
+              },
+            ],
           },
         ],
-        status: "delivered",
       },
-    },
-  },
-  {
-    user: {
-      details: {
-        id: 2,
-        crateName: "Men's Clothing",
-        deliveryDate: "1612221348744",
-        orderProducts: [
+      {
+        crate: {
+          name: "accesories for men",
+        },
+        orders: [
           {
-            name: "Shirt for Men",
-            returned: false,
+            deliveryDate: "1612221348744",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: true,
+                product: {
+                  name: "watch for women",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "pants for women",
+                },
+              },
+            ],
           },
           {
-            name: "Pants for Men",
-            returned: false,
+            deliveryDate: "1612221348888",
+            status: "pending shipment",
+            orderProducts: [
+              {
+                returned: false,
+                product: {
+                  name: "watch for women",
+                },
+              },
+              {
+                returned: true,
+                product: {
+                  name: "accesories for women",
+                },
+              },
+            ],
           },
         ],
-        status: "pending delivery",
       },
-    },
+    ],
   },
-  {
-    user: {
-      details: {
-        id: 3,
-        crateName: "Men's Clothing",
-        deliveryDate: "1612303095881",
-        orderProducts: [
-          {
-            name: "Shirt for Men",
-            returned: true,
-          },
-        ],
-        status: "pending delivery",
-      },
-    },
-  },
-];
+};
 
 const sortOrderHistory = () => {
-  return mockOrderData.sort((a, b) => {
-    return b.user.details.deliveryDate - a.user.details.deliveryDate;
+  const orderData = cleanData();
+  return orderData.sort((a, b) => {
+    return b.deliveryDate - a.deliveryDate;
   });
+};
+
+const cleanData = () => {
+  return mockOrderData.user.subscriptions.reduce((accum, subscription) => {
+    let orderData = {
+      deliveryDate: "",
+      status: "",
+      crateName: subscription.crate.name,
+      orderProducts: [],
+    };
+
+    subscription.orders.forEach((order) => {
+      orderData.deliveryDate = order.deliveryDate;
+      orderData.status = order.status;
+
+      order.orderProducts.forEach((product) => {
+        orderData.orderProducts.push(product);
+      });
+    });
+    accum.push(orderData);
+    return accum;
+  }, []);
 };
 
 const generateOrderHistory = () => {

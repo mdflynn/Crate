@@ -1,5 +1,5 @@
 // Imports
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // UI Imports
@@ -10,10 +10,13 @@ import Card from "../../ui/card";
 import { APP_URL } from "../../setup/config/env";
 
 const OrderHistory = ({ data }) => {
+  const [itemType, setItemType] = useState(true);
+
   const filterKeptItems = () => {
-    const crateProducts = data.user.details.orderProducts;
+    const crateProducts = data.orderProducts;
     return crateProducts.filter((product) => {
-      return !product.returned;
+      const itemFilter = itemType ? !product.returned : product.returned;
+      return itemFilter;
     });
   };
 
@@ -23,7 +26,7 @@ const OrderHistory = ({ data }) => {
       return <p>No items kept from this order</p>;
     } else {
       return keptItems.map((item, index) => {
-        return <p key={index}>{item.name}</p>;
+        return <p key={index}>{item.product.name}</p>;
       });
     }
   };
@@ -36,7 +39,10 @@ const OrderHistory = ({ data }) => {
 
   const itemDisplay = generateItemDisplay();
 
-  const dateDisplay = convertDate(data.user.details.deliveryDate);
+  const dateDisplay = convertDate(data.deliveryDate);
+
+  const itemStatus = itemType ? "Kept Items" : "Returned Items";
+  const itemTheme = itemType ? "primary" : "secondary";
 
   return (
     <Card
@@ -53,7 +59,6 @@ const OrderHistory = ({ data }) => {
         borderRadius: "1em",
       }}
     >
-
       {/* crate and create type */}
       <div style={{ padding: "1em 1.2em", width: "250px" }}>
         <img
@@ -62,7 +67,7 @@ const OrderHistory = ({ data }) => {
           style={{ width: "100%" }}
         />
         <p style={{ color: grey2, marginTop: "1em", textAlign: "center" }}>
-          {data.user.details.crateName}
+          {data.crateName}
         </p>
       </div>
       <div
@@ -71,12 +76,12 @@ const OrderHistory = ({ data }) => {
           flexDirection: "column",
           justifyContent: "space-evenly",
           padding: "1em 1.2em",
+          width: "30% "
         }}
       >
-        {/* create details  */}
         <H3 font="secondary">Delivered on: {dateDisplay}</H3>
-        <H3 font="secondary">Items: {itemDisplay} </H3>
-        <H3 font="secondary">Status: {data.user.details.status}</H3>
+        <H3 font="secondary">{itemStatus}: {itemDisplay} </H3>
+        <H3 font="secondary">Status: {data.status}</H3>
       </div>
 
       {/* remove buttons. functionality not needed */}
@@ -88,11 +93,12 @@ const OrderHistory = ({ data }) => {
           padding: "1em 1.2em",
         }}
       >
-        <Button style={{ marginBottom: "10px" }} theme="primary">
-          KEEP Items
-        </Button>
-        <Button style={{ marginTop: "10px" }} theme="secondary">
-          RETURN Items
+        <Button
+          style={{ marginBottom: "10px" }}
+          theme={itemTheme}
+          onClick={() => setItemType(!itemType)}
+        >
+          Toggle<br />Order<br />Items
         </Button>
       </div>
     </Card>
