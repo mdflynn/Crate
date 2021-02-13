@@ -33,3 +33,49 @@ export const userData2 = {
   image: "https://ichef.bbci.co.uk/news/976/cpsprodpb/CFE3/production/_108391235_nessie.jpg",
   description: "Nessie"
 };
+
+export const crateData1 = {
+  id: 1,
+  name: 'Crate',
+  description: 'A crate.',
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
+
+export const subscriptionData1 = {
+  id: 1,
+  userId: 1,
+  crateId: 1,
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
+
+export const orderData1 = {
+  id: 1,
+  subscriptionId: 1,
+  status: "delivered",
+  deliveryDate: new Date(),
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
+
+export const orderProductData1 = {
+  id: 1,
+  orderId: 1,
+  productId: 1,
+  returned: false,
+  createdAt: new Date(),
+  updatedAt: new Date()
+};
+
+export const productData1 = {
+  id: 1,
+  name: 'Belt for Men',
+  slug: 'belt-for-men',
+  description: 'A very nice belt for men.',
+  type: 1,
+  gender: 1,
+  image: '/images/stock/belt-male.jpg',
+  createdAt: new Date(),
+  updatedAt: new Date()
+};

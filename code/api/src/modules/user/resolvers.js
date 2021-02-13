@@ -60,7 +60,21 @@ export async function login(parentValue, { email, password }) {
 
 // Get by ID
 export async function getById(parentValue, { id }) {
-  return await models.User.findOne({ where: { id } })
+  return await models.User.findOne({
+    where: { id },
+    include: [{
+      model: models.Subscription, as: 'subscriptions',
+      include: [{
+          model: models.Order, as: 'orders',
+          include: [{
+            model: models.OrderProduct, as: 'orderProducts',
+            include: [{ model: models.Product, as: 'product' }]
+          }]
+        },
+        { model: models.Crate, as: 'crate' }
+      ]
+    }]
+  })
 }
 
 // Get all
