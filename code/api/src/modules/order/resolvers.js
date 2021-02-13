@@ -27,3 +27,20 @@ export async function getAll() {
     ]
   })
 }
+
+// Update order
+export async function update(parentValue, { id, deliveryDate, status }, { auth }) {
+  if (auth.isAuthenticated) {
+    await models.Order.update(
+      {
+        deliveryDate,
+        status
+      },
+      {
+        where: { id: id }
+			});
+		return await models.Order.findOne({ where: { id: id } })
+  } else {
+    throw new Error('Please login to update information.')
+  }
+}
