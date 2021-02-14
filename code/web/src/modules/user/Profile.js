@@ -6,20 +6,15 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { ProfileModal } from "../../ui/modal/index";
 import EditProfileForm from "../../ui/form/EditProfileForm";
-// impor {placeholder} from './profile-placeholder.svg'
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
-import { H2, H3, H4 } from "../../ui/typography";
+import { H2, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
 import {
   grey,
-  grey2,
   primaryAccent,
-  secondaryAccent,
 } from "../../ui/common/colors";
-import { Tile } from "../../ui/image";
-import { level5 } from "../../ui/common/shadows";
 import OrderHistory from "./OrderHistory";
 
 // App Imports
@@ -27,110 +22,8 @@ import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
 import { routeImage } from "../../setup/routes/index";
 
-// props.user.details.name
-
-const mockOrderData = {
-  user: {
-    id: 1,
-    name: "Mike",
-    email: "user@crate.com",
-    image: "some image url link",
-    description:
-      "Hi, I'm the main user. I love clothes and accessories! Follow my insta!",
-    streetAddress: "123 Admin St",
-    city: "Kenai",
-    state: "Alaska",
-    country: "USA",
-    subscriptions: [
-      {
-        crate: {
-          name: "Clothes for men",
-        },
-        orders: [
-          {
-            deliveryDate: Date.now(),
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: true,
-                product: {
-                  name: "watch for men",
-                },
-              },
-              {
-                returned: false,
-                product: {
-                  name: "pants for men",
-                },
-              },
-            ],
-          },
-          {
-            deliveryDate: "1612221377730",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: false,
-                product: {
-                  name: "shirts for men",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "jeans for men",
-                },
-              },
-            ],
-          },
-        ],
-      },
-      {
-        crate: {
-          name: "accesories for men",
-        },
-        orders: [
-          {
-            deliveryDate: "1612221348744",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: true,
-                product: {
-                  name: "watch for women",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "pants for women",
-                },
-              },
-            ],
-          },
-          {
-            deliveryDate: "1612221348888",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: false,
-                product: {
-                  name: "watch for women",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "accesories for women",
-                },
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-};
+// Mock Data
+import { mockOrderData } from "./mockOrderData";
 
 const sortOrderHistory = () => {
   const orderData = cleanData();
@@ -148,11 +41,11 @@ const cleanData = () => {
       orderProducts: [],
     };
 
-    subscription.orders.forEach((order) => {
+    subscription.orders.forEach(order => {
       orderData.deliveryDate = order.deliveryDate;
       orderData.status = order.status;
 
-      order.orderProducts.forEach((product) => {
+      order.orderProducts.forEach(product => {
         orderData.orderProducts.push(product);
       });
     });
@@ -174,18 +67,19 @@ const displayOrders = generateOrderHistory();
 const Profile = props => {
   const { user, logout } = props;
   const [edit, setEdit] = useState(false);
-  const profileImage = () => { 
+
+  const profileImage = () => {
     if (user.details.image === null || user.details.image === "") {
-      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"
-    } else if (user.details.image.charAt(0) === '/') {
-      return (routeImage + user.details.image)
+      return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
+    } else if (user.details.image.charAt(0) === "/") {
+      return routeImage + user.details.image;
     } else {
-      return user.details.image
+      return user.details.image;
     }
-  }
+  };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#cacaca26" }}>
       {/* SEO */}
       <Helmet>
         <title>My Profile - Crate</title>
@@ -194,7 +88,7 @@ const Profile = props => {
       {/* Top title bar */}
       <Grid style={{ backgroundColor: grey }}>
         <GridCell style={{ padding: "2em", textAlign: "center" }}>
-          <H3 font="primary">Details & Orders</H3>
+          <H2 font="secondary">Details & Orders</H2>
         </GridCell>
       </Grid>
 
@@ -207,85 +101,40 @@ const Profile = props => {
         </EditProfileForm>
       </ProfileModal>
 
-      <Grid>
-        <GridCell style={{ margin: "2em", minHeight: "60vh", display:'flex' }}>
-          <div style={{display:'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <Grid style={{ justifyContent: "center", margin: "0 4vh" }}>
+        <div className="profile-image-container">
+          <div className="profile-image">
             {user.details.image && (
-              <img
-                src={profileImage()}
-                alt="User Image"
-                style={{
-                  width: "100%",
-                  maxHeight: "70vh",
-                  borderRadius: "15px",
-                  boxShadow: '4px 4px 20px 0px #00000038'
-                }}
-              />
+              <img src={profileImage()} alt="User Image" />
             )}
           </div>
-        </GridCell>
+        </div>
 
         {/* User Profile Details */}
-        <GridCell
-          style={{
-            width: "25%",
-            borderRadius: '15px',
-            padding: '3em',
-            border: 'solid',
-            display: "flex",
-            flexDirection: "column",
-            margin: '2em'
-          }}>
-          <caption
-            style={{
-              borderRadius: "5px",
-              width: "100%",
-              height: '8em'
-            }}>
-            <h3 style={{ marginBottom: "0.5em", fontSize:'2em', color: 'black' }}>
-              {user.details.description ? user.details.description : "Edit your profile and add a description to tell us a little about yourself..."}
+        <div className="user-details-container">
+          <div>
+            <h3>
+              {user.details.description
+                ? user.details.description
+                : "Edit your profile and add a description to tell us a little about yourself..."}
             </h3>
-          </caption>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}>
-              <H4>
-                {props.user.details.name}
-              </H4>
           </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}>
-              <H4>EMAIL </H4>
-              <p
-                style={{
-                  color: 'black',
-                  fontSize: "1.5em",
-                  marginBottom: "2em",
-                }}>
-                {props.user.details.email}
-              </p>
+          <div>
+            <H4>{props.user.details.name}</H4>
           </div>
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "space-between",
-            }}>
+          <div>
+            <H4>EMAIL </H4>
+            <p>{props.user.details.email}</p>
+          </div>
+          <div>
             <H4>ADDRESS </H4>
-            <p style={{ color: 'black', fontSize: "1.5em", marginBottom: "2em" }}>
+            <p>
               {`${user.details.streetAddress}`}
               <br />
               {`${user.details.city}, ${user.details.state} ${user.details.zip}`}
             </p>
           </div>
-        </GridCell>
+        </div>
       </Grid>
 
       <section
@@ -319,9 +168,7 @@ const Profile = props => {
           flexDirection: "column",
           alignItems: "center",
         }}>
-        <H2 font="secondary" style={{ alignSelf: "start" }}>
-          Orders
-        </H2>
+        <H2 font="secondary">Orders</H2>
         <GridCell
           style={{
             padding: "2em",
@@ -333,6 +180,57 @@ const Profile = props => {
           {displayOrders}
         </GridCell>
       </Grid>
+
+      <style jsx>{`
+        .profile-image-container {
+          margin: 2em;
+          max-height: 90%;
+          display: flex;
+          justify-content: center;
+          flex: 1;
+        }
+        .profile-image {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .profile-image img {
+          width: 100%;
+          border-radius: 15px;
+          box-shadow: 4px 4px 20px 0px #00000038;
+        }
+        .user-details-container {
+          flex: 1;
+          width: 25% !important;
+          border-radius: 15px !important;
+          padding: 3em !important;
+          border: solid !important;
+          display: flex !important;
+          flex-direction: column !important;
+          margin: 2em !important;
+          box-shadow: 3px 6px 20px 0px #00000038 !important;
+        }
+        h3 {
+          margin-bottom: 0.5em;
+          font-size: 1.5em;
+          font-weight: 300;
+          color: black;
+        }
+        .user-details-container div {
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+        }
+        .user-details-container div p {
+          color: black;
+          font-size: 1.5em;
+          margin-bottom: 2em;
+        }
+        section {
+          padding: 3em;
+          background-image: linear-gradient(45deg, #d59ddca3, #5740d2e0);
+        }
+      `}</style>
     </div>
   );
 };
