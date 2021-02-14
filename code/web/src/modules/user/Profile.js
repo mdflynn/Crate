@@ -6,20 +6,15 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { ProfileModal } from "../../ui/modal/index";
 import EditProfileForm from "../../ui/form/EditProfileForm";
-// impor {placeholder} from './profile-placeholder.svg'
 
 // UI Imports
 import { Grid, GridCell } from "../../ui/grid";
-import { H2, H3, H4 } from "../../ui/typography";
+import { H2, H4 } from "../../ui/typography";
 import Button from "../../ui/button";
 import {
   grey,
-  grey2,
   primaryAccent,
-  secondaryAccent,
 } from "../../ui/common/colors";
-import { Tile } from "../../ui/image";
-import { level5 } from "../../ui/common/shadows";
 import OrderHistory from "./OrderHistory";
 
 // App Imports
@@ -28,7 +23,7 @@ import { logout } from "./api/actions";
 import { routeImage } from "../../setup/routes/index";
 
 // Mock Data
-import mockOrderData from './mockOrderData'
+import { mockOrderData } from "./mockOrderData";
 
 const sortOrderHistory = () => {
   const orderData = cleanData();
@@ -72,7 +67,7 @@ const displayOrders = generateOrderHistory();
 const Profile = props => {
   const { user, logout } = props;
   const [edit, setEdit] = useState(false);
-  
+
   const profileImage = () => {
     if (user.details.image === null || user.details.image === "") {
       return "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
@@ -84,7 +79,7 @@ const Profile = props => {
   };
 
   return (
-    <div style={{ backgroundColor: 'cornsilk'}}>
+    <div style={{ backgroundColor: "#cacaca26" }}>
       {/* SEO */}
       <Helmet>
         <title>My Profile - Crate</title>
@@ -106,8 +101,7 @@ const Profile = props => {
         </EditProfileForm>
       </ProfileModal>
 
-      <Grid style={{justifyContent: 'center', margin: '0 4vh'}}>
-
+      <Grid style={{ justifyContent: "center", margin: "0 4vh" }}>
         <div className="profile-image-container">
           <div className="profile-image">
             {user.details.image && (
@@ -118,11 +112,13 @@ const Profile = props => {
 
         {/* User Profile Details */}
         <div className="user-details-container">
-          <h3>
-            {user.details.description
-              ? user.details.description
-              : "Edit your profile and add a description to tell us a little about yourself..."}
-          </h3>
+          <div>
+            <h3>
+              {user.details.description
+                ? user.details.description
+                : "Edit your profile and add a description to tell us a little about yourself..."}
+            </h3>
+          </div>
           <div>
             <H4>{props.user.details.name}</H4>
           </div>
@@ -172,9 +168,7 @@ const Profile = props => {
           flexDirection: "column",
           alignItems: "center",
         }}>
-        <H2 font="secondary">
-          Orders
-        </H2>
+        <H2 font="secondary">Orders</H2>
         <GridCell
           style={{
             padding: "2em",
@@ -201,7 +195,7 @@ const Profile = props => {
           justify-content: center;
         }
         .profile-image img {
-          width:100%;
+          width: 100%;
           border-radius: 15px;
           box-shadow: 4px 4px 20px 0px #00000038;
         }

@@ -1,4 +1,4 @@
-export default const mockOrderData = {
+export const mockOrderData = {
   user: {
     id: 1,
     name: "Mike",
