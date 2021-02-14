@@ -27,110 +27,8 @@ import userRoutes from "../../setup/routes/user";
 import { logout } from "./api/actions";
 import { routeImage } from "../../setup/routes/index";
 
-// props.user.details.name
-
-const mockOrderData = {
-  user: {
-    id: 1,
-    name: "Mike",
-    email: "user@crate.com",
-    image: "some image url link",
-    description:
-      "Hi, I'm the main user. I love clothes and accessories! Follow my insta!",
-    streetAddress: "123 Admin St",
-    city: "Kenai",
-    state: "Alaska",
-    country: "USA",
-    subscriptions: [
-      {
-        crate: {
-          name: "Clothes for men",
-        },
-        orders: [
-          {
-            deliveryDate: Date.now(),
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: true,
-                product: {
-                  name: "watch for men",
-                },
-              },
-              {
-                returned: false,
-                product: {
-                  name: "pants for men",
-                },
-              },
-            ],
-          },
-          {
-            deliveryDate: "1612221377730",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: false,
-                product: {
-                  name: "shirts for men",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "jeans for men",
-                },
-              },
-            ],
-          },
-        ],
-      },
-      {
-        crate: {
-          name: "accesories for men",
-        },
-        orders: [
-          {
-            deliveryDate: "1612221348744",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: true,
-                product: {
-                  name: "watch for women",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "pants for women",
-                },
-              },
-            ],
-          },
-          {
-            deliveryDate: "1612221348888",
-            status: "pending shipment",
-            orderProducts: [
-              {
-                returned: false,
-                product: {
-                  name: "watch for women",
-                },
-              },
-              {
-                returned: true,
-                product: {
-                  name: "accesories for women",
-                },
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-};
+// Mock Data
+import mockOrderData from './mockOrderData'
 
 const sortOrderHistory = () => {
   const orderData = cleanData();
@@ -195,7 +93,7 @@ const Profile = props => {
       {/* Top title bar */}
       <Grid style={{ backgroundColor: grey }}>
         <GridCell style={{ padding: "2em", textAlign: "center" }}>
-          <H3 font="primary">Details & Orders</H3>
+          <H2 font="secondary">Details & Orders</H2>
         </GridCell>
       </Grid>
 
@@ -208,7 +106,7 @@ const Profile = props => {
         </EditProfileForm>
       </ProfileModal>
 
-      <Grid style={{justifyContent: 'center'}}>
+      <Grid style={{justifyContent: 'center', margin: '0 4vh'}}>
 
         <div className="profile-image-container">
           <div className="profile-image">
@@ -274,7 +172,7 @@ const Profile = props => {
           flexDirection: "column",
           alignItems: "center",
         }}>
-        <H2 font="secondary" style={{ alignSelf: "start" }}>
+        <H2 font="secondary">
           Orders
         </H2>
         <GridCell
@@ -317,17 +215,11 @@ const Profile = props => {
           flex-direction: column !important;
           margin: 2em !important;
           box-shadow: 3px 6px 20px 0px #00000038 !important;
-          
-          // display: flex;
-          // flex-direction: column;
-          // justify-content: center;
-          // flex: 1;
-          // padding-left: 0;
-          // align-items: center;
         }
         h3 {
           margin-bottom: 0.5em;
-          font-size: 2em;
+          font-size: 1.5em;
+          font-weight: 300;
           color: black;
         }
         .user-details-container div {
@@ -339,6 +231,10 @@ const Profile = props => {
           color: black;
           font-size: 1.5em;
           margin-bottom: 2em;
+        }
+        section {
+          padding: 3em;
+          background-image: linear-gradient(45deg, #d59ddca3, #5740d2e0);
         }
       `}</style>
     </div>
